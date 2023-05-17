@@ -102,6 +102,7 @@ const Map = ({height, zoom, center}) => {
                   featureProjection: get("EPSG:3857"),
                 }),
               })}
+              zIndex={1}
               style={FeatureStyles.MultiPolygon}
             />
           )}
@@ -112,10 +113,11 @@ const Map = ({height, zoom, center}) => {
                   featureProjection: get("EPSG:3857"),
                 }),
               })}
+              zIndex={2}
               style={FeatureStyles.MultiPolygon}
             />
           )}
-          {showMarker && <VectorLayer source={vector({ features })} />}
+          {showMarker && <VectorLayer source={vector({ features })} zIndex={3}/>}
         </Layers>
         <Controls>
           <FullScreenControl />
