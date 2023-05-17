@@ -50,7 +50,37 @@ const Map = ({height, zoom, center}) => {
   const [features, setFeatures] = useState(addMarkers(markersLonLat));
 
   return (
-    <div style={{height: height}}>
+<div class="row">
+    <div id="map_layers" class="col-md-4">
+      <div>
+      <h3>Layers</h3>
+      <input
+        type="checkbox"
+        checked={showLayer1}
+        onChange={(event) => setShowLayer1(event.target.checked)}
+      />{" "}
+      SDN_ADM0.geojson
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        checked={showLayer2}
+        onChange={(event) => setShowLayer2(event.target.checked)}
+      />{" "}
+      SDN_ADM1.geojson
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        checked={showMarker}
+        onChange={(event) => setShowMarker(event.target.checked)}
+      />{" "}
+      cities.csv
+    </div>
+    </div>
+
+    <div class="col-md-8" style={{height: height}}>
+
       <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
         <Layers>
           <TileLayer source={osm()} zIndex={0} />
@@ -80,31 +110,8 @@ const Map = ({height, zoom, center}) => {
           <FullScreenControl />
         </Controls>
       </OpenLayersMap>
-      <div id="map_layers">
-        <h3>Layers</h3>
-        <input
-          type="checkbox"
-          checked={showLayer1}
-          onChange={(event) => setShowLayer1(event.target.checked)}
-        />{" "}
-        SDN_ADM0.geojson
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          checked={showLayer2}
-          onChange={(event) => setShowLayer2(event.target.checked)}
-        />{" "}
-        SDN_ADM1.geojson
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          checked={showMarker}
-          onChange={(event) => setShowMarker(event.target.checked)}
-        />{" "}
-        cities.csv
-      </div>
+      
+    </div>
     </div>
   );
 };
@@ -112,8 +119,8 @@ const Map = ({height, zoom, center}) => {
 export default Map;
 
 Map.defaultProps = {
-  zoom: 10,
-  center: [10,10],
-  height: 300,
+  zoom: 5,
+  center: [30.21, 15.86],
+  height: 400,
   children: null
 };

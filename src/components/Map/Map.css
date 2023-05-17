@@ -20,10 +20,15 @@
   }
 
   #map_layers {
-    margin-top: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+
   }
 
   #map_layers h3 {
     background-color: #FAFAFA;
     padding: 5px;
+    font-size: 17px;
+    margin-bottom: 10px;
+
   }
