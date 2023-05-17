@@ -51,7 +51,7 @@ const Map = ({height, zoom, center}) => {
 
   return (
 <div class="row">
-    <div id="map_layers" class="col-md-4">
+    <div id="map_layers" class="col-md-3">
       <div>
       <h3>Layers</h3>
       <input
@@ -79,7 +79,7 @@ const Map = ({height, zoom, center}) => {
     </div>
     </div>
 
-    <div class="col-md-8" style={{height: height}}>
+    <div class="col-md-9" style={{height: height}}>
 
       <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
         <Layers>
