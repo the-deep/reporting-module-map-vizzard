@@ -32,3 +32,18 @@
     margin-bottom: 10px;
 
   }
+
+  #map-container {
+    position: absolute;
+  }
+
+  #map-title {
+    position: absolute;
+    z-index: 3;
+    padding: 3px 8px;
+  }
+
+  #main-title {
+    font-size: 22px;
+    font-weight: bold;
+  }

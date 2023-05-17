@@ -42,12 +42,11 @@ function addMarkers(lonLatArray) {
   return features;
 }
 
-const Map = ({height, zoom, center}) => {
+const Map = ({height, zoom, center, mainTitle, subTitle}) => {
   const [showLayer0, setShowLayer0] = useState(true);
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(false);
   const [showMarker, setShowMarker] = useState(true);
-
   const [features, setFeatures] = useState(addMarkers(markersLonLat));
 
   return (
@@ -88,8 +87,11 @@ const Map = ({height, zoom, center}) => {
     </div>
     </div>
 
-    <div class="col-md-9" style={{height: height}}>
-
+    <div id="map-container" class="col-md-9" style={{height: height}}>
+      <div id="map-title">
+        <div id="main-title">{mainTitle}</div>
+        <div id="sub-title">{subTitle}</div>
+      </div>
       <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
         <Layers>
         {showLayer0 && (
@@ -133,6 +135,8 @@ export default Map;
 
 Map.defaultProps = {
   zoom: 5,
+  mainTitle: 'Main title',
+  subTitle: 'Sub-title',
   center: [30.21, 15.86],
   height: 400,
   children: null

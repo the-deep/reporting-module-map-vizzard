@@ -23,6 +23,8 @@ export default {
     height: { control: 'number', description: 'Viewbox height in pixels', table: {type: {summary: 'number'}}},
     zoom: { control: 'number', description: 'Initial zoom level', table: {type: {summary: 'number'}}},
     center: {  description: 'Viewbox centre coordinates', table: {type: {summary: 'array [lon,lat]'}} },
+    mainTitle: {  description: 'Main map title', table: {type: {summary: 'string'}} },
+    subTitle: {  description: 'Map sub-title', table: {type: {summary: 'string'}} },
     // symbolSize: { control: 'number', description: 'Symbol point radius size in pixels', table: {type: {summary: 'number'}}},
     children: { table: { disable: true}}
   }
@@ -33,6 +35,8 @@ export const Default = {
   args: {
     center: [30.21, 15.86],
     zoom: 5,
-    height: 400
+    height: 400,
+    mainTitle: 'Main title',
+    subTitle: 'Sub-title',
   },
 };
