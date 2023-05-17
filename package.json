@@ -1,5 +1,6 @@
 {
   "name": "reporting",
+  "homepage": "http://matthewsmawfield.github.io/map-vizzard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,6 +12,7 @@
     "@types/node": "^16.18.29",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
+    "bootstrap": "^5.2.3",
     "d3": "^7.8.4",
     "mapbox-gl": "^2.14.1",
     "ol": "^7.3.0",
@@ -26,7 +28,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "eslintConfig": {
     "extends": [
@@ -64,8 +67,10 @@
     "@storybook/preset-create-react-app": "^7.0.11",
     "@storybook/react": "^7.0.11",
     "@storybook/react-webpack5": "^7.0.11",
+    "@storybook/storybook-deployer": "^2.8.16",
     "@storybook/testing-library": "^0.0.14-next.2",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
     "storybook": "^7.0.11",
     "webpack": "^5.82.1"

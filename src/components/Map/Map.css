@@ -1,7 +1,6 @@
 .ol-map {
     min-width: 600px;
     min-height: 50px;
-    margin: 50px;
     width: "100%";
   }
   .ol-control {
@@ -18,4 +17,13 @@
   .ol-map {
     background-color: #FAFAFA;
     border: 1px solid rgb(211, 211, 211)
+  }
+
+  #map_layers {
+    margin-top: 20px;
+  }
+
+  #map_layers h3 {
+    background-color: #FAFAFA;
+    padding: 5px;
   }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import OpenLayersMap from "./OpenLayersMap";
 import { Layers, TileLayer, VectorLayer } from "./Layers";
-import { Style, Icon } from "ol/style";
+import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { osm, vector } from "./Source";
@@ -11,20 +11,26 @@ import SDN_ADM0 from "./Data/sdn_adm0.json";
 import SDN_ADM1 from "./Data/sdn_adm1.json";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
-
+import 'bootstrap/dist/css/bootstrap.css';
 import mapConfig from "./config.json";
 
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
-const markersLonLat = [mapConfig.kansasCityLonLat, mapConfig.blueSpringsLonLat];
+const markersLonLat = [mapConfig.darfurCityLonLat, mapConfig.khartoumLonLat, mapConfig.portsaidLonLat];
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({
-    image: new Icon({
-      anchorXUnits: "fraction",
-      anchorYUnits: "pixels",
-      src: mapConfig.markerImage32,
-    }),
+
+            image: new Circle({
+                radius: 5,
+                fill: new Fill({
+                    color: '#FFF'
+                }),
+                stroke: new Stroke({
+                  color: '#000',
+                  width: 2
+              }),
+            }),
   });
   let features = lonLatArray.map((item) => {
     let feature = new Feature({
@@ -38,8 +44,8 @@ function addMarkers(lonLatArray) {
 
 const Map = ({height, zoom, center}) => {
   const [showLayer1, setShowLayer1] = useState(true);
-  const [showLayer2, setShowLayer2] = useState(true);
-  const [showMarker, setShowMarker] = useState(false);
+  const [showLayer2, setShowLayer2] = useState(false);
+  const [showMarker, setShowMarker] = useState(true);
 
   const [features, setFeatures] = useState(addMarkers(markersLonLat));
 
@@ -74,13 +80,14 @@ const Map = ({height, zoom, center}) => {
           <FullScreenControl />
         </Controls>
       </OpenLayersMap>
-      <div>
+      <div id="map_layers">
+        <h3>Layers</h3>
         <input
           type="checkbox"
           checked={showLayer1}
           onChange={(event) => setShowLayer1(event.target.checked)}
         />{" "}
-        SDN_ADM0
+        SDN_ADM0.geojson
       </div>
       <div>
         <input
@@ -88,16 +95,15 @@ const Map = ({height, zoom, center}) => {
           checked={showLayer2}
           onChange={(event) => setShowLayer2(event.target.checked)}
         />{" "}
-        SDN_ADM1
+        SDN_ADM1.geojson
       </div>
-      <hr />
       <div>
         <input
           type="checkbox"
           checked={showMarker}
           onChange={(event) => setShowMarker(event.target.checked)}
         />{" "}
-        Show cities
+        cities.csv
       </div>
     </div>
   );
