@@ -23,6 +23,7 @@ export default {
     height: { control: 'number', description: 'Viewbox height in pixels', table: {type: {summary: 'number'}}},
     zoom: { control: 'number', description: 'Initial zoom level', table: {type: {summary: 'number'}}},
     center: {  description: 'Viewbox centre coordinates', table: {type: {summary: 'array [lon,lat]'}} },
+    // symbolSize: { control: 'number', description: 'Symbol point radius size in pixels', table: {type: {summary: 'number'}}},
     children: { table: { disable: true}}
   }
 };

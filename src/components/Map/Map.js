@@ -43,6 +43,7 @@ function addMarkers(lonLatArray) {
 }
 
 const Map = ({height, zoom, center}) => {
+  const [showLayer0, setShowLayer0] = useState(true);
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(false);
   const [showMarker, setShowMarker] = useState(true);
@@ -77,13 +78,23 @@ const Map = ({height, zoom, center}) => {
       />{" "}
       cities.csv
     </div>
+    <div>
+      <input
+        type="checkbox"
+        checked={showLayer0}
+        onChange={(event) => setShowLayer0(event.target.checked)}
+      />{" "}
+      OpenStreetMap Raster Tiles
+    </div>
     </div>
 
     <div class="col-md-9" style={{height: height}}>
 
       <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
         <Layers>
-          <TileLayer source={osm()} zIndex={0} />
+        {showLayer0 && (
+          <TileLayer source={osm()} zIndex={-1} />
+        )}
           {showLayer1 && (
             <VectorLayer
               source={vector({
