@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import './maplayers.css';
 import mapConfig from "./config.json";
 import Map from '../Map';
 import MapLayers from '../MapLayers';

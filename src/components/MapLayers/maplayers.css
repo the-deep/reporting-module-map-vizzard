@@ -1,6 +1,6 @@
 .layersPanel {
     background-color:rgb(241, 241, 241);
-    padding: 3px 8px;
+    padding: 6px 8px;
 }
 
 .layersPanel h1 {
@@ -15,7 +15,7 @@
 }
 
 .layersPanelBody {
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .MapLayers_row:hover {
