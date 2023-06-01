@@ -1,11 +1,10 @@
 import React from 'react';
-import Map from '../components/Map';
+import MapVizzard from '../components/MapVizzard';
 import mapConfig from "../components/MapVizzard/config.json";
 
 // import Plugin from '../packages/MapboxAnimatorPlugin';
 
 // eslint-disable-next-line prefer-destructuring
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ';
 
 // also just wrapping a functional component can be done real simply
 // and as needed.
@@ -18,8 +17,8 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GY
 
 // Story Config
 export default {
-  title: 'Map',
-  component: Map,
+  title: 'Map Vizzard',
+  component: MapVizzard,
   tags: ['autodocs'],
   argTypes: {
     height: { control: 'number', description: 'Viewbox height in pixels', table: {type: {summary: 'number'}}},
