@@ -75,7 +75,7 @@
         {
             "name": "SDN_ADM1.geojson",
             "type": "polygon",
-            "opacity": 0.25,
+            "opacity": 0.2,
             "zIndex": 2,
             "visible": 0,
             "style": {
