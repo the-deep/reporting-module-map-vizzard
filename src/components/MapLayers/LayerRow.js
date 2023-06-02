@@ -4,6 +4,9 @@ const LayerRow = ({d, update, layerIndex}) => {
 
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
+  const addHover = () => setHovered(true);
+  const removeHover = () => setHovered(false);
+
 
   const onClick = () => {
     d.zIndex = d.zIndex - 1.3;
@@ -46,7 +49,7 @@ const LayerRow = ({d, update, layerIndex}) => {
     showIcon = <img src={process.env.PUBLIC_URL+"/icons/hide.svg"}/>
   }
 
-  return <div className={hovered ? 'MapLayers_row hovered' : 'MapLayers_row'} onMouseEnter={toggleHover} onMouseLeave={toggleHover} >
+  return <div className={hovered ? 'MapLayers_row hovered' : 'MapLayers_row'} onMouseEnter={addHover} onMouseLeave={removeHover} >
     <div className="MapLayers_icon_container">
       <div className="MapLayers_icon">
         {icon}
