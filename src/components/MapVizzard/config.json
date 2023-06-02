@@ -77,7 +77,7 @@
             "type": "polygon",
             "opacity": 0.25,
             "zIndex": 2,
-            "visible": 1,
+            "visible": 0,
             "style": {
                 "radius": 7,
                 "strokeWidth": 1.4,
