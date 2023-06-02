@@ -15,6 +15,13 @@
             "visible": 1
         },
         {
+            "name": "Mapbox background layer",
+            "type": "mapbox",
+            "opacity": 0.27,
+            "zIndex": 0,
+            "visible": 1
+        },
+        {
             "name": "capitals.csv",
             "type": "point",
             "symbol": "capital",
@@ -52,7 +59,7 @@
         {
             "name": "SDN_ADM0.geojson",
             "type": "polygon",
-            "opacity": 1,
+            "opacity": 0.25,
             "zIndex": 1,
             "visible": 1,
             "style": {
@@ -68,7 +75,7 @@
         {
             "name": "SDN_ADM1.geojson",
             "type": "polygon",
-            "opacity": 1,
+            "opacity": 0.25,
             "zIndex": 2,
             "visible": 1,
             "style": {

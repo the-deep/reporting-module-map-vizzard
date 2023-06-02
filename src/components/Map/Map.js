@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
-import { Layers, TileLayer, VectorLayer } from "./Layers";
+import { Layers, TileLayer, VectorLayer, MapboxLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
@@ -60,22 +60,29 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
           }),
         })}
         zIndex={d.zIndex}
+        opacity={d.opacity}
         style={FeatureStyles.MultiPolygon}
       />)
     }
+    if(d.type=='mapbox'){
+      renderLayers.push(d.visible > 0 && <MapboxLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+    }
   });
 
-  useEffect(() => {
-    renderLayers = [];
-    layers.forEach(function(d,i){
-      if(d.type=='point'){
-        renderLayers.push(d.visible > 0 && <VectorLayer key={"key"+i} source={vector({features: AddSymbols(d)})} zIndex={d.zIndex} opacity={d.opacity}/>)
-      }
-      if(d.type=='osm'){
-        renderLayers.push(d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
-      }
-    });
-  }, [layers]);
+  // useEffect(() => {
+  //   renderLayers = [];
+  //   layers.forEach(function(d,i){
+  //     if(d.type=='point'){
+  //       renderLayers.push(d.visible > 0 && <VectorLayer key={"key"+i} source={vector({features: AddSymbols(d)})} zIndex={d.zIndex} opacity={d.opacity}/>)
+  //     }
+  //     if(d.type=='osm'){
+  //       renderLayers.push(d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+  //     }
+  //     if(d.type=='mapbox'){
+  //       renderLayers.push(d.visible > 0 && <MapboxLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+  //     }
+  //   });
+  // }, [layers]);
 
 
   return (
@@ -89,7 +96,7 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
           {renderLayers}
         </Layers>
         <Controls>
-          <FullScreenControl />
+          {/* <FullScreenControl /> */}
         </Controls>
       </OpenLayersMap>     
     </div>

@@ -5,9 +5,9 @@ import Map from '../Map';
 import MapLayers from '../MapLayers';
 
 
-export const MapVizzard = ({layers, height, zoom, center, mainTitle, subTitle}) => {
+export const MapVizzard = ({height, zoom, center, mainTitle, subTitle}) => {
     
-    const [layers2, setLayers] = useState(layers);
+    const [layers, setLayers] = useState(mapConfig.layers);
     const [val, setVal] = useState(0);
   
     function setOpeningLayers(layers) {
