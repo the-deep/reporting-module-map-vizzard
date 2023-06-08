@@ -83,11 +83,11 @@
             "type": "polygon",
             "opacity": 0.2,
             "zIndex": 2,
-            "visible": 0,
+            "visible": 1,
             "style": {
                 "radius": 7,
                 "strokeWidth": 1.4,
-                "fill": { "hex8": "#FFF" },
+                "fill": { "hex8": "#ffd7d7ff" },
                 "stroke": { "hex8": "#000" }
             },
             "data": {"type":"FeatureCollection", "features": [
