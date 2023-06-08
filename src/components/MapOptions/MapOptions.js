@@ -34,16 +34,12 @@ export const MapOptions = ({layers, setLayers, val, setVal, activeLayer}) => {
     const renderLayers = [];
     
     layers.forEach(function(dd,ii){
-        console.log(dd);
         if(dd.id == activeLayer){
             if(dd.type=='polygon'){
                 renderLayers.push(<OptionsVector key={'polygonOptions'} layer={dd} updateLayer={updateLayer} activeLayer={activeLayer}/>)
             }
         }
     })
-
-
-
    
 
     // layers.sort(function(a, b){
