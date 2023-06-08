@@ -53,6 +53,17 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
       renderLayers.push(d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
     }
     if(d.type=='polygon'){
+
+      var style = new Style({
+        stroke: new Stroke({
+          width: 2,
+          color: d.style.stroke.hex
+        }),
+        fill: new Fill({
+          color: d.style.fill.hex
+        })
+      });
+
       renderLayers.push(d.visible > 0 && <VectorLayer
         key={"key"+i} source={vector({
           features: new GeoJSON().readFeatures(d.data, {
@@ -61,7 +72,7 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
         })}
         zIndex={d.zIndex}
         opacity={d.opacity}
-        style={FeatureStyles.MultiPolygon}
+        style={style}
       />)
     }
     if(d.type=='mapbox'){
@@ -77,6 +88,18 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
   //     }
   //     if(d.type=='osm'){
   //       renderLayers.push(d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+  //     }
+  //     if(d.type=='polygon'){
+  //       renderLayers.push(d.visible > 0 && <VectorLayer
+  //         key={"key"+i} source={vector({
+  //           features: new GeoJSON().readFeatures(d.data, {
+  //             featureProjection: get("EPSG:3857"),
+  //           }),
+  //         })}
+  //         zIndex={d.zIndex}
+  //         opacity={d.opacity}
+  //         style={FeatureStyles.MultiPolygon}
+  //       />)
   //     }
   //     if(d.type=='mapbox'){
   //       renderLayers.push(d.visible > 0 && <MapboxLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)

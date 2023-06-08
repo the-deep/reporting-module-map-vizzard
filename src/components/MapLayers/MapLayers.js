@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './maplayers.css';
 import LayerRow from "./LayerRow";
 
-export const MapLayers = ({layers, setLayers, val, setVal}) => {
+export const MapLayers = ({layers, setLayers, val, setVal, activeLayer, setActiveLayer}) => {
 
     const renderLayers = [];
 
@@ -15,6 +15,7 @@ export const MapLayers = ({layers, setLayers, val, setVal}) => {
         dd.zIndex = ii;
     });
 
+    
     const updateLayers = (d, index) => {
         if(d=='remove'){
             layers.splice(index, 1)
@@ -27,6 +28,7 @@ export const MapLayers = ({layers, setLayers, val, setVal}) => {
         layers.forEach(function(dd,ii){
             dd.zIndex = ii;
         });
+        console.log('updateLyers');
         setLayers(layers);
         setVal(val+1);
     }
@@ -36,7 +38,7 @@ export const MapLayers = ({layers, setLayers, val, setVal}) => {
      });
 
     layers.forEach(function(d,i){
-        renderLayers.push(<LayerRow key={"key"+i} d={d} update={updateLayers} layerIndex={i}/>)
+        renderLayers.push(<LayerRow key={"key"+i} d={d} update={updateLayers} layerIndex={i} activeLayer={activeLayer} setActiveLayer={setActiveLayer}/>)
     });
 
     return (

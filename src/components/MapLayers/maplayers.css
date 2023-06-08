@@ -95,3 +95,7 @@ opacity: 0;
     opacity: 1 !important;
 
 }
+
+.active {
+    font-weight: bold;
+}

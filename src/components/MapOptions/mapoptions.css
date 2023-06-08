@@ -1,0 +1,40 @@
+.mapOptions {
+    font-family: Roboto;
+    max-width: 400px
+}
+
+.mapOptionsPanel {
+    background-color:rgb(241, 241, 241);
+    padding: 6px 8px;
+}
+
+.mapOptionsPanel h1 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 18px;
+    color: rgb(59, 59, 59);
+}
+
+.MapLayers_row div {
+    display: inline-block;
+}
+
+.mapOptionsPanelBody {
+    margin-top: 3px;
+    font-size: 12px;
+    padding: 3px;
+}
+
+.optionRow {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.optionLabel {
+    display: inline-block;
+}
+
+.optionValue {
+    font-weight: bold;
+    float: right;
+}

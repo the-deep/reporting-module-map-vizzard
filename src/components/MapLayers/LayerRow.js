@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 
-const LayerRow = ({d, update, layerIndex}) => {
+const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
 
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
   const addHover = () => setHovered(true);
   const removeHover = () => setHovered(false);
 
-
   const onClick = () => {
     d.zIndex = d.zIndex - 1.3;
     update(d, layerIndex);
+  }
+
+  const clickRow = () => {
+    setActiveLayer(d.id);
   }
 
   const moveBack = () => {
@@ -49,13 +52,18 @@ const LayerRow = ({d, update, layerIndex}) => {
     showIcon = <img src={process.env.PUBLIC_URL+"/icons/hide.svg"}/>
   }
 
-  return <div className={hovered ? 'MapLayers_row hovered' : 'MapLayers_row'} onMouseEnter={addHover} onMouseLeave={removeHover} >
+  let activeClass = '';
+  if(activeLayer==d.id){
+      activeClass = 'active'
+  }
+
+  return <div className={hovered ? 'MapLayers_row hovered' : 'MapLayers_row'} onClick={clickRow} onMouseEnter={addHover} onMouseLeave={removeHover} >
     <div className="MapLayers_icon_container">
       <div className="MapLayers_icon">
         {icon}
       </div>
     </div>
-    <div className="MapLayers_title">{d.name}</div>
+    <div className={"MapLayers_title "+activeClass}>{d.name}</div>
     <div className="MapLayers_buttons">
       <div className="MapLayers_buttons_forward" onClick={moveForward}>
         <img src={process.env.PUBLIC_URL+"/icons/up.svg"}/>
