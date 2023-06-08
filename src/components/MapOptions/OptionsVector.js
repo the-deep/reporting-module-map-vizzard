@@ -81,9 +81,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
       <div className="optionLabel">Fill colour</div>
       <div className='optionValue'>
       <MuiColorInput
-        format="hex"
+        format="hex8"
         aria-label="Fill colour"
-        value={layer.style.fill.hex}
+        value={layer.style.fill.hex8}
         onChange={(e,val) => setFill(val)}
         size="small"
       />
@@ -94,9 +94,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
       <div className="optionLabel">Stroke colour</div>
       <div className='optionValue'>
       <MuiColorInput
-        format="hex"
+        format="hex8"
         aria-label="Stroke colour"
-        value={layer.style.stroke.hex}
+        value={layer.style.stroke.hex8}
         onChange={(e,val) => setStroke(val)}
         size="small"
       />
