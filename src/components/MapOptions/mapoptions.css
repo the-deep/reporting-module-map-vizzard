@@ -38,3 +38,13 @@
     font-weight: bold;
     float: right;
 }
+
+
+
+  .MuiSlider-thumb:not(.MuiSlider-active) {
+    transition: none;
+  }
+  
+  .MuiSlider-track {
+    transition: none;
+  }

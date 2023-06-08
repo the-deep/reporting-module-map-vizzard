@@ -15,7 +15,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
   const theme = createTheme({
     palette: {
       primary: grey,
-    },
+    }
   });
 
   const setOpacity = (d) => {
@@ -70,6 +70,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
       <Slider
         aria-label="Opacity"
         value={layer.opacity}
+        transition="none"
         size="small"
         onChange={(e,val) => setOpacity(val)}
         // getAriaValueText={valuetext}
@@ -115,6 +116,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
         aria-label="Stroke width"
         value={layer.style.strokeWidth}
         size="small"
+        transition="none"
         onChange={(e,val) => setStrokeWidth(val)}
         // getAriaValueText={valuetext}
         valueLabelDisplay="auto"
