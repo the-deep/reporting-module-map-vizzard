@@ -28,7 +28,6 @@ export const MapLayers = ({layers, setLayers, val, setVal, activeLayer, setActiv
         layers.forEach(function(dd,ii){
             dd.zIndex = ii;
         });
-        console.log('updateLyers');
         setLayers(layers);
         setVal(val+1);
     }
