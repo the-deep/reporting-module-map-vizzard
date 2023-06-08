@@ -56,7 +56,7 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
 
       var style = new Style({
         stroke: new Stroke({
-          width: 2,
+          width: d.style.strokeWidth,
           color: d.style.stroke.hex8
         }),
         fill: new Fill({

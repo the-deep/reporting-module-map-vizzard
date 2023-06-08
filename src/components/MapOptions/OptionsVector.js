@@ -33,6 +33,11 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
     updateLayer(layer, activeLayer);
   }
 
+  const setStrokeWidth = (d) => {
+    layer.style.strokeWidth = d;
+    updateLayer(layer, activeLayer);
+  }
+
   useEffect(() => {
     // if (!map) return;
     // let vectorLayer = new OLVectorLayer({
@@ -102,6 +107,25 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
       />
       </div>
     </div>
+  <br/>
+
+    <div className="optionRow">
+      <div className="optionLabel">Stroke width</div>
+      <Slider
+        aria-label="Stroke width"
+        value={layer.style.strokeWidth}
+        size="small"
+        onChange={(e,val) => setStrokeWidth(val)}
+        // getAriaValueText={valuetext}
+        valueLabelDisplay="auto"
+        step={0.1}
+        color="primary"
+        theme={theme}
+        min={0.1}
+        max={5}
+      />
+    </div>
+
 
 <br/><br/>
   </div>
