@@ -38,7 +38,7 @@ const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
   let icon;
   if(d.type=='osm'){
     icon = <img className="MapLayers_raster" src={process.env.PUBLIC_URL + "/icons/raster.svg"}/>
-  } else if(d.type=='point'){
+  } else if(d.type=='symbol'){
       icon = <img className="MapLayers_point" src={process.env.PUBLIC_URL + "/icons/point.svg"}/>
   } else if(d.type=='polygon'){
       icon = <img className="MapLayers_polygon" src={process.env.PUBLIC_URL + "/icons/polygon.svg"}/>
