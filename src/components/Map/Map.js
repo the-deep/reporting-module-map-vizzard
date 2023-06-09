@@ -13,7 +13,7 @@ import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
 import 'bootstrap/dist/css/bootstrap.css';
 import { isVariableStatement } from "typescript";
-import {AddCircles, AddSymbols} from "./Layers/AddPoints"
+import {AddCircles, AddSymbols} from "./Layers/AddSymbol"
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({
@@ -46,7 +46,7 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
   let renderLayers = [];
 
   layers.forEach(function(d,i){
-    if(d.type=='point'){
+    if(d.type=='symbol'){
       renderLayers.push(d.visible > 0 && <VectorLayer key={"key"+i} source={vector({features: AddSymbols(d)})} zIndex={d.zIndex} opacity={d.opacity}/>)
     }
     if(d.type=='osm'){

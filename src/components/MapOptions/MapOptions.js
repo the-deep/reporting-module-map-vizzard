@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import OptionsVector from "./OptionsVector";
+import OptionsSymbol from "./OptionsSymbol";
 import './mapoptions.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -37,6 +38,9 @@ export const MapOptions = ({layers, setLayers, val, setVal, activeLayer}) => {
         if(dd.id == activeLayer){
             if(dd.type=='polygon'){
                 renderLayers.push(<OptionsVector key={'polygonOptions'} layer={dd} updateLayer={updateLayer} activeLayer={activeLayer}/>)
+            }
+            if(dd.type=='symbol'){
+                renderLayers.push(<OptionsSymbol key={'polygonOptions'} layer={dd} updateLayer={updateLayer} activeLayer={activeLayer}/>)
             }
         }
     })

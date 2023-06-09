@@ -2,12 +2,13 @@ import { useContext, useEffect } from "react";
 import MapContext from "../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
 import Chip from '@mui/material/Chip';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
 import { MuiColorInput } from 'mui-color-input'
-
-const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
+import { FormGroup, FormControlLabel } from '@mui/material';
+const OptionsSymbol = ({ layer, activeLayer, updateLayer}) => {
 
   // const { map } = useContext(MapContext);
 
@@ -23,20 +24,25 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
     updateLayer(layer, activeLayer);
   }
 
-  const setFill = (d) => {
-    layer.style.fill = d;
+  const setShowLabels = (d) => {
+    layer.showLabels = d;
     updateLayer(layer, activeLayer);
   }
 
-  const setStroke = (d) => {
-    layer.style.stroke = d;
-    updateLayer(layer, activeLayer);
-  }
+  // const setFill = (d) => {
+  //   layer.style.fill = d;
+  //   updateLayer(layer, activeLayer);
+  // }
 
-  const setStrokeWidth = (d) => {
-    layer.style.strokeWidth = d;
-    updateLayer(layer, activeLayer);
-  }
+  // const setStroke = (d) => {
+  //   layer.style.stroke = d;
+  //   updateLayer(layer, activeLayer);
+  // }
+
+  // const setStrokeWidth = (d) => {
+  //   layer.style.strokeWidth = d;
+  //   updateLayer(layer, activeLayer);
+  // }
 
   useEffect(() => {
     // if (!map) return;
@@ -83,49 +89,15 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
     </div>
 
     <div className="optionRow">
-      <div className="optionLabel">Fill colour</div>
+      <div className="optionLabel">Show text labels</div>
       <div className='optionValue'>
-      <MuiColorInput
-        format="hex8"
-        fullWidth="true"
-        aria-label="Fill colour"
-        value={layer.style.fill.hex8}
-        onChange={(e,val) => setFill(val)}
-        size="small"
-      />
+        <Switch
+          checked={layer.showLabels}
+          color="default"
+          onChange={(e,val) => setShowLabels(val)}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
       </div>
-    </div>
-    <br/>
-    <div className="optionRow">
-      <div className="optionLabel">Stroke colour</div>
-      <div className='optionValue'>
-      <MuiColorInput
-        format="hex8"
-        fullWidth="true"
-        aria-label="Stroke colour"
-        value={layer.style.stroke.hex8}
-        onChange={(e,val) => setStroke(val)}
-        size="small"
-      />
-      </div>
-    </div>
-  <br/>
-
-    <div className="optionRow">
-      <div className="optionLabel">Stroke width</div>
-      <Slider
-        aria-label="Stroke width"
-        value={layer.style.strokeWidth}
-        size="small"
-        onChange={(e,val) => setStrokeWidth(val)}
-        // getAriaValueText={valuetext}
-        valueLabelDisplay="auto"
-        step={0.1}
-        color="primary"
-        theme={theme}
-        min={0.1}
-        max={5}
-      />
     </div>
 
 
@@ -135,4 +107,4 @@ const OptionsVector = ({ layer, activeLayer, updateLayer}) => {
 
 };
 
-export default OptionsVector;
+export default OptionsSymbol;

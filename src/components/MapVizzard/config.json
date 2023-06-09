@@ -26,8 +26,9 @@
         {
             "id": 12,
             "name": "capitals.csv",
-            "type": "point",
+            "type": "symbol",
             "symbol": "capital",
+            "showLabels": true,
             "opacity": 1,
             "zIndex": 4,
             "visible": 1,
@@ -44,8 +45,9 @@
         {
             "id": 13,
             "name": "cities.csv",
-            "type": "point",
+            "type": "symbol",
             "symbol": "city",
+            "showLabels": true,
             "opacity": 1,
             "zIndex": 3,
             "visible": 1,

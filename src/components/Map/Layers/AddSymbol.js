@@ -75,6 +75,8 @@ const AddSymbols = (d) => {
     //     })
     // })]
 
+    let showLabels = d.showLabels;
+
     let features = d.data.map((item) => {
         let feature = new Feature({
             geometry: new Point(fromLonLat([item.lon, item.lat])),
@@ -88,19 +90,23 @@ const AddSymbols = (d) => {
               scale: scale,
               src: process.env.PUBLIC_URL+'/icons/'+d.symbol+'.svg',
             })
-          }),new Style({
-            text: new Text({
-                text: item.title,
-                textAlign: 'left',
-                font: font,
-                offsetY: 0.5,
-                offsetX: 8,
-                scale: 1,
-                fill: new Fill({
-                    color: '#black',
+          })];
+
+          if(showLabels===true){
+            iconStyle.push(new Style({
+                text: new Text({
+                    text: item.title,
+                    textAlign: 'left',
+                    font: font,
+                    offsetY: 0.5,
+                    offsetX: 8,
+                    scale: 1,
+                    fill: new Fill({
+                        color: '#black',
+                    })
                 })
-            })
-        })]
+            }))
+          }
 
         feature.setStyle(iconStyle);
         return feature;
