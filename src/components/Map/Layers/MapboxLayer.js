@@ -52,6 +52,19 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1}) => {
     };
   }, [map, source, zIndex]);
 
+  useEffect(() => {
+    if (!map) return;
+
+    console.log(source);
+    console.log(zIndex);
+
+    return () => {
+      if (map) {
+        // map.removeLayer(mbLayer);
+      }
+    };
+  }, [zIndex]);
+
   return null;
 
 };

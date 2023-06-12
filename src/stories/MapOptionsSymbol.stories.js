@@ -1,6 +1,5 @@
 import React from 'react';
 import MapOptions from '../components/MapOptions';
-import OptionsVector from '../components/MapOptions/OptionsVector';
 import mapConfig from "../components/MapVizzard/config.json";
 
 // import Plugin from '../packages/MapboxAnimatorPlugin';
@@ -18,7 +17,7 @@ import mapConfig from "../components/MapVizzard/config.json";
 
 // Story Config
 export default {
-  title: 'Layer Options/Vector',
+  title: 'Layer Options/Symbol',
   component: MapOptions,
   tags: ['autodocs'],
   argTypes: {
@@ -33,12 +32,12 @@ export default {
   }
 };
 
-
 export const Default = {
   args: {
     // center: [30.21, 15.86],
     // config: 5,
-    layer: mapConfig.layers[4],
+    layers: mapConfig.layers,
+    activeLayer: 12,
     // height: 400,
     // mainTitle: 'Main title',
     // subTitle: 'Sub-title',

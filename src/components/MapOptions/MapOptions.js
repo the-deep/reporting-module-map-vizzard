@@ -44,7 +44,6 @@ export const MapOptions = ({layers, setLayers, val, setVal, activeLayer}) => {
             }
         }
     })
-   
 
     // layers.sort(function(a, b){
     //     return b["zIndex"]-a["zIndex"];
