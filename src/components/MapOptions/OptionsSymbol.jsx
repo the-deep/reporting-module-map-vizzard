@@ -87,7 +87,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
       </div>
 
       <div className="optionRow">
-        <div className="optionLabel">Show text labels</div>
+        <div className="optionLabel optionPaddingTop">Show text labels</div>
         <div className="optionValue">
           <Switch
             checked={layer.showLabels}
