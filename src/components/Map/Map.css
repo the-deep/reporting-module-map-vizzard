@@ -1,49 +1,47 @@
 .ol-map {
-    min-width: 600px;
-    min-height: 50px;
-    width: "100%";
-  }
-  .ol-control {
-    position: absolute;
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 4px;
-    padding: 2px;
-  }
-  .ol-full-screen {
-    top: .5em;
-    right: .5em;
-  }
+  min-width: 600px;
+  min-height: 50px;
+  width: "100%";
+}
+.ol-control {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 2px;
+}
+.ol-full-screen {
+  top: 0.5em;
+  right: 0.5em;
+}
 
-  .ol-map {
-    background-color: #FAFAFA;
-    border: 1px solid rgb(211, 211, 211)
-  }
+.ol-map {
+  background-color: #fafafa;
+  border: 1px solid rgb(211, 211, 211);
+}
 
-  #map_layers {
-    font-size: 12px;
-    margin-bottom: 10px;
+#map_layers {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
 
-  }
+#map_layers h3 {
+  background-color: #fafafa;
+  padding: 5px;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
 
-  #map_layers h3 {
-    background-color: #FAFAFA;
-    padding: 5px;
-    font-size: 17px;
-    margin-bottom: 10px;
+#map-container {
+}
 
-  }
+#map-title {
+  position: absolute;
+  z-index: 3;
+  padding: 3px 8px;
+  line-height: 1.4;
+}
 
-  #map-container {
-  }
-
-  #map-title {
-    position: absolute;
-    z-index: 3;
-    padding: 3px 8px;
-    line-height: 1.4;
-  }
-
-  #main-title {
-    font-size: 22px;
-    font-weight: bold;
-  }
+#main-title {
+  font-size: 22px;
+  font-weight: bold;
+}

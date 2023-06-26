@@ -3,10 +3,12 @@ import MapContext from "../MapContext";
 import OLTileLayer from "ol/layer/Tile";
 
 const TileLayer = ({ source, zIndex = 0, opacity = 1 }) => {
-  const { map } = useContext(MapContext); 
+
+  const { map } = useContext(MapContext);
+  
   useEffect(() => {
     if (!map) return;
-    
+
     let tileLayer = new OLTileLayer({
       source,
       zIndex,
@@ -20,7 +22,9 @@ const TileLayer = ({ source, zIndex = 0, opacity = 1 }) => {
         map.removeLayer(tileLayer);
       }
     };
-  }, [map,source,zIndex]);
+}, [JSON.stringify(source.urls)]);
+
   return null;
 };
+
 export default TileLayer;
