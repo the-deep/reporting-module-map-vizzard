@@ -16,8 +16,6 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1}) => {
 
   useEffect(() => {
     if (!map) return;
-    console.log('add mbLayer');
-    console.log(source);
 
     let mbLayer = new MapboxVector({
       styleUrl: 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv',
@@ -32,24 +30,32 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1}) => {
 
     return () => {
       if (map) {
-        console.log('remove mbLayer');
+        // console.log('remove mbLayer');
         map.removeLayer(mbLayer);
       }
     };
-  }, [map, source.url, zIndex]);
+  }, [JSON.stringify(source.urls)]);
 
-  useEffect(() => {
-    if (!map) return;
+  // useEffect(() => {
+  //   // if (!map) return;
+  //   console.log('z changed');
+  //   // return () => {
+  //     // if (map) {
+  //       // map.removeLayer(mbLayer);
+  //     // }
+  //   // };
+  // }, [zIndex]);
 
-    // console.log(source);
-    // console.log(zIndex);
+  // useEffect(() => {
+  //   if (!map) return;
+  //   console.log('opacity changed');
 
-    return () => {
-      if (map) {
-        // map.removeLayer(mbLayer);
-      }
-    };
-  }, [zIndex]);
+  //   return () => {
+  //     if (map) {
+  //       // map.removeLayer(mbLayer);
+  //     }
+  //   };
+  // }, [opacity]);
 
   return null;
 

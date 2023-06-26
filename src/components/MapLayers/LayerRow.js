@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
+const LayerRow = ({d, update, activeLayer, setActiveLayer}) => {
 
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
@@ -8,8 +8,8 @@ const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
   const removeHover = () => setHovered(false);
 
   const onClick = () => {
-    d.zIndex = d.zIndex - 1.3;
-    update(d, layerIndex);
+    d.zIndex = d.zIndex - 1.1;
+    update(d, d.id);
   }
 
   const clickRow = () => {
@@ -17,23 +17,23 @@ const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
   }
 
   const moveBack = () => {
-    d.zIndex = d.zIndex - 1.3;
-    update(d, layerIndex);
+    d.zIndex = d.zIndex - 1.1;
+    update(d, d.id);
   }
 
   const moveForward = () => {
-    d.zIndex = d.zIndex + 1.3;
-    update(d, layerIndex);
+    d.zIndex = d.zIndex + 1.1;
+    update(d, d.id);
   }
 
   const remove = () => {
-    update('remove', layerIndex);
+    update('remove', d.id);
   }
 
   const toggleVisibility = () => {
     if(d.visible==1) { d.visible = 0 } else { d.visible = 1}
     d.ts = Math.random();
-    update(d, layerIndex);
+    update(d, d.id);
   }
 
   let icon;

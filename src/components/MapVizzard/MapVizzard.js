@@ -12,8 +12,6 @@ export const MapVizzard = ({height, zoom, center, mainTitle, subTitle}) => {
     const [activeLayer, setActiveLayer] = useState(4);
     const [val, setVal] = useState(0);
 
-    console.log(layers);
-    
     return (
         <div className="row">
           <div id="map_layers" className="col-md-3">

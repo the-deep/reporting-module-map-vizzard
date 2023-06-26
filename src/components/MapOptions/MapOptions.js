@@ -10,26 +10,13 @@ import '@fontsource/roboto/700.css';
 
 export const MapOptions = ({layers, setLayers, val, setVal, activeLayer}) => {
 
-
-    const updateLayer = (d, activeLayerIndex) => {
-        // if(d=='remove'){
-        //     layers.splice(index, 1)
-        // } else {
-        //     layers[index] = d;
-        // }
-        // layers.sort(function(a, b){
-        //     return a["zIndex"]-b["zIndex"];
-        //  })
-        // layers.forEach(function(dd,ii){
-        //     dd.zIndex = ii;
-        // });
+    const updateLayer = (d, id) => {
        layers.forEach(function(dd,ii){
-            if(dd.id == activeLayerIndex){
+            if(dd.id == id){
                 layers[ii] = d
             }
         })
-        setLayers(layers);
-        setVal(val+1);
+        setLayers([...layers]);
     }
 
     const renderLayers = [];
@@ -44,14 +31,6 @@ export const MapOptions = ({layers, setLayers, val, setVal, activeLayer}) => {
             }
         }
     })
-
-    // layers.sort(function(a, b){
-    //     return b["zIndex"]-a["zIndex"];
-    //  });
-
-    // layers.forEach(function(d,i){
-    //     renderLayers.push(<LayerRow key={"key"+i} d={d} update={updateLayers} layerIndex={i}/>)
-    // });
 
     return (
     <div className="mapOptions">

@@ -46,7 +46,6 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
 
   // console.log(layers);
   useEffect(() => {
-    console.log('mapInit');
     let renderLayersArr = [...renderLayers];
     layers.forEach(function(d,i){
       if(d.type=='symbol'){
@@ -83,7 +82,6 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
       }
     });
     setRenderLayers(renderLayersArr);
-    console.log(renderLayersArr);
 
   }, [layers]);
 
