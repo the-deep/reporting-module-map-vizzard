@@ -31,7 +31,8 @@ const LayerRow = ({d, update, layerIndex, activeLayer, setActiveLayer}) => {
   }
 
   const toggleVisibility = () => {
-    d.visible = !d.visible;
+    if(d.visible==1) { d.visible = 0 } else { d.visible = 1}
+    d.ts = Math.random();
     update(d, layerIndex);
   }
 

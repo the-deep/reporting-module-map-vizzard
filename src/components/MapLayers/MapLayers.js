@@ -7,13 +7,13 @@ export const MapLayers = ({layers, setLayers, val, setVal, activeLayer, setActiv
 
     const renderLayers = [];
 
-    layers.sort(function(a, b){
-        return a["zIndex"]-b["zIndex"];
-     });
+    // layers.sort(function(a, b){
+    //     return a["zIndex"]-b["zIndex"];
+    //  });
 
-     layers.forEach(function(dd,ii){
-        dd.zIndex = ii;
-    });
+    //  layers.forEach(function(dd,ii){
+    //     dd.zIndex = ii;
+    // });
 
     
     const updateLayers = (d, index) => {
@@ -22,19 +22,20 @@ export const MapLayers = ({layers, setLayers, val, setVal, activeLayer, setActiv
         } else {
             layers[index] = d;
         }
-        layers.sort(function(a, b){
-            return a["zIndex"]-b["zIndex"];
-         })
-        layers.forEach(function(dd,ii){
-            dd.zIndex = ii;
-        });
-        setLayers(layers);
-        setVal(val+1);
+        // layers.sort(function(a, b){
+        //     return a["zIndex"]-b["zIndex"];
+        //  })
+        // layers.forEach(function(dd,ii){
+        //     dd.zIndex = ii;
+        // });
+        setLayers([...layers]);
+        // setLayers(layers);
+        // setVal(val+1);
     }
 
-    layers.sort(function(a, b){
-        return b["zIndex"]-a["zIndex"];
-     });
+    // layers.sort(function(a, b){
+    //     return b["zIndex"]-a["zIndex"];
+    //  });
 
     layers.forEach(function(d,i){
         renderLayers.push(<LayerRow key={"key"+i} d={d} update={updateLayers} layerIndex={i} activeLayer={activeLayer} setActiveLayer={setActiveLayer}/>)

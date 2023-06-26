@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
-import { Layers, TileLayer, VectorLayer, MapboxLayer } from "./Layers";
+import { TileLayer, VectorLayer, MapboxLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
@@ -42,43 +42,51 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
   const [showLayer0, setShowLayer0] = useState(true);
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(false);
-  
-  let renderLayers = [];
+  const [renderLayers, setRenderLayers] = useState([]);
 
-  layers.forEach(function(d,i){
-    if(d.type=='symbol'){
-      renderLayers.push(d.visible > 0 && <VectorLayer key={"key"+i} source={vector({features: AddSymbols(d)})} zIndex={d.zIndex} opacity={d.opacity}/>)
-    }
-    if(d.type=='osm'){
-      renderLayers.push(d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
-    }
-    if(d.type=='polygon'){
+  // console.log(layers);
+  useEffect(() => {
+    console.log('mapInit');
+    let renderLayersArr = [...renderLayers];
+    layers.forEach(function(d,i){
+      if(d.type=='symbol'){
+        renderLayersArr[i] = (d.visible > 0 && <VectorLayer key={"key"+i} source={vector({features: AddSymbols(d)})} zIndex={d.zIndex} opacity={d.opacity}/>)
+      }
+      if(d.type=='osm'){
+        renderLayersArr[i] = (d.visible > 0 && <TileLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+      }
+      if(d.type=='polygon'){
 
-      var style = new Style({
-        stroke: new Stroke({
-          width: d.style.strokeWidth,
-          color: d.style.stroke.hex8
-        }),
-        fill: new Fill({
-          color: d.style.fill.hex8
-        })
-      });
-
-      renderLayers.push(d.visible > 0 && <VectorLayer
-        key={"key"+i} source={vector({
-          features: new GeoJSON().readFeatures(d.data, {
-            featureProjection: get("EPSG:3857"),
+        var style = new Style({
+          stroke: new Stroke({
+            width: d.style.strokeWidth,
+            color: d.style.stroke.hex8
           }),
-        })}
-        zIndex={d.zIndex}
-        opacity={d.opacity}
-        style={style}
-      />)
-    }
-    if(d.type=='mapbox'){
-      renderLayers.push(d.visible > 0 && <MapboxLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
-    }
-  });
+          fill: new Fill({
+            color: d.style.fill.hex8
+          })
+        });
+
+        renderLayersArr[i] = (d.visible > 0 && <VectorLayer
+          key={"key"+i} source={vector({
+            features: new GeoJSON().readFeatures(d.data, {
+              featureProjection: get("EPSG:3857"),
+            }),
+          })}
+          zIndex={d.zIndex}
+          opacity={d.opacity}
+          style={style}
+        />)
+      }
+      if(d.type=='mapbox'){
+        renderLayersArr[i] = (d.visible > 0 && <MapboxLayer key={"key"+i} source={osm()} zIndex={d.zIndex} opacity={d.opacity}/>)
+      }
+    });
+    setRenderLayers(renderLayersArr);
+    console.log(renderLayersArr);
+
+  }, [layers]);
+
 
   // useEffect(() => {
   //   renderLayers = [];
@@ -115,9 +123,7 @@ const Map = ({layers, height, zoom, center, mainTitle, subTitle}) => {
         <div id="sub-title">{subTitle}</div>
       </div>
       <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
-        <Layers>
           {renderLayers}
-        </Layers>
         <Controls>
           {/* <FullScreenControl /> */}
         </Controls>
