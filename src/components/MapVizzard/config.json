@@ -9,7 +9,7 @@
     "layers": [
         {
             "id": 10,
-            "name": "OSM background layer",
+            "name": "OSM background",
             "type": "osm",
             "opacity": 1,
             "zIndex": -1,
@@ -17,7 +17,7 @@
         },
         {
             "id": 11,
-            "name": "Mapbox background layer",
+            "name": "Mapbox background",
             "type": "mapbox",
             "opacity": 0.27,
             "zIndex": 0,
