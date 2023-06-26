@@ -26,8 +26,8 @@
 }
 
 .optionRow {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 19px;
+    margin-bottom: 25px;
 }
 
 .optionLabel {
@@ -47,4 +47,9 @@
   
   .MuiSlider-track {
     transition: none;
+  }
+
+  .mapSymbolSelectIcon {
+    width: 14px;
+    padding-right: 3px;
   }

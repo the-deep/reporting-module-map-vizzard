@@ -43,11 +43,16 @@ const AddCircles = (d) => {
 };
 
 const AddSymbols = (d) => {
-  let scale = 1;
+  let scale = 0.9;
   let font = "11px Arial";
 
   if (d.symbol == "city") {
     scale = 0.6;
+  }
+
+  if (d.symbol == "settlement") {
+    scale = 0.4;
+    font = "10px Arial";
   }
 
   if (d.symbol == "capital") {
@@ -69,7 +74,7 @@ const AddSymbols = (d) => {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction",
           scale: scale,
-          src: process.env.PUBLIC_URL + "/icons/" + d.symbol + ".svg",
+          src: process.env.PUBLIC_URL + "/map-icons/" + d.symbol + ".svg",
         }),
       }),
     ];
@@ -81,7 +86,7 @@ const AddSymbols = (d) => {
             text: item.title,
             textAlign: "left",
             font: font,
-            offsetY: 0.5,
+            offsetY: 1,
             offsetX: 8,
             scale: 1,
             fill: new Fill({

@@ -7,7 +7,7 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
   const removeHover = () => setHovered(false);
 
   const onClick = () => {
-    d.zIndex = d.zIndex - 1.1;
+    d.zIndex = d.zIndex - 1;
     update(d, d.id);
   };
 
@@ -16,12 +16,12 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
   };
 
   const moveBack = () => {
-    d.zIndex = d.zIndex - 1.1;
+    d.zIndex = d.zIndex - 1.001;
     update(d, d.id);
   };
 
   const moveForward = () => {
-    d.zIndex = d.zIndex + 1.1;
+    d.zIndex = d.zIndex + 1.001;
     update(d, d.id);
   };
 
