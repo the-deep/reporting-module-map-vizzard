@@ -17,7 +17,7 @@ const MaskLayer = ({ polygon, source, blur, style, zIndex = 1, opacity = 1 }) =>
     let vectorLayer = new OLVectorLayer({
       source,
       style,
-      className: 'blur'+blur,
+      className: 'blur blur'+blur,
       id: 213
     });
 

@@ -228,7 +228,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
           color="primary"
           theme={theme}
           min={0}
-          max={10}
+          max={20}
         />
       </div>
 
