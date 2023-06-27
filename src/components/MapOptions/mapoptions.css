@@ -57,3 +57,7 @@
   .optionPaddingTop {
     padding-top: 10px;
   }
+
+  .draw {
+    opacity: 0.2;
+  }

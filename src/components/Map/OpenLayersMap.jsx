@@ -1,11 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useContext, seState, useEffect } from "react";
 import "./Map.css";
-import MapContext from "./MapContext";
 import * as ol from "ol";
+import MapContext from "./MapContext";
 
-const OpenLayersMap = ({ children, zoom, center, height }) => {
+const OpenLayersMap = ({ children, setMap, zoom, center, height }) => {
   const mapRef = useRef();
-  const [map, setMap] = useState(null);
+  const { map } = useContext(MapContext);
 
   // on component mount
   useEffect(() => {
@@ -16,6 +16,11 @@ const OpenLayersMap = ({ children, zoom, center, height }) => {
       overlays: []
     };
     let mapObject = new ol.Map(options);
+
+    mapObject.getViewport().addEventListener('mouseout', function(evt){
+      // console.info('out');
+  }, false);
+
     mapObject.setTarget(mapRef.current);
     setMap(mapObject);
     return () => mapObject.setTarget(undefined);
@@ -24,7 +29,6 @@ const OpenLayersMap = ({ children, zoom, center, height }) => {
   // zoom change handler
   useEffect(() => {
     if (!map) return;
-    console.log("zoom:" + zoom);
     map.getView().setZoom(zoom);
   }, [zoom]);
   
@@ -35,11 +39,9 @@ const OpenLayersMap = ({ children, zoom, center, height }) => {
   }, [center]);
 
   return (
-    <MapContext.Provider value={{ map }}>
       <div ref={mapRef} className="ol-map" style={{ height: height }}>
         {children}
       </div>
-    </MapContext.Provider>
   );
 };
 

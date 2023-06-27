@@ -9,7 +9,7 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
     if (!map) return;
     let vectorLayer = new OLVectorLayer({
       source,
-      style,
+      style
     });
     map.addLayer(vectorLayer);
     vectorLayer.setZIndex(zIndex);

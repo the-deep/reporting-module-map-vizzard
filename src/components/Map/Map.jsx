@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
-import { TileLayer, VectorLayer, MapboxLayer } from "./Layers";
+import { TileLayer, VectorLayer, MapboxLayer, MaskLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
-import { osm, vector } from "./Source";
+import { osm, vector, mask } from "./Source";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import SDN_ADM0 from "./Data/sdn_adm0.json";
@@ -38,7 +38,7 @@ function addMarkers(lonLatArray) {
   return cities;
 }
 
-const Map = ({ layers, height, zoom, center, mainTitle, subTitle }) => {
+const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
   const [showLayer0, setShowLayer0] = useState(true);
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(false);
@@ -102,6 +102,28 @@ const Map = ({ layers, height, zoom, center, mainTitle, subTitle }) => {
           />
         );
       }
+      if (d.type == "mask") {
+        var style = new Style({
+          stroke: new Stroke({
+            width: 1,
+            color: 'transparent',
+          }),
+          fill: new Fill({
+            color: '#FFF',
+          }),
+        });
+        renderLayersArr[i] = d.visible > 0 && (
+          <MaskLayer
+            key={"key" + i}
+            source={mask()}    
+            polygon={d.mask}        
+            zIndex={d.zIndex}
+            opacity={d.opacity}
+            blur={d.blur}
+            style={style}
+          />
+        );
+      }
     });
     setRenderLayers(renderLayersArr);
   }, [layers]);
@@ -112,7 +134,7 @@ const Map = ({ layers, height, zoom, center, mainTitle, subTitle }) => {
         <div id="main-title">{mainTitle}</div>
         <div id="sub-title">{subTitle}</div>
       </div>
-      <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height}>
+      <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height} setMap={setMap}>
         {renderLayers}
         <Controls>{/* <FullScreenControl /> */}</Controls>
       </OpenLayersMap>

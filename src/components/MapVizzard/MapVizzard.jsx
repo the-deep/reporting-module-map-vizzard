@@ -4,12 +4,16 @@ import mapConfig from "./config.json";
 import Map from "../Map";
 import MapLayers from "../MapLayers";
 import MapOptions from "../MapOptions";
+import MapContext from "../Map/MapContext";
 
 export const MapVizzard = ({ height, zoom, center, mainTitle, subTitle }) => {
   const [layers, setLayers] = useState(mapConfig.layers);
   const [activeLayer, setActiveLayer] = useState(4);
+  const [map, setMap] = useState(null);
 
   return (
+    <MapContext.Provider value={{ map }}>
+
     <div className="row">
       <div id="map_layers" className="col-md-3">
         <MapLayers
@@ -32,11 +36,13 @@ export const MapVizzard = ({ height, zoom, center, mainTitle, subTitle }) => {
           height={height}
           center={center}
           zoom={zoom}
+          setMap={setMap}
           mainTitle={mainTitle}
           subTitle={subTitle}
         />
       </div>
     </div>
+    </MapContext.Provider>
   );
 };
 

@@ -5,8 +5,24 @@
     "portsaidLonLat": [37.1902, 19.5903],
     "markerImage24" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-24.png",
     "markerImage32" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-32.png",
-    "markerImage64" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",
+    "markerImage64" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",    
     "layers": [
+        {
+            "id": 21,
+            "name": "Mask",
+            "type": "mask",
+            "opacity": 1,
+            "zIndex": 10,
+            "visible": 1,
+            "blur": 2,
+            "mask": "POLYGON((0 90,180 90,180 -90,0 -90,-180 -90,-180 0,-180 90,0 90),(21.0329495642951 20.445091534592564,23.85422565878869 23.199652212150696,33.10440785620573 23.267792738410122,36.02205782260023 23.918369412587296,40.40389461504942 21.49442818112314,40.92120370091022 18.485479504866106,39.714259536536886 13.751812086264238,38.272219799872325 11.711676525174312,36.59285868151915 8.774782115920374,32.29488502156586 7.698445124908332,22.150073488759485 7.796222856913104,19.23047297945316 13.579170502551008,21.51091383050711 17.447334480805054,21.0329495642951 20.445091534592564))",
+            "style": {
+                "radius": 7,
+                "strokeWidth": 1.4,
+                "fill": { "hex8": "#acb6ea" },
+                "stroke": { "hex8": "#000" }
+            }
+        },
         {
             "id": 10,
             "name": "OSM background",
