@@ -4,12 +4,33 @@ import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
 import Switch from "@mui/material/Switch";
-
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
+import {
+  FormGroup,
+  InputLabel,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 
 const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
+
+  let columns = layer.data.features[0].properties;
+  const allColumns = layer.data.features[0].properties;
+
+  const removeEmpty = (obj) => {
+    Object.entries(obj).forEach(([key, val])  =>
+      (val && typeof val === 'object') && removeEmpty(val) ||
+      (val === null || val === "") && delete obj[key]
+    );
+    return obj;
+  };
+
+  columns = removeEmpty(allColumns)
+
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -40,6 +61,14 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
     layer.showLabels = d;
     updateLayer(layer, activeLayer);
   };
+
+  const setLabelColumn = (d) => {
+    layer.labelColumn = d;
+    updateLayer(layer, activeLayer);
+  };
+
+
+
 
   return (
     <div className="optionsPanel">
@@ -127,8 +156,34 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
           />
         </div>
       </div>
+      <div className="optionRow" style={{paddingTop: 9}}>
+        <FormControl fullWidth >
+          <InputLabel id="text-column-label" syle={{marginLeft: -14}}>Text label column</InputLabel>
+          <Select
+            labelId="text-column-label"
+            id="text-column"
+            value={layer.labelColumn}
+            onChange={(e, val) => setLabelColumn(val.props.value)}
+            size="small"
+            variant="standard"
+          >
+            {Object.keys(columns).sort().map((labelColumn,i) => (
+              
+              <MenuItem key={labelColumn+i} value={labelColumn}>
+                {/* <img
+                  className="mapLabelColumnSelectIcon"
+                  src={process.env.PUBLIC_URL + "/map-icons/" + symbol + ".svg"}
+                />
+                &nbsp;
+                */}
+                {labelColumn} 
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
-      <br />
+
     </div>
   );
 };

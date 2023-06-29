@@ -29,6 +29,7 @@ const OpenLayersMap = ({ children, setMap, zoom, center, height }) => {
   // zoom change handler
   useEffect(() => {
     if (!map) return;
+    console.log('zoom');
     map.getView().setZoom(zoom);
   }, [zoom]);
   

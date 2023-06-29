@@ -4,7 +4,7 @@ import OLVectorLayer from "ol/layer/Vector";
 import { LensBlurTwoTone } from "@mui/icons-material";
 import { Style, Icon, Fill, Stroke, Circle, Image, Text } from "ol/style";
 
-const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true, showLabels = false}) => {
+const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true, showLabels = false, labelColumn = ""}) => {
   const { map } = useContext(MapContext);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true,
       })
     }));
 
-    if(showLabels){ // with text labels
+    if((showLabels)&&(labelColumn)){ // with text labels
       labelStyle = new Style({
         text: new Text({
           font: style.labelStyle.fontWeight+' '+style.labelStyle.fontSize+' Calibri,sans-serif',
@@ -39,9 +39,9 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true,
       vectorLayer = new OLVectorLayer({
         source: source,
         style: function (feature) {
-          let columnName = 'ADM1_EN';
-          if(!feature.get(columnName)) columnName = 'ADM0_EN';
-          const label = feature.get(columnName).split(' ').join('\n');
+          let columnName = labelColumn;
+          if(!feature.get(columnName)) columnName = labelColumn;
+          const label = String(feature.get(columnName)).split(' ').join('\n');
           labelStyle.getText().setText(label);
           return styles;
         },
@@ -54,9 +54,6 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true,
       });
     }
 
-
-
-
     map.addLayer(vectorLayer);
     vectorLayer.setZIndex(zIndex);
     vectorLayer.setOpacity(opacity);
@@ -66,6 +63,8 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true,
       }
     };
   }, [map, source, zIndex]);
+
+  
 
   return null;
 };

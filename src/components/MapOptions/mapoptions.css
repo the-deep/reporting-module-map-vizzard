@@ -39,6 +39,9 @@
     float: right;
 }
 
+label.MuiFormLabel-root {
+  margin-left: -13px;
+}
 
 
   .MuiSlider-thumb:not(.MuiSlider-active) {

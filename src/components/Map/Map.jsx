@@ -81,6 +81,7 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
             opacity={d.opacity}
             style={d.style}
             showLabels={d.showLabels}
+            labelColumn={d.labelColumn}
             declutter={true}
           />
         );
