@@ -47,6 +47,13 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
         src={process.env.PUBLIC_URL + "/icons/raster.svg"}
       />
     );
+  } else if (d.type == "mask") {
+    icon = (
+      <img
+        className="MapLayers_point"
+        src={process.env.PUBLIC_URL + "/icons/mask.svg"}
+      />
+    );
   } else if (d.type == "symbol") {
     icon = (
       <img

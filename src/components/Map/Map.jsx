@@ -69,16 +69,7 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
         );
       }
       if (d.type == "polygon") {
-        var style = new Style({
-          stroke: new Stroke({
-            width: d.style.strokeWidth,
-            color: d.style.stroke.hex8,
-          }),
-          fill: new Fill({
-            color: d.style.fill.hex8,
-          }),
-        });
-        renderLayersArr[i] = d.visible > 0 && (
+                renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
             key={"key" + i}
             source={vector({
@@ -88,7 +79,9 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
             })}
             zIndex={d.zIndex}
             opacity={d.opacity}
-            style={style}
+            style={d.style}
+            showLabels={d.showLabels}
+            declutter={true}
           />
         );
       }

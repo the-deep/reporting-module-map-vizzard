@@ -3,6 +3,8 @@ import MapContext from "../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
+import Switch from "@mui/material/Switch";
+
 import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
@@ -31,6 +33,11 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
   const setStrokeWidth = (d) => {
     layer.style.strokeWidth = d;
+    updateLayer(layer, activeLayer);
+  };
+
+  const setShowLabels = (d) => {
+    layer.showLabels = d;
     updateLayer(layer, activeLayer);
   };
 
@@ -109,7 +116,18 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
         />
       </div>
 
-      <br />
+      <div className="optionRow">
+        <div className="optionLabel optionPaddingTop">Show text labels</div>
+        <div className="optionValue">
+          <Switch
+            checked={layer.showLabels}
+            color="default"
+            onChange={(e, val) => setShowLabels(val)}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </div>
+      </div>
+
       <br />
     </div>
   );
