@@ -1,3 +1,7 @@
+#map_options {
+  background-color: #f9f9f9b0;
+}
+
 .mapOptions {
     font-family: Roboto;
     max-width: 400px
@@ -5,7 +9,9 @@
 
 .mapOptionsPanel {
     background-color:rgb(241, 241, 241);
-    padding: 6px 8px;
+    padding: 6px 9px;
+    margin-left: -12px;
+    margin-right: -12px;
 }
 
 .mapOptionsPanel h1 {

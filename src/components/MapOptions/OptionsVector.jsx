@@ -107,6 +107,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
         <div className="optionValue">
           <MuiColorInput
             format="hex8"
+            style={{backgroundColor: "#fff"}}
             aria-label="Fill colour"
             value={layer.style.fill.hex8}
             onChange={(e, val) => setFill(val)}
@@ -120,6 +121,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
         <div className="optionValue">
           <MuiColorInput
             format="hex8"
+            style={{backgroundColor: "#fff"}}
             aria-label="Stroke colour"
             value={layer.style.stroke.hex8}
             onChange={(e, val) => setStroke(val)}
@@ -166,6 +168,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
             value={layer.labelColumn}
             onChange={(e, val) => setLabelColumn(val.props.value)}
             size="small"
+            style={{backgroundColor: "#fff"}}
             variant="standard"
           >
             {Object.keys(columns).sort().map((labelColumn,i) => (

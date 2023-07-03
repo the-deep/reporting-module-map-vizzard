@@ -104,10 +104,13 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
           <Select
             labelId="symbol-select-label"
             id="symbol-select"
+            style={{backgroundColor: "#fff"}}
             value={layer.symbol}
             onChange={(e, val) => setSymbol(val.props.value)}
             label="Symbol"
+            variant="outlined"
             size="small"
+            
           >
             {symbols.map((symbol,i) => (
               <MenuItem key={symbol+i} value={symbol}>

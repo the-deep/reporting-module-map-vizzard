@@ -14,9 +14,9 @@ export const MapVizzard = ( ) => {
 
   return (
     <MapContext.Provider value={{ map }}>
-
+      <div className="container">
     <div className="row">
-      <div id="map_layers" className="col-md-3">
+      <div id="map_layers" className="col-3">
         <MapLayers
           layers={layers}
           setLayers={setLayers}
@@ -24,7 +24,7 @@ export const MapVizzard = ( ) => {
           setActiveLayer={setActiveLayer}
         />
       </div>
-      <div id="map_options" className="col-md-3">
+      <div id="map_options" className="col">
         <MapOptions
           layers={layers}
           setLayers={setLayers}
@@ -33,7 +33,7 @@ export const MapVizzard = ( ) => {
           setMapOptions={setMapOptions}
         />
       </div>
-      <div id="map_panel" className="col-md-6">
+      <div id="map_panel" className="col-7">
         <Map
           layers={layers}
           height={mapOptions.height}
@@ -46,6 +46,7 @@ export const MapVizzard = ( ) => {
           showScale={mapOptions.showScale}
         />
       </div>
+    </div>
     </div>
     </MapContext.Provider>
   );
