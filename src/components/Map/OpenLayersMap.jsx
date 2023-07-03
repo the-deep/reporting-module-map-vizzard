@@ -3,7 +3,7 @@ import "./Map.css";
 import * as ol from "ol";
 import MapContext from "./MapContext";
 
-const OpenLayersMap = ({ children, setMap, zoom, center, height }) => {
+const OpenLayersMap = ({ children, setMap, zoom, center }) => {
   const mapRef = useRef();
   const { map } = useContext(MapContext);
 
@@ -40,7 +40,7 @@ const OpenLayersMap = ({ children, setMap, zoom, center, height }) => {
   }, [center]);
 
   return (
-      <div ref={mapRef} className="ol-map" style={{ height: height }}>
+      <div ref={mapRef} className="ol-map" style={{height: '100%'}}>
         {children}
       </div>
   );

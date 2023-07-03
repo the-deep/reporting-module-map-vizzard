@@ -41,12 +41,17 @@ export const MapLayers = ({
     );
   });
 
+  function layersBgClick(){
+    setActiveLayer(null);
+  }
+  
   return (
-    <div>
+    <div className="layersPanelContainer">
       <div className="layersPanel">
         <h1>Layers</h1>
       </div>
       <div className="layersPanelBody">{renderLayers}</div>
+      <div className="layersPanelBg" onClick={layersBgClick}></div>
     </div>
   );
 };

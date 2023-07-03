@@ -1,11 +1,18 @@
 {
-    "center": {"lon": 30.21, "lat": 15.86},
     "darfurCityLonLat": [24.9042, 14.3783],
     "khartoumLonLat": [32.559994, 15.5007],
     "portsaidLonLat": [37.1902, 19.5903],
     "markerImage24" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-24.png",
     "markerImage32" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-32.png",
     "markerImage64" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",    
+    "mapOptions": {
+        "height": 400,
+        "width": 700,
+        "mainTitle": "Sudan",
+        "subTitle": "Country map",
+        "center": {"lon": 30.21, "lat": 15.86},
+        "zoom": 5
+    },
     "layers": [
         {
             "id": 21,

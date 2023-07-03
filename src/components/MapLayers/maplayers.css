@@ -18,6 +18,15 @@
     margin-top: 3px;
 }
 
+.layersPanelContainer {
+    height: 100%;
+}
+
+.layersPanelBg {
+    height: 100%;
+    cursor: pointer;
+}
+
 .MapLayers_row:hover {
     background-color: #f7f7f769;
 }
@@ -28,6 +37,7 @@
     padding-left: 2px;
     padding-right: 3px;
     padding-top: 1px;
+    cursor: pointer;
 }
 
 .MapLayers_icon img {

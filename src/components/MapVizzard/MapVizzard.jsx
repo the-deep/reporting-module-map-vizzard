@@ -6,10 +6,11 @@ import MapLayers from "../MapLayers";
 import MapOptions from "../MapOptions";
 import MapContext from "../Map/MapContext";
 
-export const MapVizzard = ({ height, zoom, center, mainTitle, subTitle }) => {
+export const MapVizzard = ( ) => {
   const [layers, setLayers] = useState(mapConfig.layers);
-  const [activeLayer, setActiveLayer] = useState(4);
+  const [activeLayer, setActiveLayer] = useState(null);
   const [map, setMap] = useState(null);
+  const [mapOptions, setMapOptions] = useState(mapConfig.mapOptions);
 
   return (
     <MapContext.Provider value={{ map }}>
@@ -28,17 +29,20 @@ export const MapVizzard = ({ height, zoom, center, mainTitle, subTitle }) => {
           layers={layers}
           setLayers={setLayers}
           activeLayer={activeLayer}
+          mapOptions={mapOptions}
+          setMapOptions={setMapOptions}
         />
       </div>
       <div id="map_panel" className="col-md-6">
         <Map
           layers={layers}
-          height={height}
-          center={center}
-          zoom={zoom}
+          height={mapOptions.height}
+          width={mapOptions.width}
+          center={mapOptions.center}
+          zoom={mapOptions.zoom}
           setMap={setMap}
-          mainTitle={mainTitle}
-          subTitle={subTitle}
+          mainTitle={mapOptions.mainTitle}
+          subTitle={mapOptions.subTitle}
         />
       </div>
     </div>

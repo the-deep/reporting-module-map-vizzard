@@ -38,10 +38,7 @@ function addMarkers(lonLatArray) {
   return cities;
 }
 
-const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
-  const [showLayer0, setShowLayer0] = useState(true);
-  const [showLayer1, setShowLayer1] = useState(true);
-  const [showLayer2, setShowLayer2] = useState(false);
+const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle }) => {
   const [renderLayers, setRenderLayers] = useState([]);
 
   useEffect(() => {
@@ -69,7 +66,7 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
         );
       }
       if (d.type == "polygon") {
-                renderLayersArr[i] = d.visible > 0 && (
+        renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
             key={"key" + i}
             source={vector({
@@ -100,17 +97,17 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
         var style = new Style({
           stroke: new Stroke({
             width: 1,
-            color: 'transparent',
+            color: "transparent",
           }),
           fill: new Fill({
-            color: '#FFF',
+            color: "#FFF",
           }),
         });
         renderLayersArr[i] = d.visible > 0 && (
           <MaskLayer
             key={"key" + i}
-            source={mask()}    
-            polygon={d.mask}        
+            source={mask()}
+            polygon={d.mask}
             zIndex={d.zIndex}
             opacity={d.opacity}
             blur={d.blur}
@@ -122,13 +119,19 @@ const Map = ({ layers, setMap, height, zoom, center, mainTitle, subTitle }) => {
     setRenderLayers(renderLayersArr);
   }, [layers]);
 
+
+
   return (
-    <div id="map-container" style={{ height: height }}>
+    <div id="map-container" style={{ height: height+'px', width: width+'px' }}>
       <div id="map-title">
         <div id="main-title">{mainTitle}</div>
         <div id="sub-title">{subTitle}</div>
       </div>
-      <OpenLayersMap center={fromLonLat(center)} zoom={zoom} height={height} setMap={setMap}>
+      <OpenLayersMap
+        center={fromLonLat([center.lon, center.lat])}
+        zoom={zoom}
+        setMap={setMap}
+      >
         {renderLayers}
         <Controls>{/* <FullScreenControl /> */}</Controls>
       </OpenLayersMap>
@@ -143,7 +146,8 @@ Map.defaultProps = {
   // layers: mapConfig.layers,
   mainTitle: "Main title",
   subTitle: "Sub-title",
-  center: [30.21, 15.86],
+  center: {lon: 30.21, lat: 15.86},
   height: 400,
+  width: 700,
   children: null,
 };
