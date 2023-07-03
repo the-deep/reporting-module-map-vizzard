@@ -43,6 +43,7 @@ export const MapVizzard = ( ) => {
           setMap={setMap}
           mainTitle={mapOptions.mainTitle}
           subTitle={mapOptions.subTitle}
+          showScale={mapOptions.showScale}
         />
       </div>
     </div>

@@ -14,6 +14,7 @@ import FeatureStyles from "./Features/Styles";
 import "bootstrap/dist/css/bootstrap.css";
 import { isVariableStatement } from "typescript";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
+import 'ol/ol.css';
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({
@@ -38,7 +39,7 @@ function addMarkers(lonLatArray) {
   return cities;
 }
 
-const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle }) => {
+const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle, showScale }) => {
   const [renderLayers, setRenderLayers] = useState([]);
 
   useEffect(() => {
@@ -131,6 +132,7 @@ const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle 
         center={fromLonLat([center.lon, center.lat])}
         zoom={zoom}
         setMap={setMap}
+        showScale={showScale}
       >
         {renderLayers}
         <Controls>{/* <FullScreenControl /> */}</Controls>

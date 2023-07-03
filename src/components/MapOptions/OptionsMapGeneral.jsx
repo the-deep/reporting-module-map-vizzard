@@ -44,6 +44,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
         <FormControl fullWidth>
           <TextField
             label="Sub-title"
+            size="small"
             variant="standard"
             value={mapOptions.subTitle}
             onChange={(e) => { mapOptions.subTitle = e.target.value; updateMapOptions(mapOptions); }}
@@ -58,6 +59,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             variant="standard"
             value={mapOptions.height}
             type="number"
+            size="small"
             inputProps={{
               step: 1,
             }}
@@ -125,6 +127,19 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           />
         </FormControl>
       </div>
+
+      <div className="optionRow">
+        <div className="optionLabel optionPaddingTop">Show scale line</div>
+        <div className="optionValue">
+          <Switch
+            checked={mapOptions.showScale}
+            color="default"
+            onChange={(e, val) => { mapOptions.showScale = val; console.log(val); updateMapOptions(mapOptions); }}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </div>
+      </div>
+
 
 
     </div>
