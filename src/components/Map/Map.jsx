@@ -11,10 +11,10 @@ import SDN_ADM0 from "./Data/sdn_adm0.json";
 import SDN_ADM1 from "./Data/sdn_adm1.json";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
+import 'ol/ol.css';
 import "bootstrap/dist/css/bootstrap.css";
 import { isVariableStatement } from "typescript";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
-import 'ol/ol.css';
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({

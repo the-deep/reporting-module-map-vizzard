@@ -96,6 +96,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
 
       drawLayer.setZIndex(1000);
 
+
       if (polygon) {
         var format = new WKT(),
           wkt = format.readGeometry(polygon, {
@@ -124,6 +125,15 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
         type: "Polygon"
       });
       map.addInteraction(draw);
+
+      // hide/show draw cursor on mouseout
+      map.getViewport().addEventListener('mouseout', function(evt){
+        draw.setActive(false);
+      }, false);
+
+      map.getViewport().addEventListener('mouseover', function(evt){
+        draw.setActive(true);
+      }, false);
 
       modify = new Modify({ source: source });
       snap = new Snap({ source: source });

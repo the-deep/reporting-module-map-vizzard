@@ -75,6 +75,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             variant="standard"
             value={mapOptions.width}
             type="number"
+            size="medium"
             inputProps={{
               step: 1,
             }}

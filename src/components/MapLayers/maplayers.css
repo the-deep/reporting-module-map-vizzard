@@ -38,6 +38,7 @@
     padding-right: 3px;
     padding-top: 1px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .MapLayers_icon img {
