@@ -185,12 +185,12 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
     <div className="optionsPanel">
       <div className="optionRow">
         <div className="optionLabel">Layer name</div>
-        <div className="optionValue">{layer.name}</div>
+        <div className="optionValueFloat">{layer.name}</div>
       </div>
 
       <div className="optionRow">
         <div className="optionLabel">Layer type</div>
-        <div className="optionValue">
+        <div className="optionValueFloat">
           <Chip label={layer.type} size="small" />
         </div>
       </div>

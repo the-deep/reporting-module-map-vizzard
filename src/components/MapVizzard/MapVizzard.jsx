@@ -14,8 +14,8 @@ export const MapVizzard = ( ) => {
 
   return (
     <MapContext.Provider value={{ map }}>
-      <div className="container">
-    <div className="row">
+      <div className="">
+    <div className="row flex-nowrap">
       <div id="map_layers" className="col-3">
         <MapLayers
           layers={layers}

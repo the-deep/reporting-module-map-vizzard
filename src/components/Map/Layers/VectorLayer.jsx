@@ -3,6 +3,7 @@ import MapContext from "../MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import { LensBlurTwoTone } from "@mui/icons-material";
 import { Style, Icon, Fill, Stroke, Circle, Image, Text } from "ol/style";
+import {rgba} from "../../MapOptions/ColourPicker";
 
 const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true, showLabels = false, labelColumn = ""}) => {
   const { map } = useContext(MapContext);
@@ -14,10 +15,10 @@ const VectorLayer = ({ source, style, zIndex = 1, opacity = 1, declutter = true,
     if(style) styles.push(new Style({
       stroke: new Stroke({
         width: style.strokeWidth,
-        color: style.stroke.hex8,
+        color: rgba(style.stroke),
       }),
       fill: new Fill({
-        color: style.fill.hex8,
+        color: rgba(style.fill)
       })
     }));
 

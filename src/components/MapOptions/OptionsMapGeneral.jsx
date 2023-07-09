@@ -131,7 +131,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
       <div className="optionRow">
         <div className="optionLabel optionPaddingTop">Show scale line</div>
-        <div className="optionValue">
+        <div className="optionValueFloat">
           <Switch
             checked={mapOptions.showScale}
             color="default"

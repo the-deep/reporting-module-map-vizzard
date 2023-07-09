@@ -1,10 +1,11 @@
 #map_options {
   background-color: #f9f9f9b0;
+  max-width: 223px;
+  min-width: 223px;
 }
 
 .mapOptions {
     font-family: Roboto;
-    max-width: 400px
 }
 
 .mapOptionsPanel {
@@ -13,6 +14,7 @@
     margin-left: -12px;
     margin-right: -12px;
 }
+
 
 
 .mapOptionsPanel h1 {
@@ -46,13 +48,32 @@
 
 }
 
+.MuiSlider-root {
+  padding-bottom: 0px !important;
+  margin-bottom: -8px !important;
+  padding-top: 17px !important;
+}
+
 .optionLabel {
     display: inline-block;
+    padding-bottom: 3px;
+}
+
+hr {
+  opacity: 0.05;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.optionValueFloat {
+  font-weight: bold;
+  float: right;
 }
 
 .optionValue {
     font-weight: bold;
-    float: right;
+    /* float: right; */
 }
 
   .MuiSlider-thumb:not(.MuiSlider-active) {
@@ -74,4 +95,9 @@
 
   .draw {
     opacity: 0.2;
+  }
+
+  .optionRow Button {
+    font-size: 9px;
+    padding: 4px 7px;
   }

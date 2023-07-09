@@ -27,8 +27,8 @@
             "style": {
                 "radius": 7,
                 "strokeWidth": 1.4,
-                "fill": { "hex8": "#acb6ea" },
-                "stroke": { "hex8": "#000" }
+                "fill": { "r": 172, "g": 182, "b": 234, "a": 1 },
+                "stroke": { "r": 0, "g": 0, "b": 0, "a": 1 }
             }
         },
         {
@@ -98,14 +98,10 @@
             "zIndex": 1,
             "visible": 1,
             "style": {
-                "radius": 7,
-                "strokeWidth": 1.4,
-                "fill": {
-                    "hex8": "#acb6ea59"
-                },
-                "stroke": {
-                    "hex8": "#00000070"
-                },
+                "fillType": "single",
+                "fill": {"r": 209, "g": 215, "b": 255, "a": 0.3},
+                "stroke": { "r": 0, "g": 0, "b": 0, "a": 0.6 },
+                "strokeWidth": 1.2,
                 "labelStyle": {
                     "fontWeight": "bold",
                     "fontSize": "14px",
@@ -126,10 +122,10 @@
             "zIndex": 2,
             "visible": 1,
             "style": {
-                "radius": 7,
+                "fillType": "single",
                 "strokeWidth": 0.8,
-                "fill": { "hex8": "#ffd7d74a" },
-                "stroke": { "hex8": "#0000003b" },
+                "fill": { "r": 255, "g": 215, "b": 215, "a": 0.29 },
+                "stroke": { "r": 0, "g": 0, "b": 0, "a": 0.23 },
                 "labelStyle": {
                     "fontWeight": "normal",
                     "color": "grey",

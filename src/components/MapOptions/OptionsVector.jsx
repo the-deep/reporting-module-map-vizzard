@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import MapContext from "../Map/MapContext";
+import ColourPicker from "./ColourPicker";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -9,28 +10,34 @@ import MenuItem from "@mui/material/MenuItem";
 import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
-
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import {
   FormGroup,
+  ToggleButton,
+  ToggleButtonGroup,
   InputLabel,
   FormControl,
   FormControlLabel,
 } from "@mui/material";
 
 const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
-
   let columns = layer.data.features[0].properties;
   const allColumns = layer.data.features[0].properties;
 
   const removeEmpty = (obj) => {
-    Object.entries(obj).forEach(([key, val])  =>
-      (val && typeof val === 'object') && removeEmpty(val) ||
-      (val === null || val === "") && delete obj[key]
+    Object.entries(obj).forEach(
+      ([key, val]) =>
+        (val && typeof val === "object" && removeEmpty(val)) ||
+        ((val === null || val === "") && delete obj[key])
     );
     return obj;
   };
 
-  columns = removeEmpty(allColumns)
+  columns = removeEmpty(allColumns);
 
   const theme = createTheme({
     palette: {
@@ -45,6 +52,11 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
   const setFill = (d) => {
     layer.style.fill = d;
+    updateLayer(layer, activeLayer);
+  };
+
+  const setFillType = (d) => {
+    layer.style.fillType = d;
     updateLayer(layer, activeLayer);
   };
 
@@ -68,22 +80,21 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
     updateLayer(layer, activeLayer);
   };
 
-
-
-
   return (
     <div className="optionsPanel">
       <div className="optionRow">
         <div className="optionLabel">Layer name</div>
-        <div className="optionValue">{layer.name}</div>
+        <div className="optionValueFloat">{layer.name}</div>
       </div>
 
       <div className="optionRow">
         <div className="optionLabel">Layer type</div>
-        <div className="optionValue">
+        <div className="optionValueFloat">
           <Chip label={layer.type} size="small" />
         </div>
       </div>
+
+      <hr />
 
       <div className="optionRow">
         <div className="optionLabel">Opacity</div>
@@ -102,34 +113,14 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
         />
       </div>
 
-      <div className="optionRow">
-        <div className="optionLabel">Fill colour</div>
-        <div className="optionValue">
-          <MuiColorInput
-            format="hex8"
-            style={{backgroundColor: "#fff"}}
-            aria-label="Fill colour"
-            value={layer.style.fill.hex8}
-            onChange={(e, val) => setFill(val)}
-            size="small"
-          />
-        </div>
-      </div>
-      <br />
+      <hr />
+
       <div className="optionRow">
         <div className="optionLabel">Stroke colour</div>
         <div className="optionValue">
-          <MuiColorInput
-            format="hex8"
-            style={{backgroundColor: "#fff"}}
-            aria-label="Stroke colour"
-            value={layer.style.stroke.hex8}
-            onChange={(e, val) => setStroke(val)}
-            size="small"
-          />
+          <ColourPicker colour={layer.style.stroke} setColour={setStroke}/>
         </div>
       </div>
-      <br />
 
       <div className="optionRow">
         <div className="optionLabel">Stroke width</div>
@@ -148,9 +139,41 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
         />
       </div>
 
+      <hr />
+
+      <div className="optionRow">
+        <div className="optionLabel">Fill type</div>
+        <div className="optionValue">
+          <ToggleButtonGroup
+            fullWidth
+            value={layer.style.fillType}
+            color="primary"
+            exclusive
+            size="small"
+            onChange={(e, val) => setFillType(val)}
+            aria-label="Fill type"
+          >
+            <ToggleButton value="single">Single</ToggleButton>
+            <ToggleButton value="graduated">Graduated</ToggleButton>
+            <ToggleButton value="categorised">Categorical</ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+      </div>
+
+      {layer.style.fillType == "single" && (
+        <div className="optionRow">
+          <div className="optionLabel">Fill colour</div>
+          <div className="optionValue">
+            <ColourPicker colour={layer.style.fill} setColour={setFill}/>
+          </div>
+        </div>
+      )}
+
+      <hr />
+
       <div className="optionRow">
         <div className="optionLabel optionPaddingTop">Show text labels</div>
-        <div className="optionValue">
+        <div className="optionValueFloat">
           <Switch
             checked={layer.showLabels}
             color="default"
@@ -159,34 +182,40 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
           />
         </div>
       </div>
-      <div className="optionRow" style={{paddingTop: 9}}>
-        <FormControl fullWidth >
-          <InputLabel id="text-column-label" syle={{marginLeft: -14}}>Text label column</InputLabel>
-          <Select
-            labelId="text-column-label"
-            id="text-column"
-            value={layer.labelColumn}
-            onChange={(e, val) => setLabelColumn(val.props.value)}
-            size="small"
-            style={{backgroundColor: "#fff"}}
-            variant="standard"
-          >
-            {Object.keys(columns).sort().map((labelColumn,i) => (
-              
-              <MenuItem key={labelColumn+i} value={labelColumn}>
-                {/* <img
-                  className="mapLabelColumnSelectIcon"
-                  src={process.env.PUBLIC_URL + "/map-icons/" + symbol + ".svg"}
-                />
-                &nbsp;
-                */}
-                {labelColumn} 
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
 
+      {layer.showLabels && (
+
+      <div className="optionRow">
+        <div className="optionLabel">Text label column</div>
+        <div className="optionValue">
+          <FormControl fullWidth>
+            <Select
+              labelId="text-column-label"
+              id="text-column"
+              value={layer.labelColumn}
+              onChange={(e, val) => setLabelColumn(val.props.value)}
+              size="small"
+              style={{ backgroundColor: "#fff" }}
+              variant="standard"
+            >
+              {Object.keys(columns)
+                .sort()
+                .map((labelColumn, i) => (
+                  <MenuItem key={labelColumn + i} value={labelColumn}>
+                    {/* <img
+                    className="mapLabelColumnSelectIcon"
+                    src={process.env.PUBLIC_URL + "/map-icons/" + symbol + ".svg"}
+                  />
+                  &nbsp;
+                  */}
+                    {labelColumn}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+      )}
 
     </div>
   );
