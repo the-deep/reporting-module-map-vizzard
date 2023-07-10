@@ -66,6 +66,8 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             </FormControl>
           </div>
 
+          <hr />
+
           <div className="optionRow">
             <FormControl fullWidth>
               <TextField
@@ -103,6 +105,8 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
               />
             </FormControl>
           </div>
+
+          <hr />
 
           <div className="optionRow">
             <FormControl fullWidth>
@@ -157,6 +161,8 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
               />
             </FormControl>
           </div>
+
+          <hr />
 
           <div className="optionRow">
             <div className="optionLabel optionPaddingTop">Show scale bar</div>
