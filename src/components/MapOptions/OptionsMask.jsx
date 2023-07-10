@@ -7,12 +7,21 @@ import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
 import { Draw, Modify, Snap } from "ol/interaction";
-import MultiPoint from 'ol/geom/MultiPoint';
+import MultiPoint from "ol/geom/MultiPoint";
 import WKT from "ol/format/WKT.js";
 import Feature from "ol/Feature";
 import { Vector as VectorSource } from "ol/source";
-import { Style, Fill, Stroke, Circle} from "ol/style";
-import {transform} from 'ol/proj';
+import { Style, Fill, Stroke, Circle } from "ol/style";
+import { transform } from "ol/proj";
+import TextField from "@mui/material/TextField";
+import {
+  FormGroup,
+  ToggleButton,
+  ToggleButtonGroup,
+  InputLabel,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 
 const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
   const { map } = useContext(MapContext);
@@ -53,35 +62,37 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
 
   map.getLayers().forEach(function (el) {
     if (el.values_.id && el.values_.id == 213) {
-
       var image = new Circle({
         radius: 4,
         fill: new Fill({
-          color: 'grey',
+          color: "grey",
         }),
-        stroke: new Stroke({color: 'white', width: 1.5})
+        stroke: new Stroke({ color: "white", width: 1.5 }),
       });
 
-      var drawLayerStyle = [new Style({
-        image: image,
-        geometry: function(feature) {
+      var drawLayerStyle = [
+        new Style({
+          image: image,
+          geometry: function (feature) {
             var coordinates = feature.getGeometry().getCoordinates()[1];
             var coords = [];
-            coordinates.forEach(function(d,i){
-              coords.push(transform(d, 'EPSG:3857', 'EPSG:3857'))
-            })
+            coordinates.forEach(function (d, i) {
+              coords.push(transform(d, "EPSG:3857", "EPSG:3857"));
+            });
             return new MultiPoint(coords);
-        }
-      }), new Style({
-        stroke: new Stroke({
-          width: 1,
-          color: '#a3a0a0',
-        lineDash: [2,4],
+          },
         }),
-        fill: new Fill({
-          color: 'transparent',
+        new Style({
+          stroke: new Stroke({
+            width: 1,
+            color: "#a3a0a0",
+            lineDash: [2, 4],
+          }),
+          fill: new Fill({
+            color: "transparent",
+          }),
         }),
-      })]
+      ];
 
       let polygon = layer.mask;
 
@@ -96,7 +107,6 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
 
       drawLayer.setZIndex(1000);
 
-
       if (polygon) {
         var format = new WKT(),
           wkt = format.readGeometry(polygon, {
@@ -106,7 +116,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
         var feature = new Feature(wkt);
         source.addFeature(feature);
         map.addLayer(drawLayer);
-      } 
+      }
 
       map.getInteractions().forEach(function (interaction) {
         if (interaction instanceof Draw) {
@@ -122,18 +132,26 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
 
       draw = new Draw({
         source: source,
-        type: "Polygon"
+        type: "Polygon",
       });
       map.addInteraction(draw);
 
       // hide/show draw cursor on mouseout
-      map.getViewport().addEventListener('mouseout', function(evt){
-        draw.setActive(false);
-      }, false);
+      map.getViewport().addEventListener(
+        "mouseout",
+        function (evt) {
+          draw.setActive(false);
+        },
+        false
+      );
 
-      map.getViewport().addEventListener('mouseover', function(evt){
-        draw.setActive(true);
-      }, false);
+      map.getViewport().addEventListener(
+        "mouseover",
+        function (evt) {
+          draw.setActive(true);
+        },
+        false
+      );
 
       modify = new Modify({ source: source });
       snap = new Snap({ source: source });
@@ -154,7 +172,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
       });
 
       draw.on("drawstart", function (e) {
-        source.clear(); 
+        source.clear();
       });
 
       source.on(
@@ -182,68 +200,71 @@ const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
   });
 
   return (
-    <div className="optionsPanel">
-      <div className="optionRow">
-        <div className="optionLabel">Layer name</div>
-        <div className="optionValueFloat">{layer.name}</div>
+    <div>
+      <div className="mapOptionsPanel">
+        <h1>
+          <div className="mapOptions_icon">
+            <img src={process.env.PUBLIC_URL + "/icons/mask.svg"} />
+          </div>
+          Mask Options
+        </h1>
       </div>
+      <div className="mapOptionsPanelBody">
+        <div className="optionsPanel">
+          <div className="optionRow">
+            <FormControl fullWidth>
+              <TextField
+                label="Layer name"
+                variant="standard"
+                value={layer.name}
+                onChange={(e) => {
+                  layer.name = e.target.value;
+                  updateLayer(layer, activeLayer);
+                }}
+              />
+            </FormControl>
+          </div>
 
-      <div className="optionRow">
-        <div className="optionLabel">Layer type</div>
-        <div className="optionValueFloat">
-          <Chip label={layer.type} size="small" />
+          <hr />
+
+          <div className="optionRow">
+            <div className="optionLabel">Opacity</div>
+            <Slider
+              aria-label="Opacity"
+              value={layer.opacity}
+              size="small"
+              onChange={(e, val) => setOpacity(val)}
+              valueLabelDisplay="auto"
+              step={0.01}
+              color="primary"
+              theme={theme}
+              min={0}
+              max={1}
+            />
+          </div>
+
+          <hr />
+
+          <div className="optionRow">
+            <div className="optionLabel">Blur radius</div>
+            <Slider
+              aria-label="Blur radius"
+              value={layer.blur}
+              size="small"
+              onChange={(e, val) => setBlur(val)}
+              valueLabelDisplay="auto"
+              step={1}
+              color="primary"
+              theme={theme}
+              min={0}
+              max={20}
+            />
+          </div>
+
+          <br />
+          <br />
         </div>
       </div>
-
-      <div className="optionRow">
-        <div className="optionLabel">Opacity</div>
-        <Slider
-          aria-label="Opacity"
-          value={layer.opacity}
-          size="small"
-          onChange={(e, val) => setOpacity(val)}
-          // getAriaValueText={valuetext}
-          valueLabelDisplay="auto"
-          step={0.01}
-          color="primary"
-          theme={theme}
-          min={0}
-          max={1}
-        />
-      </div>
-
-      {/* <div className="optionRow">
-        <div className="optionLabel">Fill colour</div>
-        <div className="optionValue">
-          <MuiColorInput
-            format="hex8"
-            aria-label="Fill colour"
-            value={layer.style.fill.hex8}
-            onChange={(e, val) => setFill(val)}
-            size="small"
-          />
-        </div>
-      </div>
-   */}
-
-      <div className="optionRow">
-        <div className="optionLabel">Blur radius</div>
-        <Slider
-          aria-label="Blur radius"
-          value={layer.blur}
-          size="small"
-          onChange={(e, val) => setBlur(val)}
-          valueLabelDisplay="auto"
-          step={1}
-          color="primary"
-          theme={theme}
-          min={0}
-          max={20}
-        />
-      </div>
-
-      <br />
-      <br />
     </div>
   );
 };

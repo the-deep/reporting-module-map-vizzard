@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import MapContext from "../MapContext";
 import Layer from "ol/layer/Layer";
 import Source from "ol/source/Source";
@@ -13,6 +13,7 @@ mapboxgl.accessToken =
 
 const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
+  const [mapboxLayer, setMapboxLayer] = useState(false);
 
   useEffect(() => {
     if (!map) return;
@@ -28,6 +29,8 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
     map.addLayer(mbLayer);
     mbLayer.setZIndex(zIndex);
     mbLayer.setOpacity(opacity);
+    
+    setMapboxLayer(mbLayer);
 
     return () => {
       if (map) {
@@ -36,15 +39,12 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
     };
   }, [JSON.stringify(source.urls)]);
 
-  // useEffect(() => {
-  //   if (!map) return;
-  //   console.log('opacity changed');
-  //   return () => {
-  //     if (map) {
-  //       // map.removeLayer(mbLayer);
-  //     }
-  //   };
-  // }, [opacity]);
+  useEffect(() => {
+    if (!mapboxLayer) return;
+    return () => {
+      mapboxLayer.setOpacity(opacity);
+    };
+  }, [opacity]);
 
   return null;
 };

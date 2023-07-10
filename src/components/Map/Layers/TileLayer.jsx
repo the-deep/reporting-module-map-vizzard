@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import MapContext from "../MapContext";
 import OLTileLayer from "ol/layer/Tile";
 
 const TileLayer = ({ source, zIndex = 0, opacity = 1 }) => {
 
   const { map } = useContext(MapContext);
+  const [tileLayer, setTileLayer] = useState(false);
   
   useEffect(() => {
     if (!map) return;
@@ -17,12 +18,23 @@ const TileLayer = ({ source, zIndex = 0, opacity = 1 }) => {
     tileLayer.setZIndex(zIndex);
     tileLayer.setOpacity(opacity);
 
+    setTileLayer(tileLayer);
+
+
     return () => {
       if (map) {
         map.removeLayer(tileLayer);
       }
     };
 }, [JSON.stringify(source.urls)]);
+
+useEffect(() => {
+  if (!tileLayer) return;
+  return () => {
+    tileLayer.setOpacity(opacity);
+  };
+}, [opacity]);
+
 
   return null;
 };

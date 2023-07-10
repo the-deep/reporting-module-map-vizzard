@@ -7,7 +7,7 @@
     "markerImage64" : "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",    
     "mapOptions": {
         "height": 400,
-        "width": 700,
+        "width": 600,
         "mainTitle": "Sudan",
         "subTitle": "Country map",
         "center": {"lon": 30.21, "lat": 15.86},

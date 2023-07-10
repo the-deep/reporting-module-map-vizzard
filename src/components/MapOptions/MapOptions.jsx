@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import OptionsVector from "./OptionsVector";
 import OptionsMask from "./OptionsMask";
 import OptionsSymbol from "./OptionsSymbol";
+import OptionsTile from "./OptionsTile";
 import OptionsMapGeneral from "./OptionsMapGeneral";
 import { Draw, Modify, Snap } from "ol/interaction";
 
@@ -70,10 +71,8 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
   }
 
   const renderLayers = [];
-  let layersHeader = 'Layer Options';
   
   if (activeLayer === null) {
-    layersHeader = 'Map Options';
     renderLayers.push(
       <OptionsMapGeneral
         key={"generalMapOptions"}
@@ -114,16 +113,34 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
             />
           );
         }
+        if (dd.type == "mapbox") {
+          renderLayers.push(
+            <OptionsTile
+              key={"mapboxOptions"}
+              layer={dd}
+              updateLayer={updateLayer}
+              activeLayer={activeLayer}
+            />
+          );
+        }
+
+        if (dd.type == "osm") {
+          renderLayers.push(
+            <OptionsTile
+              key={"osmOptions"}
+              layer={dd}
+              updateLayer={updateLayer}
+              activeLayer={activeLayer}
+            />
+          );
+        }
       }
     });
   }
 
   return (
     <div className="mapOptions">
-      <div className="mapOptionsPanel">
-        <h1>{layersHeader}</h1>
-      </div>
-      <div className="mapOptionsPanelBody">{renderLayers}</div>
+      {renderLayers}
     </div>
   );
 };
