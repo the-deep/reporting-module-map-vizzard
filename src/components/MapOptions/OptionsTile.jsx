@@ -63,13 +63,6 @@ const OptionsTile = ({ layer, activeLayer, updateLayer }) => {
             </FormControl>
           </div>
 
-          <div className="optionRow">
-            <div className="optionLabel">Layer type</div>
-            <div className="optionValueFloat">
-              <Chip label={layer.type} size="small" />
-            </div>
-          </div>
-
           <hr />
 
           <div className="optionRow">
@@ -86,6 +79,15 @@ const OptionsTile = ({ layer, activeLayer, updateLayer }) => {
               min={0}
               max={1}
             />
+          </div>
+
+          <hr />
+
+          <div className="optionRow">
+            <div className="optionLabel">Layer style</div>
+            <div className="optionValueFloat">
+              <Chip label={layer.type} size="small" />
+            </div>
           </div>
 
           <br />

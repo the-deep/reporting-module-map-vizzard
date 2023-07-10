@@ -75,7 +75,7 @@
             "showLabels": true,
             "labelColumn": null,
             "opacity": 1,
-            "zIndex": 34,
+            "zIndex": 4,
             "visible": 1,
             "style": {
                 "radius": 7,

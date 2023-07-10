@@ -6,12 +6,8 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
   const addHover = () => setHovered(true);
   const removeHover = () => setHovered(false);
 
-  const onClick = () => {
-    d.zIndex = d.zIndex - 1;
-    update(d, d.id);
-  };
-
-  const clickRow = () => {
+  const clickRow = (e) => {
+    if(e.target.nodeName=='IMG') return;
     setActiveLayer(d.id);
   };
 
