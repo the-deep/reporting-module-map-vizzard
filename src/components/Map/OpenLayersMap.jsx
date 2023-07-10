@@ -4,7 +4,7 @@ import * as ol from "ol";
 import MapContext from "./MapContext";
 import {ScaleLine, defaults as defaultControls} from 'ol/control.js';
 
-const OpenLayersMap = ({ children, setMap, zoom, center, showScale}) => {
+const OpenLayersMap = ({ children, setMap, zoom, center, showScale, scaleUnits, scaleBar, scaleBarPosition}) => {
   const mapRef = useRef();
   const { map } = useContext(MapContext);
 
@@ -18,19 +18,22 @@ const OpenLayersMap = ({ children, setMap, zoom, center, showScale}) => {
     };
     let mapObject = new ol.Map(options);
 
-    mapObject.getViewport().addEventListener('mouseout', function(evt){
+    // mapObject.getViewport().addEventListener('mouseout', function(evt){
       // console.info('out');
-  }, false);
-
+  // }, false);
 
   if(showScale){
+    let scaleClassName = 'ol-scale-line';
+    if(scaleBar) scaleClassName = 'ol-scale-bar';
+    scaleClassName = 'scalePos'+scaleBarPosition + ' '+scaleClassName;
     let control = new ScaleLine({
-      units: 'metric',
-      minWidth: 100,
+      units: scaleUnits,
+      bar: scaleBar,
+      className: scaleClassName,
+      minWidth: 100
     });
     mapObject.addControl(control);
   }
-
 
     mapObject.setTarget(mapRef.current);
     setMap(mapObject);
@@ -56,6 +59,7 @@ const OpenLayersMap = ({ children, setMap, zoom, center, showScale}) => {
   }, [center]);
 
   useEffect(() => {
+    console.log(scaleUnits);
     if (!map) return;
     map.getControls().forEach(function(control) {
       if (control instanceof ScaleLine) {
@@ -63,18 +67,18 @@ const OpenLayersMap = ({ children, setMap, zoom, center, showScale}) => {
       }
     }, this);
     if(showScale){
+      let scaleClassName = 'ol-scale-line';
+      if(scaleBar) scaleClassName = 'ol-scale-bar';
+      scaleClassName = 'scalePos'+scaleBarPosition + ' '+scaleClassName;
       let control = new ScaleLine({
-        units: 'metric',
+        units: scaleUnits,
+        bar: scaleBar,
+        className: scaleClassName,
+        minWidth: 100
       });
       map.addControl(control);
     }
-  }, [showScale]);
-
-
-
-
-
-
+  }, [showScale, scaleUnits, scaleBar, scaleBarPosition]);
 
 
   return (

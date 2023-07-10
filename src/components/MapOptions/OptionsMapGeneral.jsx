@@ -159,20 +159,96 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           </div>
 
           <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Show scale line</div>
+            <div className="optionLabel optionPaddingTop">Show scale bar</div>
             <div className="optionValueFloat">
               <Switch
                 checked={mapOptions.showScale}
                 color="default"
                 onChange={(e, val) => {
                   mapOptions.showScale = val;
-                  console.log(val);
                   updateMapOptions(mapOptions);
                 }}
                 inputProps={{ "aria-label": "controlled" }}
               />
             </div>
           </div>
+
+          {mapOptions.showScale && (
+          <div className="optionRow">
+            <div className="optionLabel">Scale position</div>
+            <div className="optionValue">
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.scaleBarPosition}
+                  onChange={(e, val) => {
+                    mapOptions.scaleBarPosition = (val.props.value);
+                    updateMapOptions(mapOptions);
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  variant="standard"
+                >
+                    <MenuItem key="scaleBarPositionBottomLeft" value="bottom-left">Bottom left</MenuItem>
+                    <MenuItem key="scaleBarPositionBottomRight" value="bottom-right">Bottom right</MenuItem>
+                    <MenuItem key="scaleBarPositionTopRight" value="top-right">Top right</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
+
+          {mapOptions.showScale && (
+          <div className="optionRow">
+            <div className="optionLabel">Scale units</div>
+            <div className="optionValue">
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.scaleUnits}
+                  onChange={(e, val) => {
+                    mapOptions.scaleUnits = val.props.value;
+                    updateMapOptions(mapOptions);
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  variant="standard"
+                >
+                    <MenuItem key="scaleUnit1" value="metric">metric (km)</MenuItem>
+                    <MenuItem key="scaleUnit2" value="imperial">imperial (miles)</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
+
+          {mapOptions.showScale && (
+          <div className="optionRow">
+            <div className="optionLabel">Scale style</div>
+            <div className="optionValue">
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.scaleBar}
+                  onChange={(e, val) => {
+                    mapOptions.scaleBar = eval(val.props.value);
+                    updateMapOptions(mapOptions);
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  variant="standard"
+                >
+                    <MenuItem key="scaleBarFalse" value="false">Line</MenuItem>
+                    <MenuItem key="scaleBarTrue" value="true">Bars</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
+
         </div>
       </div>
     </div>

@@ -209,7 +209,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
                     value={layer.labelColumn}
                     onChange={(e, val) => setLabelColumn(val.props.value)}
                     size="small"
-                    style={{ backgroundColor: "#fff" }}
+                    style={{ backgroundColor: "#fff", fontSize: 12}}
                     variant="standard"
                   >
                     {Object.keys(columns)

@@ -44,6 +44,9 @@ export const MapVizzard = ( ) => {
           mainTitle={mapOptions.mainTitle}
           subTitle={mapOptions.subTitle}
           showScale={mapOptions.showScale}
+          scaleUnits={mapOptions.scaleUnits}
+          scaleBar={mapOptions.scaleBar}
+          scaleBarPosition={mapOptions.scaleBarPosition}
         />
       </div>
     </div>

@@ -39,7 +39,7 @@ function addMarkers(lonLatArray) {
   return cities;
 }
 
-const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle, showScale }) => {
+const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle, showScale, scaleUnits, scaleBar, scaleBarPosition}) => {
   const [renderLayers, setRenderLayers] = useState([]);
 
   useEffect(() => {
@@ -121,7 +121,6 @@ const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle,
   }, [layers]);
 
 
-
   return (
     <div id="map-container" style={{ height: height+'px', width: width+'px' }}>
       <div id="map-title">
@@ -133,6 +132,9 @@ const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle,
         zoom={zoom}
         setMap={setMap}
         showScale={showScale}
+        scaleUnits={scaleUnits}
+        scaleBar={scaleBar}
+        scaleBarPosition={scaleBarPosition}
       >
         {renderLayers}
         <Controls>{/* <FullScreenControl /> */}</Controls>

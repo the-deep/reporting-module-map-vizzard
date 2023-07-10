@@ -33,8 +33,8 @@
 
 #map-container {
   -webkit-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
--moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
+  box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
 }
 
 #map-title {
@@ -73,7 +73,19 @@ box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
 
 .blur {
   -webkit-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
--moz-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
+  -moz-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
+  box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
+}
+
+.scalePosbottom-right {
+  left: unset !important;
+  right: 8px;
+}
+
+.scalePostop-right {
+  bottom: unset !important;
+  left: unset !important;
+  top: 8px;
+  right: 8px;
 }
 
