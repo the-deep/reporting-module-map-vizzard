@@ -15,7 +15,10 @@
         "showScale": true,
         "scaleUnits": "metric",
         "scaleBar": false,
-        "scaleBarPosition": "bottom-left"
+        "scaleBarPosition": "bottom-left",
+        "enableMouseWheelZoom": false,
+        "enableZoomControls": true,
+        "zoomControlsPosition": "top-right"
     },
     "layers": [
         {
@@ -40,13 +43,13 @@
             "type": "osm",
             "opacity": 1,
             "zIndex": -1,
-            "visible": 1
+            "visible": 0
         },
         {
             "id": 11,
             "name": "Mapbox background",
             "type": "mapbox",
-            "opacity": 0.27,
+            "opacity": 0.39,
             "zIndex": 0,
             "visible": 1
         },

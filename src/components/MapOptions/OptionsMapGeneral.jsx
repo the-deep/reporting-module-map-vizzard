@@ -165,6 +165,65 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           <hr />
 
           <div className="optionRow">
+            <div className="optionLabel optionPaddingTop">Show zoom buttons</div>
+            <div className="optionValueFloat">
+              <Switch
+                checked={mapOptions.enableZoomControls}
+                color="default"
+                onChange={(e, val) => {
+                  mapOptions.enableZoomControls = val;
+                  updateMapOptions(mapOptions);
+                }}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            </div>
+          </div>
+
+          {mapOptions.enableZoomControls && (
+          <div className="optionRow">
+            <div className="optionLabelSm">Zoom buttons position</div>
+            <div className="optionValue">
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.zoomControlsPosition}
+                  onChange={(e, val) => {
+                    mapOptions.zoomControlsPosition = (val.props.value);
+                    updateMapOptions(mapOptions);
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  variant="standard"
+                >
+                    <MenuItem key="zoomControlsPositionBottomLeft" value="bottom-left">Bottom left</MenuItem>
+                    <MenuItem key="zoomControlsPositionBottomRight" value="bottom-right">Bottom right</MenuItem>
+                    <MenuItem key="zoomControlsPositionTopRight" value="top-right">Top right</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
+
+
+          <div className="optionRow">
+            <div className="optionLabel optionPaddingTop">Mousewheel zoom</div>
+            <div className="optionValueFloat">
+              <Switch
+                checked={mapOptions.enableMouseWheelZoom}
+                color="default"
+                onChange={(e, val) => {
+                  mapOptions.enableMouseWheelZoom = val;
+                  updateMapOptions(mapOptions);
+                }}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="optionRow">
             <div className="optionLabel optionPaddingTop">Show scale bar</div>
             <div className="optionValueFloat">
               <Switch
@@ -181,7 +240,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           {mapOptions.showScale && (
           <div className="optionRow">
-            <div className="optionLabel">Scale position</div>
+            <div className="optionLabelSm">Scale position</div>
             <div className="optionValue">
               <FormControl fullWidth>
                 <Select
@@ -207,7 +266,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           {mapOptions.showScale && (
           <div className="optionRow">
-            <div className="optionLabel">Scale units</div>
+            <div className="optionLabelSm">Scale units</div>
             <div className="optionValue">
               <FormControl fullWidth>
                 <Select
@@ -232,7 +291,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           {mapOptions.showScale && (
           <div className="optionRow">
-            <div className="optionLabel">Scale style</div>
+            <div className="optionLabelSm">Scale style</div>
             <div className="optionValue">
               <FormControl fullWidth>
                 <Select

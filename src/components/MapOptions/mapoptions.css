@@ -79,6 +79,15 @@
 .optionLabel {
     display: inline-block;
     padding-bottom: 3px;
+    font-size: 1em !important;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.optionLabelSm {
+  display: inline-block;
+  padding-bottom: 3px;
+  font-size: 1em !important;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 hr {

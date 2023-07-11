@@ -11,7 +11,7 @@ import SDN_ADM0 from "./Data/sdn_adm0.json";
 import SDN_ADM1 from "./Data/sdn_adm1.json";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
-import 'ol/ol.css';
+import "ol/ol.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { isVariableStatement } from "typescript";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
@@ -39,7 +39,23 @@ function addMarkers(lonLatArray) {
   return cities;
 }
 
-const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle, showScale, scaleUnits, scaleBar, scaleBarPosition}) => {
+const Map = ({
+  layers,
+  setMap,
+  height,
+  width,
+  zoom,
+  center,
+  mainTitle,
+  subTitle,
+  showScale,
+  scaleUnits,
+  scaleBar,
+  scaleBarPosition,
+  enableMouseWheelZoom,
+  enableZoomControls,
+  zoomControlsPosition
+}) => {
   const [renderLayers, setRenderLayers] = useState([]);
 
   useEffect(() => {
@@ -120,9 +136,11 @@ const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle,
     setRenderLayers(renderLayersArr);
   }, [layers]);
 
-
   return (
-    <div id="map-container" style={{ height: height+'px', width: width+'px' }}>
+    <div
+      id="map-container"
+      style={{ height: height + "px", width: width + "px" }}
+    >
       <div id="map-title">
         <div id="main-title">{mainTitle}</div>
         <div id="sub-title">{subTitle}</div>
@@ -135,6 +153,9 @@ const Map = ({ layers, setMap, height, width, zoom, center, mainTitle, subTitle,
         scaleUnits={scaleUnits}
         scaleBar={scaleBar}
         scaleBarPosition={scaleBarPosition}
+        enableMouseWheelZoom={enableMouseWheelZoom}
+        enableZoomControls={enableZoomControls}
+        zoomControlsPosition={zoomControlsPosition}
       >
         {renderLayers}
         <Controls>{/* <FullScreenControl /> */}</Controls>
@@ -150,7 +171,7 @@ Map.defaultProps = {
   // layers: mapConfig.layers,
   mainTitle: "Main title",
   subTitle: "Sub-title",
-  center: {lon: 30.21, lat: 15.86},
+  center: { lon: 30.21, lat: 15.86 },
   height: 400,
   width: 700,
   children: null,

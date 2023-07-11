@@ -47,6 +47,9 @@ export const MapVizzard = ( ) => {
           scaleUnits={mapOptions.scaleUnits}
           scaleBar={mapOptions.scaleBar}
           scaleBarPosition={mapOptions.scaleBarPosition}
+          enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
+          enableZoomControls={mapOptions.enableZoomControls}
+          zoomControlsPosition={mapOptions.zoomControlsPosition}
         />
       </div>
     </div>

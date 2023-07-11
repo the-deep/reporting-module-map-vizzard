@@ -77,15 +77,24 @@
   box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
 }
 
-.scalePosbottom-right {
+.scalePosbottom-right, .POS-bottom-right {
+  top: unset !important;
   left: unset !important;
   right: 8px;
+  bottom: 8px !important;
 }
 
-.scalePostop-right {
+.scalePostop-right, .POS-top-right {
   bottom: unset !important;
   left: unset !important;
   top: 8px;
   right: 8px;
+}
+
+.POS-bottom-left {
+  left: 8px !important;
+  top: unset !important;
+  right: unset !important;
+  bottom: 8px;
 }
 

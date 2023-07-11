@@ -22,6 +22,7 @@ const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
       styleUrl: "mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv",
       attributionControl: true,
       scrollZoom: false,
+      background: false,
       accessToken:
         "pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ",
     });
