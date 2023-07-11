@@ -8,7 +8,7 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
 
   const clickRow = (e) => {
     if(e.target.nodeName=='IMG') return;
-    setActiveLayer(d.id);
+    if(setActiveLayer) setActiveLayer(d.id);
   };
 
   const moveBack = () => {

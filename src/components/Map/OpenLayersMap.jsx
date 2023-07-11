@@ -1,4 +1,4 @@
-import React, { useRef, useContext, seState, useEffect } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import "./Map.css";
 import * as ol from "ol";
 import MapContext from "./MapContext";
@@ -7,6 +7,7 @@ import { MouseWheelZoom } from "ol/interaction";
 
 const OpenLayersMap = ({
   children,
+  setMapObj,
   setMap,
   zoom,
   center,
@@ -29,8 +30,6 @@ const OpenLayersMap = ({
       overlays: [],
       controls: []
     };
-
-   
 
     let mapObject = new ol.Map(options);
 
@@ -70,7 +69,8 @@ const OpenLayersMap = ({
     }
 
     mapObject.setTarget(mapRef.current);
-    setMap(mapObject);
+    if(setMapObj) setMapObj(mapObject);
+    if(setMap) setMap(mapObject);
     return () => mapObject.setTarget(undefined);
   }, []);
 
@@ -92,10 +92,6 @@ const OpenLayersMap = ({
       map.addControl(new Zoom({delta: 0.3, className: 'ol-zoom POS-'+zoomControlsPosition}));
     }
   }, [enableZoomControls, zoomControlsPosition]);
-
-
-
-  
 
   // center change handler
   useEffect(() => {

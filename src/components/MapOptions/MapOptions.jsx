@@ -14,8 +14,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOptions, setMapOptions }) => {
-  const { map } = useContext(MapContext);
+export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOptions, setMapOptions, mapObj }) => {
+
+  let map = mapObj;
 
   useEffect(() => {
     if (!map) return;
@@ -63,7 +64,7 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
         layers[ii] = d;
       }
     });
-    setLayers([...layers]);
+    if(setLayers) setLayers([...layers]);
   };
 
   const updateMapOptions = (d) => {
@@ -110,6 +111,7 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
+              map={map}
             />
           );
         }

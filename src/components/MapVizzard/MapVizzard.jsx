@@ -5,15 +5,17 @@ import Map from "../Map";
 import MapLayers from "../MapLayers";
 import MapOptions from "../MapOptions";
 import MapContext from "../Map/MapContext";
+import MapVizzardContext from "../MapVizzard/MapVizzardContext";
 
 export const MapVizzard = ( ) => {
   const [layers, setLayers] = useState(mapConfig.layers);
   const [activeLayer, setActiveLayer] = useState(null);
-  const [map, setMap] = useState(null);
+  const [mapVizzard, setMapVizzard] = useState(null);
+  const [mapObj, setMapObj] = useState(null);
   const [mapOptions, setMapOptions] = useState(mapConfig.mapOptions);
 
   return (
-    <MapContext.Provider value={{ map }}>
+    <MapVizzardContext.Provider value={{ mapVizzard }}>
       <div className="">
     <div className="row flex-nowrap">
       <div id="map_layers" className="col-3">
@@ -31,6 +33,7 @@ export const MapVizzard = ( ) => {
           activeLayer={activeLayer}
           mapOptions={mapOptions}
           setMapOptions={setMapOptions}
+          mapObj={mapObj}
         />
       </div>
       <div id="map_panel" className="col-7">
@@ -40,7 +43,6 @@ export const MapVizzard = ( ) => {
           width={mapOptions.width}
           center={mapOptions.center}
           zoom={mapOptions.zoom}
-          setMap={setMap}
           mainTitle={mapOptions.mainTitle}
           subTitle={mapOptions.subTitle}
           showScale={mapOptions.showScale}
@@ -50,11 +52,12 @@ export const MapVizzard = ( ) => {
           enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
           enableZoomControls={mapOptions.enableZoomControls}
           zoomControlsPosition={mapOptions.zoomControlsPosition}
+          setMapObj={setMapObj}
         />
       </div>
     </div>
     </div>
-    </MapContext.Provider>
+    </MapVizzardContext.Provider>
   );
 };
 

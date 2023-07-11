@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import MapContext from "../Map/MapContext";
+import { useEffect } from "react";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -23,8 +22,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
-const OptionsTile = ({ layer, activeLayer, updateLayer }) => {
-  const { map } = useContext(MapContext);
+const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
   const theme = createTheme({
     palette: {

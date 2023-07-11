@@ -22,7 +22,7 @@ export const MapLayers = ({
     } else {
       l = d;
     }
-    setLayers([...layers]);
+    if(setLayers) setLayers([...layers]);
   };
 
   const mLayers = layers.sort(function (a, b) {
@@ -42,7 +42,7 @@ export const MapLayers = ({
   });
 
   function layersBgClick(){
-    setActiveLayer(null);
+    if(setActiveLayer) setActiveLayer(null);
   }
   
   return (

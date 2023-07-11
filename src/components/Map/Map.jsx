@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
 import { TileLayer, VectorLayer, MapboxLayer, MaskLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
@@ -15,6 +15,7 @@ import "ol/ol.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { isVariableStatement } from "typescript";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
+import MapContext from "./MapContext";
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({
@@ -40,8 +41,8 @@ function addMarkers(lonLatArray) {
 }
 
 const Map = ({
+  setMapObj,
   layers,
-  setMap,
   height,
   width,
   zoom,
@@ -57,6 +58,7 @@ const Map = ({
   zoomControlsPosition
 }) => {
   const [renderLayers, setRenderLayers] = useState([]);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     let renderLayersArr = [];
@@ -137,6 +139,7 @@ const Map = ({
   }, [layers]);
 
   return (
+    <MapContext.Provider value={{ map }}>
     <div
       id="map-container"
       style={{ height: height + "px", width: width + "px" }}
@@ -148,6 +151,7 @@ const Map = ({
       <OpenLayersMap
         center={fromLonLat([center.lon, center.lat])}
         zoom={zoom}
+        setMapObj={setMapObj}
         setMap={setMap}
         showScale={showScale}
         scaleUnits={scaleUnits}
@@ -161,6 +165,8 @@ const Map = ({
         <Controls>{/* <FullScreenControl /> */}</Controls>
       </OpenLayersMap>
     </div>
+    </MapContext.Provider>
+
   );
 };
 

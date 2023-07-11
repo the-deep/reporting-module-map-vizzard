@@ -23,8 +23,8 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
-const OptionsMask = ({ layer, activeLayer, updateLayer }) => {
-  const { map } = useContext(MapContext);
+const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
+  // const { map } = useContext(MapContext);
 
   const theme = createTheme({
     palette: {

@@ -2,19 +2,8 @@ import React from 'react';
 import Map from '../components/Map';
 import mapConfig from "../components/MapVizzard/config.json";
 
-// import Plugin from '../packages/MapboxAnimatorPlugin';
-
-// eslint-disable-next-line prefer-destructuring
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ';
 
-// also just wrapping a functional component can be done real simply
-// and as needed.
-// const PluginWithMap = withMap( ( props ) => {
-//   console.log( 'PluginWithMap', props );
-//   return (
-//     <div>simple component</div>
-//   );
-// } );
 
 // Story Config
 export default {
@@ -28,6 +17,8 @@ export default {
     mainTitle: {  description: 'Main map title', table: {type: {summary: 'string'}} },
     subTitle: {  description: 'Map sub-title', table: {type: {summary: 'string'}} },
     layers: {  control: 'object', description: 'layers object', table: {type: {summary: 'JSON object'}} },
+    showScale: {  control: 'boolean', description: 'show scale', table: {type: {summary: 'boolean'}} },
+
     // symbolSize: { control: 'number', description: 'Symbol point radius size in pixels', table: {type: {summary: 'number'}}},
     children: { table: { disable: true}}
   }
@@ -36,11 +27,28 @@ export default {
 
 export const Default = {
   args: {
-    center: [30.21, 15.86],
-    zoom: 5,
+    center: mapConfig.mapOptions.center,
+    zoom: mapConfig.mapOptions.zoom,
     layers: mapConfig.layers,
-    height: 400,
+    height: mapConfig.mapOptions.height,
+    width: mapConfig.mapOptions.width,
     mainTitle: 'Main title',
     subTitle: 'Sub-title',
+    showScale: mapConfig.mapOptions.showScale,
+    scaleUnits: mapConfig.mapOptions.scaleUnits,
+    scaleBar: mapConfig.mapOptions.scaleBar,
+    scaleBarPosition: mapConfig.mapOptions.scaleBarPosition,
+    enableMouseWheelZoom: mapConfig.mapOptions.enableMouseWheelZoom,
+    enableZoomControls: mapConfig.mapOptions.enableZoomControls,
+    zoomControlsPosition: mapConfig.mapOptions.zoomControlsPosition,
   },
 };
+
+
+// showScale={mapOptions.showScale}
+//           scaleUnits={mapOptions.scaleUnits}
+//           scaleBar={mapOptions.scaleBar}
+//           scaleBarPosition={mapOptions.scaleBarPosition}
+//           enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
+//           enableZoomControls={mapOptions.enableZoomControls}
+//           zoomControlsPosition={mapOptions.zoomControlsPosition}
