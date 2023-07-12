@@ -174,7 +174,6 @@ export default Map;
 
 Map.defaultProps = {
   zoom: 5,
-  // layers: mapConfig.layers,
   mainTitle: "Main title",
   subTitle: "Sub-title",
   center: { lon: 30.21, lat: 15.86 },

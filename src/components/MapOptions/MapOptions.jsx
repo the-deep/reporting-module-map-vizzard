@@ -19,6 +19,7 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
   let map = mapObj;
 
   useEffect(() => {
+
     if (!map) return;
     layers.forEach(function (dd, ii) {
       if (dd.id == activeLayer) {

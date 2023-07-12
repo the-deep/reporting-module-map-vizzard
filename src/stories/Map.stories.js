@@ -18,8 +18,6 @@ export default {
     subTitle: {  description: 'Map sub-title', table: {type: {summary: 'string'}} },
     layers: {  control: 'object', description: 'layers object', table: {type: {summary: 'JSON object'}} },
     showScale: {  control: 'boolean', description: 'show scale', table: {type: {summary: 'boolean'}} },
-
-    // symbolSize: { control: 'number', description: 'Symbol point radius size in pixels', table: {type: {summary: 'number'}}},
     children: { table: { disable: true}}
   }
 };
@@ -43,12 +41,3 @@ export const Default = {
     zoomControlsPosition: mapConfig.mapOptions.zoomControlsPosition,
   },
 };
-
-
-// showScale={mapOptions.showScale}
-//           scaleUnits={mapOptions.scaleUnits}
-//           scaleBar={mapOptions.scaleBar}
-//           scaleBarPosition={mapOptions.scaleBarPosition}
-//           enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
-//           enableZoomControls={mapOptions.enableZoomControls}
-//           zoomControlsPosition={mapOptions.zoomControlsPosition}
