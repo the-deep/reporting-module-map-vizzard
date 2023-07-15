@@ -4,6 +4,7 @@ import Map from "../Map";
 import MapLayers from "../MapLayers";
 import MapOptions from "../MapOptions";
 import MapContext from "../Map/MapContext";
+import styles from "../MapOptions/MapOptions.module.css";
 
 export const MapVizzard = ({mapConfig}) => {
 
@@ -23,7 +24,7 @@ export const MapVizzard = ({mapConfig}) => {
               setActiveLayer={setActiveLayer}
             />
           </div>
-          <div id="map_options" className="col">
+          <div className={`${styles.mapOptionsContainer} col`}>
             <MapOptions
               layers={layers}
               setLayers={setLayers}

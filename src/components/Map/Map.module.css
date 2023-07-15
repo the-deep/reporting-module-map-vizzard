@@ -33,18 +33,6 @@
   border: 1px solid rgb(211, 211, 211);
 }
 
-#map_layers {
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-
-#map_layers h3 {
-  background-color: #fafafa;
-  padding: 5px;
-  font-size: 17px;
-  margin-bottom: 10px;
-}
-
 .mapContainer {
   -webkit-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
   -moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);

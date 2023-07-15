@@ -9,12 +9,19 @@ import OptionsMapGeneral from "./OptionsMapGeneral";
 import { Draw, Modify, Snap } from "ol/interaction";
 import styles from "./MapOptions.module.css";
 
-export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOptions, setMapOptions, mapObj }) => {
-
+export const MapOptions = ({
+  layers,
+  setLayers,
+  val,
+  setVal,
+  activeLayer,
+  mapOptions,
+  setMapOptions,
+  mapObj,
+}) => {
   let map = mapObj;
 
   useEffect(() => {
-
     if (!map) return;
     layers.forEach(function (dd, ii) {
       if (dd.id == activeLayer) {
@@ -60,15 +67,15 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
         layers[ii] = d;
       }
     });
-    if(setLayers) setLayers([...layers]);
+    if (setLayers) setLayers([...layers]);
   };
 
   const updateMapOptions = (d) => {
-    setMapOptions({...d});
-  }
+    setMapOptions({ ...d });
+  };
 
   const renderLayers = [];
-  
+
   if (activeLayer === null) {
     renderLayers.push(
       <OptionsMapGeneral
@@ -136,11 +143,7 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
     });
   }
 
-  return (
-    <div className={styles.mapOptions}>
-      {renderLayers}
-    </div>
-  );
+  return <div className={styles.mapOptions}>{renderLayers}</div>;
 };
 
 export default MapOptions;
