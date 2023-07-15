@@ -1,10 +1,10 @@
 import React from 'react';
-import MapOptions from '../components/MapOptions';
+import MapOptions from '../components/MapVizzard/MapOptions';
 import mapConfig from "./mapConfig.json";
 
 // Story Config
 export default {
-  title: 'Layer Options/Vector',
+  title: 'Map Vizzard/Layer options panel/Vector',
   component: MapOptions,
   tags: ['autodocs'],
   argTypes: {

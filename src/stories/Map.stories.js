@@ -2,10 +2,9 @@ import React from 'react';
 import Map from '../components/Map';
 import mapConfig from "./mapConfig.json";
 
-
 // Story Config
 export default {
-  title: 'Map',
+  title: 'Map Library/Map',
   component: Map,
   tags: ['autodocs'],
   argTypes: {

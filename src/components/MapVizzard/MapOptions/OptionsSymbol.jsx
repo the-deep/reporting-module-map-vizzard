@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../Map/MapContext";
+import MapContext from "../../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Switch from "@mui/material/Switch";

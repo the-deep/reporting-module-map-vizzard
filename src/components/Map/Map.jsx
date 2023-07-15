@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useMemo, useContext, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
 import styles from "./Map.module.css";
 import { TileLayer, VectorLayer, MapboxLayer, MaskLayer } from "./Layers";

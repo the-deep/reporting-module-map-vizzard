@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import MapContext from "../Map/MapContext";
+import MapContext from "../../Map/MapContext";
 import PropTypes from "prop-types";
 import OptionsVector from "./OptionsVector";
 import OptionsMask from "./OptionsMask";

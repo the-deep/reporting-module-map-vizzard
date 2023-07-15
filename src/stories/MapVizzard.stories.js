@@ -4,7 +4,7 @@ import mapConfig from "./mapConfig.json";
 
 // Story Config
 export default {
-  title: 'Map Vizzard',
+  title: 'Map Vizzard/Map Vizzard',
   component: MapVizzard,
   tags: ['autodocs'],
   argTypes: {

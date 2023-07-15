@@ -1,10 +1,10 @@
 import React from 'react';
-import {MapLayers} from '../components/MapLayers/MapLayers';
+import {MapLayers} from '../components/MapVizzard/MapLayers/MapLayers';
 import mapConfig from "./mapConfig.json";
 
 // Story Config
 export default {
-  title: 'Layers panel',
+  title: 'Map Vizzard/Layers panel',
   component: MapLayers,
   tags: ['autodocs'],
   argTypes: {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Map from "../Map";
-import MapLayers from "../MapLayers";
-import MapOptions from "../MapOptions";
+import MapLayers from "./MapLayers";
+import MapOptions from "./MapOptions";
 import MapContext from "../Map/MapContext";
-import styles from "../MapOptions/MapOptions.module.css";
+import styles from "./MapOptions/MapOptions.module.css";
 
 export const MapVizzard = ({mapConfig}) => {
 
