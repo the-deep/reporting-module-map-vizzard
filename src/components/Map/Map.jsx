@@ -7,11 +7,8 @@ import Point from "ol/geom/Point";
 import { osm, vector, mask } from "./Source";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
-import { Controls, FullScreenControl } from "./Controls";
-import FeatureStyles from "./Features/Styles";
 import "ol/ol.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { isVariableStatement } from "typescript";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
 import MapContext from "./MapContext";
 
@@ -160,11 +157,9 @@ const Map = ({
         zoomControlsPosition={zoomControlsPosition}
       >
         {renderLayers}
-        <Controls>{/* <FullScreenControl /> */}</Controls>
       </OpenLayersMap>
     </div>
     </MapContext.Provider>
-
   );
 };
 
