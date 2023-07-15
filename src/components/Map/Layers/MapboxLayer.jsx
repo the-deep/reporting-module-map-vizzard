@@ -3,13 +3,8 @@ import MapContext from "../MapContext";
 import Layer from "ol/layer/Layer";
 import Source from "ol/source/Source";
 import Map from "ol/Map";
-import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxVector from "ol/layer/MapboxVector";
-import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import { toLonLat, get } from "ol/proj";
-
-mapboxgl.accessToken =
-  "pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ";
 
 const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
