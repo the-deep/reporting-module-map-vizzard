@@ -5,7 +5,7 @@ import Point from "ol/geom/Point";
 import { fromLonLat, get } from "ol/proj";
 import MapContext from "../MapContext";
 
-const AddCircles = (d) => {
+const addCircles = (d) => {
   var iconStyle = [
     new Style({
       image: new Circle({
@@ -42,7 +42,7 @@ const AddCircles = (d) => {
   return features;
 };
 
-const AddSymbols = (d) => {
+const addSymbols = (d) => {
   let scale = 0.9;
   let font = "11px Arial";
 
@@ -104,4 +104,4 @@ const AddSymbols = (d) => {
   return features;
 };
 
-export { AddCircles, AddSymbols };
+export { addCircles, addSymbols };

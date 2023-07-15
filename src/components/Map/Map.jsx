@@ -7,33 +7,10 @@ import { osm, vector, mask } from "./Source";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import "bootstrap/dist/css/bootstrap.css";
-import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
+import { addCircles, addSymbols } from "./Layers/SymbolLayer";
 import MapContext from "./MapContext";
 import OpenLayersMap from "./OpenLayersMap";
 import styles from "./Map.module.css";
-
-function addMarkers(lonLatArray) {
-  var iconStyle = new Style({
-    image: new Circle({
-      radius: 5,
-      fill: new Fill({
-        color: "#FFF",
-      }),
-      stroke: new Stroke({
-        color: "#000",
-        width: 2,
-      }),
-    }),
-  });
-  let cities = lonLatArray.map((item) => {
-    let feature = new Feature({
-      geometry: new Point(fromLonLat(item)),
-    });
-    feature.setStyle(iconStyle);
-    return feature;
-  });
-  return cities;
-}
 
 const Map = ({
   setMapObj,
@@ -63,7 +40,7 @@ const Map = ({
         renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
             key={"key" + i}
-            source={vector({ features: AddSymbols(d) })}
+            source={vector({ features: addSymbols(d) })}
             zIndex={d.zIndex}
             opacity={d.opacity}
           />
