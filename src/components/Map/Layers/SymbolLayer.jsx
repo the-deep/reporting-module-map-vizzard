@@ -6,7 +6,7 @@ import { fromLonLat, get } from "ol/proj";
 import MapContext from "../MapContext";
 
 const addCircles = (d) => {
-  var iconStyle = [
+  const iconStyle = [
     new Style({
       image: new Circle({
         radius: d.style.radius,
@@ -32,7 +32,7 @@ const addCircles = (d) => {
   ];
 
   let features = d.data.map((item) => {
-    let feature = new Feature({
+    const feature = new Feature({
       geometry: new Point(fromLonLat([item.lon, item.lat])),
     });
     feature.setStyle(iconStyle);
@@ -60,7 +60,7 @@ const addSymbols = (d) => {
     font = "bold 11px Arial";
   }
 
-  let showLabels = d.showLabels;
+  const showLabels = d.showLabels;
 
   let features = d.data.map((item) => {
     let feature = new Feature({
