@@ -2,19 +2,6 @@ import React from 'react';
 import MapVizzard from '../components/MapVizzard';
 import mapConfig from "./mapConfig.json";
 
-// import Plugin from '../packages/MapboxAnimatorPlugin';
-
-// eslint-disable-next-line prefer-destructuring
-
-// also just wrapping a functional component can be done real simply
-// and as needed.
-// const PluginWithMap = withMap( ( props ) => {
-//   console.log( 'PluginWithMap', props );
-//   return (
-//     <div>simple component</div>
-//   );
-// } );
-
 // Story Config
 export default {
   title: 'Map Vizzard',
@@ -26,9 +13,8 @@ export default {
   }
 };
 
-
 export const Default = {
   args: {
-    mapConfig: mapConfig,
-  },
+    mapConfig: mapConfig
+  }
 };
