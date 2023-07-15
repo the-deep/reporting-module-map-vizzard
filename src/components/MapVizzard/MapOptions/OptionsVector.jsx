@@ -25,6 +25,7 @@ import {
 import ColorPicker from "./ColorPicker";
 import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
+import polygon from "../assets/polygon.svg";
 
 
 const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
@@ -90,7 +91,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
     <div>
       <div className={styles.mapOptionsPanel}>
         <h1>
-        <div className={styles.mapOptions_icon}><img src={process.env.PUBLIC_URL + "/icons/polygon.svg"}/></div>
+        <div className={styles.mapOptions_icon}><img src={polygon}/></div>
       Polygon Options
       </h1>
       </div>

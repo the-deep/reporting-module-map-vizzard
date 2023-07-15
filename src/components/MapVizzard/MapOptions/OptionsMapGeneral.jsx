@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
+import settings from "../assets/settings.svg";
 
 
 const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
@@ -31,7 +32,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={process.env.PUBLIC_URL + "/icons/settings.svg"} />
+            <img src={settings} />
           </div>
           Map Options
         </h1>

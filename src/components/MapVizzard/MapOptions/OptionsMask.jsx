@@ -23,10 +23,10 @@ import {
 } from "@mui/material";
 import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
+import mask from "../assets/mask.svg";
 
 
 const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
-  // const { map } = useContext(MapContext);
 
   const theme = createTheme({
     palette: {
@@ -206,7 +206,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={process.env.PUBLIC_URL + "/icons/mask.svg"} />
+            <img src={mask} />
           </div>
           Mask Options
         </h1>

@@ -17,16 +17,28 @@ import {
 } from "@mui/material";
 import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
+import point from "../assets/point.svg";
+
+import capital from "../../Map/assets/map-icons/capital.svg";
+import city from "../../Map/assets/map-icons/city.svg";
+import settlement from "../../Map/assets/map-icons/settlement.svg";
+import marker from "../../Map/assets/map-icons/marker.svg";
+import airport from "../../Map/assets/map-icons/airport.svg";
+import idpRefugeeCamp from "../../Map/assets/map-icons/idp-refugee-camp.svg";
+
 
 const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
-  const symbols = [
-    "capital",
-    "city",
-    "settlement",
-    "marker",
-    "airport",
-    "idp-refugee-camp",
-  ];
+
+  const symbolIcons = {
+    "capital": capital,
+    "city": city,
+    "settlement": settlement,
+    "idp-refugee-camp": idpRefugeeCamp,
+    "airport": airport,
+    "marker": marker
+  }
+
+  const symbols = Object.keys(symbolIcons);
 
   const theme = createTheme({
     palette: {
@@ -54,15 +66,14 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={process.env.PUBLIC_URL + "/icons/point.svg"} />
+            <img src={point} />
           </div>
           Symbol Options
         </h1>
       </div>
       <div className={styles.mapOptionsPanelBody}>
         <div className={styles.optionsPanel}>
-          
-        <div className={styles.optionRow}>
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Layer name"
@@ -85,7 +96,6 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
               value={layer.opacity}
               size="small"
               onChange={(e, val) => setOpacity(val)}
-              // getAriaValueText={valuetext}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -114,9 +124,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
                   <MenuItem key={symbol} value={symbol}>
                     <img
                       className={styles.mapSymbolSelectIcon}
-                      src={
-                        process.env.PUBLIC_URL + "/map-icons/" + symbol + ".svg"
-                      }
+                      src={symbolIcons[symbol]}
                     />
                     &nbsp;{symbol}
                   </MenuItem>
@@ -128,7 +136,9 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
           <hr />
 
           <div className={styles.optionRow}>
-            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show text labels</div>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
+              Show text labels
+            </div>
             <div className={styles.optionValueFloat}>
               <Switch
                 checked={layer.showLabels}

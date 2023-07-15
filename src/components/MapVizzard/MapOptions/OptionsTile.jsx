@@ -22,6 +22,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import styles from "./MapOptions.module.css";
+import raster from "../assets/raster.svg";
 
 const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
@@ -41,7 +42,7 @@ const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={process.env.PUBLIC_URL + "/icons/raster.svg"} />
+            <img src={raster} />
           </div>
           Raster Options
         </h1>

@@ -5,6 +5,22 @@ import Point from "ol/geom/Point";
 import { fromLonLat, get } from "ol/proj";
 import MapContext from "../MapContext";
 
+import capital from "../assets/map-icons/capital.svg";
+import city from "../assets/map-icons/city.svg";
+import settlement from "../assets/map-icons/settlement.svg";
+import marker from "../assets/map-icons/marker.svg";
+import airport from "../assets/map-icons/airport.svg";
+import idpRefugeeCamp from "../assets/map-icons/idp-refugee-camp.svg";
+
+const symbolIcons = {
+  "capital": capital,
+  "city": city,
+  "settlement": settlement,
+  "idp-refugee-camp": idpRefugeeCamp,
+  "airport": airport,
+  "marker": marker
+}
+
 const addCircles = (d) => {
   const iconStyle = [
     new Style({
@@ -74,7 +90,7 @@ const addSymbols = (d) => {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction",
           scale: scale,
-          src: process.env.PUBLIC_URL + "/map-icons/" + d.symbol + ".svg",
+          src: symbolIcons[d.symbol],
         }),
       }),
     ];
