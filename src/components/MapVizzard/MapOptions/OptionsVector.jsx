@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import MapContext from "../../Map/MapContext";
-import ColourPicker from "./ColourPicker";
+import ColorPicker from "./ColorPicker";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -132,9 +132,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
           <hr />
 
           <div className={styles.optionRow}>
-            <div className={styles.optionLabel}>Stroke colour</div>
+            <div className={styles.optionLabel}>Stroke color</div>
             <div className={styles.optionValue}>
-              <ColourPicker colour={layer.style.stroke} setColour={setStroke} />
+              <ColorPicker color={layer.style.stroke} setColor={setStroke} />
             </div>
           </div>
 
@@ -177,9 +177,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
           {layer.style.fillType == "single" && (
             <div className={styles.optionRow}>
-              <div className={styles.optionLabel}>Fill colour</div>
+              <div className={styles.optionLabel}>Fill color</div>
               <div className={styles.optionValue}>
-                <ColourPicker colour={layer.style.fill} setColour={setFill} />
+                <ColorPicker color={layer.style.fill} setColor={setFill} />
               </div>
             </div>
           )}
