@@ -6,7 +6,7 @@ import Map from "ol/Map";
 import MapboxVector from "ol/layer/MapboxVector";
 import { toLonLat, get } from "ol/proj";
 
-const MapboxLayer = ({ source, style, zIndex = 1, opacity = 1 }) => {
+const MapboxLayer = ({ source, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
   const [mapboxLayer, setMapboxLayer] = useState(false);
 
