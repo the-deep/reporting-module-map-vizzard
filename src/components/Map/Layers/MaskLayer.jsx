@@ -1,12 +1,11 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../MapContext";
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import { Vector as VectorSource } from "ol/source";
 import OLVectorLayer from "ol/layer/Vector";
 import Draw from "ol/interaction/Draw";
 import WKT from 'ol/format/WKT.js';
 import Feature from 'ol/Feature';
-
+import MapContext from "../MapContext";
 
 const MaskLayer = ({ polygon, source, blur, style, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);

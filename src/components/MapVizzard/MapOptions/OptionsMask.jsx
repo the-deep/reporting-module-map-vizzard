@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -14,7 +13,6 @@ import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import { transform } from "ol/proj";
 import TextField from "@mui/material/TextField";
-import styles from "./MapOptions.module.css";
 import {
   FormGroup,
   ToggleButton,
@@ -23,6 +21,8 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import MapContext from "../../Map/MapContext";
+import styles from "./MapOptions.module.css";
 
 
 const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {

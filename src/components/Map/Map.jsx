@@ -1,6 +1,4 @@
 import React, { useState, useMemo, useContext, useEffect } from "react";
-import OpenLayersMap from "./OpenLayersMap";
-import styles from "./Map.module.css";
 import { TileLayer, VectorLayer, MapboxLayer, MaskLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
@@ -11,6 +9,8 @@ import GeoJSON from "ol/format/GeoJSON";
 import "bootstrap/dist/css/bootstrap.css";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
 import MapContext from "./MapContext";
+import OpenLayersMap from "./OpenLayersMap";
+import styles from "./Map.module.css";
 
 function addMarkers(lonLatArray) {
   var iconStyle = new Style({

@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
-import MapContext from "../MapContext";
 import Layer from "ol/layer/Layer";
 import Source from "ol/source/Source";
 import Map from "ol/Map";
 import MapboxVector from "ol/layer/MapboxVector";
 import { toLonLat, get } from "ol/proj";
+import MapContext from "../MapContext";
 
 const MapboxLayer = ({ source, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);

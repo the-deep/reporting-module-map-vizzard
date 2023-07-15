@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import MapContext from "../../Map/MapContext";
+import { Draw, Modify, Snap } from "ol/interaction";
 import PropTypes from "prop-types";
 import OptionsVector from "./OptionsVector";
 import OptionsMask from "./OptionsMask";
 import OptionsSymbol from "./OptionsSymbol";
 import OptionsTile from "./OptionsTile";
 import OptionsMapGeneral from "./OptionsMapGeneral";
-import { Draw, Modify, Snap } from "ol/interaction";
 import styles from "./MapOptions.module.css";
+import MapContext from "../../Map/MapContext";
 
 export const MapOptions = ({
   layers,

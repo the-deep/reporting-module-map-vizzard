@@ -1,6 +1,4 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../../Map/MapContext";
-import ColorPicker from "./ColorPicker";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -24,6 +22,8 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import ColorPicker from "./ColorPicker";
+import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
 
 

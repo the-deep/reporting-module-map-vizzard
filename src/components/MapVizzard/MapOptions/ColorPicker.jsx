@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import reactCSS from "reactcss";
-import styles from "./ColorPicker.module.css"
 import { SketchPicker } from "react-color";
+import styles from "./ColorPicker.module.css"
 
 export const ColorPicker = ({color, setColor}) => {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);

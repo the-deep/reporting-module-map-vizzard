@@ -1,11 +1,11 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
+import * as ol from "ol";
+import { ScaleLine, Zoom, defaults as defaultControls } from "ol/control.js";
+import { MouseWheelZoom } from "ol/interaction";
+import MapContext from "./MapContext";
 import styles from "./Map.module.css";
 import "ol/ol.css";
 import "./filters.css";
-import * as ol from "ol";
-import MapContext from "./MapContext";
-import { ScaleLine, Zoom, defaults as defaultControls } from "ol/control.js";
-import { MouseWheelZoom } from "ol/interaction";
 
 const OpenLayersMap = ({
   children,

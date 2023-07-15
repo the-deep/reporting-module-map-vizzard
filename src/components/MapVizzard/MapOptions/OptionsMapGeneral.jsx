@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -10,13 +9,15 @@ import MenuItem from "@mui/material/MenuItem";
 import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
-import styles from "./MapOptions.module.css";
 import {
   FormGroup,
   InputLabel,
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import MapContext from "../../Map/MapContext";
+import styles from "./MapOptions.module.css";
+
 
 const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
   const theme = createTheme({

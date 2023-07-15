@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../MapContext";
 import { Style, Icon, Fill, Stroke, Circle, Image, Text } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat, get } from "ol/proj";
+import MapContext from "../MapContext";
 
 const AddCircles = (d) => {
   var iconStyle = [

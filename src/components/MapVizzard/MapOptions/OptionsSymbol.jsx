@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Switch from "@mui/material/Switch";
@@ -16,6 +15,7 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
 
 const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {

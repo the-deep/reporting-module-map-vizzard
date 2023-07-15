@@ -1,9 +1,8 @@
 import { useContext, useEffect } from "react";
-import MapContext from "../MapContext";
 import OLVectorLayer from "ol/layer/Vector";
-// import { LensBlurTwoTone } from "@mui/icons-material";
 import { Style, Icon, Fill, Stroke, Circle, Image, Text } from "ol/style";
 import { rgba } from "../../MapVizzard/MapOptions/ColorPicker";
+import MapContext from "../MapContext";
 
 const VectorLayer = ({
   source,
