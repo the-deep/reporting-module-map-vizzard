@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import "./maplayers.css";
+import styles from "./MapLayers.module.css";
 import LayerRow from "./LayerRow";
 
 export const MapLayers = ({
@@ -46,12 +46,12 @@ export const MapLayers = ({
   }
   
   return (
-    <div className="layersPanelContainer">
-      <div className="layersPanel">
+    <div className={styles.layersPanelContainer}>
+      <div className={styles.layersPanel}>
         <h1>Layers</h1>
       </div>
-      <div className="layersPanelBody">{renderLayers}</div>
-      <div className="layersPanelBg" onClick={layersBgClick}></div>
+      <div className={styles.layersPanelBody}>{renderLayers}</div>
+      <div className={styles.layersPanelBg} onClick={layersBgClick}></div>
     </div>
   );
 };

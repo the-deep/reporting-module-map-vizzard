@@ -7,12 +7,7 @@ import OptionsSymbol from "./OptionsSymbol";
 import OptionsTile from "./OptionsTile";
 import OptionsMapGeneral from "./OptionsMapGeneral";
 import { Draw, Modify, Snap } from "ol/interaction";
-
-import "./mapoptions.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import styles from "./MapOptions.module.css";
 
 export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOptions, setMapOptions, mapObj }) => {
 
@@ -142,7 +137,7 @@ export const MapOptions = ({ layers, setLayers, val, setVal, activeLayer, mapOpt
   }
 
   return (
-    <div className="mapOptions">
+    <div className={styles.mapOptions}>
       {renderLayers}
     </div>
   );

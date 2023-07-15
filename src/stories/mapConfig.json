@@ -9,10 +9,10 @@
         "showScale": true,
         "scaleUnits": "metric",
         "scaleBar": false,
-        "scaleBarPosition": "bottom-left",
+        "scaleBarPosition": "bottomLeft",
         "enableMouseWheelZoom": false,
         "enableZoomControls": true,
-        "zoomControlsPosition": "top-right"
+        "zoomControlsPosition": "topRight"
     },
     "layers": [
         {

@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import OpenLayersMap from "./OpenLayersMap";
+import styles from "./Map.module.css";
 import { TileLayer, VectorLayer, MapboxLayer, MaskLayer } from "./Layers";
 import { Style, Icon, Fill, Stroke, Circle, Image } from "ol/style";
 import Feature from "ol/Feature";
@@ -7,7 +8,6 @@ import Point from "ol/geom/Point";
 import { osm, vector, mask } from "./Source";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
-import "ol/ol.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { AddCircles, AddSymbols } from "./Layers/AddSymbol";
 import MapContext from "./MapContext";
@@ -136,12 +136,12 @@ const Map = ({
   return (
     <MapContext.Provider value={{ map }}>
     <div
-      id="map-container"
+      className={styles.mapContainer}
       style={{ height: height + "px", width: width + "px" }}
     >
-      <div id="map-title">
-        <div id="main-title">{mainTitle}</div>
-        <div id="sub-title">{subTitle}</div>
+      <div className={styles.mapTitle}>
+        <div className={styles.mainTitle}>{mainTitle}</div>
+        <div className={styles.subTitle}>{subTitle}</div>
       </div>
       <OpenLayersMap
         center={fromLonLat([center.lon, center.lat])}

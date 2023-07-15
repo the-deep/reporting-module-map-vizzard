@@ -16,6 +16,7 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import styles from "./MapOptions.module.css";
 
 const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
   const symbols = [
@@ -48,35 +49,20 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
     updateLayer(layer, activeLayer);
   };
 
-  // const setFill = (d) => {
-  //   layer.style.fill = d;
-  //   updateLayer(layer, activeLayer);
-  // }
-
-  // const setStroke = (d) => {
-  //   layer.style.stroke = d;
-  //   updateLayer(layer, activeLayer);
-  // }
-
-  // const setStrokeWidth = (d) => {
-  //   layer.style.strokeWidth = d;
-  //   updateLayer(layer, activeLayer);
-  // }
-
   return (
     <div>
-      <div className="mapOptionsPanel">
+      <div className={styles.mapOptionsPanel}>
         <h1>
-          <div className="mapOptions_icon">
+          <div className={styles.mapOptions_icon}>
             <img src={process.env.PUBLIC_URL + "/icons/point.svg"} />
           </div>
           Symbol Options
         </h1>
       </div>
-      <div className="mapOptionsPanelBody">
-        <div className="optionsPanel">
+      <div className={styles.mapOptionsPanelBody}>
+        <div className={styles.optionsPanel}>
           
-        <div className="optionRow">
+        <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Layer name"
@@ -92,8 +78,8 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Opacity</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Opacity</div>
             <Slider
               aria-label="Opacity"
               value={layer.opacity}
@@ -111,7 +97,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <InputLabel id="symbol-select-label">Symbol</InputLabel>
               <Select
@@ -127,7 +113,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
                 {symbols.map((symbol, i) => (
                   <MenuItem key={symbol + i} value={symbol}>
                     <img
-                      className="mapSymbolSelectIcon"
+                      className={styles.mapSymbolSelectIcon}
                       src={
                         process.env.PUBLIC_URL + "/map-icons/" + symbol + ".svg"
                       }
@@ -141,9 +127,9 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Show text labels</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show text labels</div>
+            <div className={styles.optionValueFloat}>
               <Switch
                 checked={layer.showLabels}
                 color="default"

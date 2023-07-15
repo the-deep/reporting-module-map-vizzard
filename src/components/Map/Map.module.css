@@ -1,3 +1,4 @@
+
 .ol-map {
   min-width: 600px;
   min-height: 50px;
@@ -9,9 +10,22 @@
   border-radius: 4px;
   padding: 2px;
 }
+
 .ol-full-screen {
   top: 0.5em;
   right: 0.5em;
+}
+
+.ol-scale {
+  visibility: visible;
+}
+
+.ol-scale-line {
+  visibility: visible;
+}
+
+.ol-scale-bar {
+  visibility: visible;
 }
 
 .ol-map {
@@ -31,67 +45,46 @@
   margin-bottom: 10px;
 }
 
-#map-container {
+.mapContainer {
   -webkit-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
   -moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
   box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
 }
 
-#map-title {
+.mapTitle {
   position: absolute;
   z-index: 3;
   padding: 3px 8px;
   line-height: 1.4;
 }
 
-#main-title {
+.mainTitle {
   font-size: 22px;
   font-weight: bold;
 }
 
-.blur0 {filter: blur(0px);}
-.blur1 {filter: blur(1px);}
-.blur2 {filter: blur(2px);}
-.blur3 {filter: blur(3px);}
-.blur4 {filter: blur(4px);}
-.blur5 {filter: blur(5px);}
-.blur6 {filter: blur(6px);}
-.blur7 {filter: blur(7px);}
-.blur8 {filter: blur(8px);}
-.blur9 {filter: blur(9px);}
-.blur10 {filter: blur(10px);}
-.blur11 {filter: blur(11px);}
-.blur12 {filter: blur(12px);}
-.blur13 {filter: blur(13px);}
-.blur14 {filter: blur(14px);}
-.blur15 {filter: blur(15px);}
-.blur16 {filter: blur(16px);}
-.blur17 {filter: blur(17px);}
-.blur18 {filter: blur(18px);}
-.blur19 {filter: blur(19px);}
-.blur20 {filter: blur(20px);}
-
-.blur {
-  -webkit-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
-  -moz-box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
-  box-shadow: 0px 0px 24px 33px rgba(255,255,255,1);
-}
-
-.scalePosbottom-right, .POS-bottom-right {
+.scalePosbottomRight {
   top: unset !important;
   left: unset !important;
   right: 8px;
   bottom: 8px !important;
 }
 
-.scalePostop-right, .POS-top-right {
+.POS-bottomRight {
+  top: unset !important;
+  left: unset !important;
+  right: 8px;
+  bottom: 8px !important;
+}
+
+.scalePostopRight, .POS-topRight {
   bottom: unset !important;
   left: unset !important;
   top: 8px;
   right: 8px;
 }
 
-.POS-bottom-left {
+.scalePosbottomLeft, .POS-bottomLeft {
   left: 8px !important;
   top: unset !important;
   right: unset !important;

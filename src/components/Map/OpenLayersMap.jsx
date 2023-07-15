@@ -1,5 +1,7 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
-import "./Map.css";
+import styles from "./Map.module.css";
+import "ol/ol.css";
+import "./filters.css";
 import * as ol from "ol";
 import MapContext from "./MapContext";
 import { ScaleLine, Zoom, defaults as defaultControls } from "ol/control.js";
@@ -33,14 +35,11 @@ const OpenLayersMap = ({
 
     let mapObject = new ol.Map(options);
 
-    // mapObject.getViewport().addEventListener('mouseout', function(evt){
-    // console.info('out');
-    // }, false);
-
     if (showScale) {
       let scaleClassName = "ol-scale-line";
       if (scaleBar) scaleClassName = "ol-scale-bar";
-      scaleClassName = "scalePos" + scaleBarPosition + " " + scaleClassName;
+      let scalePosClass = 'scalePos'+scaleBarPosition;
+      scaleClassName = `${styles[scalePosClass]} ${scaleClassName}`;
       let control = new ScaleLine({
         units: scaleUnits,
         bar: scaleBar,
@@ -65,7 +64,8 @@ const OpenLayersMap = ({
     }
 
     if (enableZoomControls) {
-      mapObject.addControl(new Zoom({delta: 0.3, className: 'ol-zoom POS-'+zoomControlsPosition}));
+      let zoomClass = `${styles.ol-zoom} ${styles['POS-'+zoomControlsPosition]}`;
+      mapObject.addControl(new Zoom({delta: 0.3, className: zoomClass}));
     }
 
     mapObject.setTarget(mapRef.current);
@@ -89,7 +89,8 @@ const OpenLayersMap = ({
     })
 
     if (enableZoomControls) {
-      map.addControl(new Zoom({delta: 0.3, className: 'ol-zoom POS-'+zoomControlsPosition}));
+      let zoomClass = `ol-zoom ${styles['POS-'+zoomControlsPosition]}`;
+      map.addControl(new Zoom({delta: 0.3, className: zoomClass}));
     }
   }, [enableZoomControls, zoomControlsPosition]);
 
@@ -126,7 +127,8 @@ const OpenLayersMap = ({
     if (showScale) {
       let scaleClassName = "ol-scale-line";
       if (scaleBar) scaleClassName = "ol-scale-bar";
-      scaleClassName = "scalePos" + scaleBarPosition + " " + scaleClassName;
+      let scalePosClass = 'scalePos'+scaleBarPosition;
+      scaleClassName = `${styles[scalePosClass]} ${scaleClassName}`;
       let control = new ScaleLine({
         units: scaleUnits,
         bar: scaleBar,

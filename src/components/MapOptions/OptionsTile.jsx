@@ -21,6 +21,7 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import styles from "./MapOptions.module.css";
 
 const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
@@ -37,17 +38,17 @@ const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
   return (
     <div>
-      <div className="mapOptionsPanel">
+      <div className={styles.mapOptionsPanel}>
         <h1>
-          <div className="mapOptions_icon">
+          <div className={styles.mapOptions_icon}>
             <img src={process.env.PUBLIC_URL + "/icons/raster.svg"} />
           </div>
           Raster Options
         </h1>
       </div>
-      <div className="mapOptionsPanelBody">
-        <div className="optionsPanel">
-          <div className="optionRow">
+      <div className={styles.mapOptionsPanelBody}>
+        <div className={styles.optionsPanel}>
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Layer name"
@@ -63,8 +64,8 @@ const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Opacity</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Opacity</div>
             <Slider
               aria-label="Opacity"
               value={layer.opacity}
@@ -81,9 +82,9 @@ const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Layer style</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Layer style</div>
+            <div className={styles.optionValueFloat}>
               <Chip label={layer.type} size="small" />
             </div>
           </div>

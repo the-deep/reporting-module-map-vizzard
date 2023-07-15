@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { createTheme } from "@mui/material/styles";
 import grey from "@mui/material/colors/grey";
 import { MuiColorInput } from "mui-color-input";
-
+import styles from "./MapOptions.module.css";
 import {
   FormGroup,
   InputLabel,
@@ -27,17 +27,17 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
   return (
     <div>
-      <div className="mapOptionsPanel">
+      <div className={styles.mapOptionsPanel}>
         <h1>
-          <div className="mapOptions_icon">
+          <div className={styles.mapOptions_icon}>
             <img src={process.env.PUBLIC_URL + "/icons/settings.svg"} />
           </div>
           Map Options
         </h1>
       </div>
-      <div className="mapOptionsPanelBody">
-        <div className="optionsPanel">
-          <div className="optionRow">
+      <div className={styles.mapOptionsPanelBody}>
+        <div className={styles.optionsPanel}>
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Main title"
@@ -51,7 +51,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             </FormControl>
           </div>
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Sub-title"
@@ -68,7 +68,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           <hr />
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Height (px)"
@@ -87,7 +87,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             </FormControl>
           </div>
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Width (px)"
@@ -108,7 +108,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           <hr />
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Center latitude"
@@ -126,7 +126,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             </FormControl>
           </div>
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Center longitude"
@@ -144,7 +144,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
             </FormControl>
           </div>
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Initial zoom"
@@ -164,9 +164,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Show zoom buttons</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show zoom buttons</div>
+            <div className={styles.optionValueFloat}>
               <Switch
                 checked={mapOptions.enableZoomControls}
                 color="default"
@@ -180,9 +180,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           </div>
 
           {mapOptions.enableZoomControls && (
-          <div className="optionRow">
-            <div className="optionLabelSm">Zoom buttons position</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Zoom buttons position</div>
+            <div className={styles.optionValue}>
               <FormControl fullWidth>
                 <Select
                   labelId="text-column-label"
@@ -196,9 +196,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                   style={{ backgroundColor: "#fff", fontSize: 12}}
                   variant="standard"
                 >
-                    <MenuItem key="zoomControlsPositionBottomLeft" value="bottom-left">Bottom left</MenuItem>
-                    <MenuItem key="zoomControlsPositionBottomRight" value="bottom-right">Bottom right</MenuItem>
-                    <MenuItem key="zoomControlsPositionTopRight" value="top-right">Top right</MenuItem>
+                    <MenuItem key="zoomControlsPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                    <MenuItem key="zoomControlsPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                    <MenuItem key="zoomControlsPositionTopRight" value="topRight">Top right</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -206,9 +206,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           )}
 
 
-          <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Mousewheel zoom</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Mousewheel zoom</div>
+            <div className={styles.optionValueFloat}>
               <Switch
                 checked={mapOptions.enableMouseWheelZoom}
                 color="default"
@@ -223,9 +223,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Show scale bar</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show scale bar</div>
+            <div className={styles.optionValueFloat}>
               <Switch
                 checked={mapOptions.showScale}
                 color="default"
@@ -239,9 +239,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           </div>
 
           {mapOptions.showScale && (
-          <div className="optionRow">
-            <div className="optionLabelSm">Scale position</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Scale position</div>
+            <div className={styles.optionValue}>
               <FormControl fullWidth>
                 <Select
                   labelId="text-column-label"
@@ -255,9 +255,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                   style={{ backgroundColor: "#fff", fontSize: 12}}
                   variant="standard"
                 >
-                    <MenuItem key="scaleBarPositionBottomLeft" value="bottom-left">Bottom left</MenuItem>
-                    <MenuItem key="scaleBarPositionBottomRight" value="bottom-right">Bottom right</MenuItem>
-                    <MenuItem key="scaleBarPositionTopRight" value="top-right">Top right</MenuItem>
+                    <MenuItem key="scaleBarPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                    <MenuItem key="scaleBarPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                    <MenuItem key="scaleBarPositionTopRight" value="topRight">Top right</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -265,9 +265,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           )}
 
           {mapOptions.showScale && (
-          <div className="optionRow">
-            <div className="optionLabelSm">Scale units</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Scale units</div>
+            <div className={styles.optionValue}>
               <FormControl fullWidth>
                 <Select
                   labelId="text-column-label"
@@ -290,9 +290,9 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
           )}
 
           {mapOptions.showScale && (
-          <div className="optionRow">
-            <div className="optionLabelSm">Scale style</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Scale style</div>
+            <div className={styles.optionValue}>
               <FormControl fullWidth>
                 <Select
                   labelId="text-column-label"

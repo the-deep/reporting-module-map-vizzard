@@ -14,6 +14,7 @@ import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import { transform } from "ol/proj";
 import TextField from "@mui/material/TextField";
+import styles from "./MapOptions.module.css";
 import {
   FormGroup,
   ToggleButton,
@@ -22,6 +23,7 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+
 
 const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
   // const { map } = useContext(MapContext);
@@ -201,17 +203,17 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
 
   return (
     <div>
-      <div className="mapOptionsPanel">
+      <div className={styles.mapOptionsPanel}>
         <h1>
-          <div className="mapOptions_icon">
+          <div className={styles.mapOptions_icon}>
             <img src={process.env.PUBLIC_URL + "/icons/mask.svg"} />
           </div>
           Mask Options
         </h1>
       </div>
-      <div className="mapOptionsPanelBody">
-        <div className="optionsPanel">
-          <div className="optionRow">
+      <div className={styles.mapOptionsPanelBody}>
+        <div className={styles.optionsPanel}>
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Layer name"
@@ -227,8 +229,8 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Opacity</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Opacity</div>
             <Slider
               aria-label="Opacity"
               value={layer.opacity}
@@ -245,8 +247,8 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Blur radius</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Blur radius</div>
             <Slider
               aria-label="Blur radius"
               value={layer.blur}

@@ -24,6 +24,8 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import styles from "./MapOptions.module.css";
+
 
 const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
   // remove null columns for the text name dropdown select
@@ -86,16 +88,16 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
   return (
     <div>
-      <div className="mapOptionsPanel">
+      <div className={styles.mapOptionsPanel}>
         <h1>
-        <div className="mapOptions_icon"><img src={process.env.PUBLIC_URL + "/icons/polygon.svg"}/></div>
+        <div className={styles.mapOptions_icon}><img src={process.env.PUBLIC_URL + "/icons/polygon.svg"}/></div>
       Polygon Options
       </h1>
       </div>
-      <div className="mapOptionsPanelBody">
-        <div className="optionsPanel">
+      <div className={styles.mapOptionsPanelBody}>
+        <div className={styles.optionsPanel}>
 
-          <div className="optionRow">
+          <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
                 label="Layer name"
@@ -111,14 +113,13 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Opacity</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Opacity</div>
             <Slider
               aria-label="Opacity"
               value={layer.opacity}
               size="small"
               onChange={(e, val) => setOpacity(val)}
-              // getAriaValueText={valuetext}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -130,21 +131,20 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Stroke colour</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Stroke colour</div>
+            <div className={styles.optionValue}>
               <ColourPicker colour={layer.style.stroke} setColour={setStroke} />
             </div>
           </div>
 
-          <div className="optionRow">
-            <div className="optionLabel">Stroke width</div>
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Stroke width</div>
             <Slider
               aria-label="Stroke width"
               value={layer.style.strokeWidth}
               size="small"
               onChange={(e, val) => setStrokeWidth(val)}
-              // getAriaValueText={valuetext}
               valueLabelDisplay="auto"
               step={0.1}
               color="primary"
@@ -156,9 +156,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel">Fill type</div>
-            <div className="optionValue">
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Fill type</div>
+            <div className={styles.optionValue}>
               <ToggleButtonGroup
                 fullWidth
                 value={layer.style.fillType}
@@ -176,9 +176,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
           </div>
 
           {layer.style.fillType == "single" && (
-            <div className="optionRow">
-              <div className="optionLabel">Fill colour</div>
-              <div className="optionValue">
+            <div className={styles.optionRow}>
+              <div className={styles.optionLabel}>Fill colour</div>
+              <div className={styles.optionValue}>
                 <ColourPicker colour={layer.style.fill} setColour={setFill} />
               </div>
             </div>
@@ -186,9 +186,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
 
           <hr />
 
-          <div className="optionRow">
-            <div className="optionLabel optionPaddingTop">Show text labels</div>
-            <div className="optionValueFloat">
+          <div className={styles.optionRow}>
+            <div className="styles.optionLabel optionPaddingTop">Show text labels</div>
+            <div className="styles.optionValueFloat">
               <Switch
                 checked={layer.showLabels}
                 color="default"
@@ -199,9 +199,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
           </div>
 
           {layer.showLabels && (
-            <div className="optionRow">
-              <div className="optionLabel">Text label column</div>
-              <div className="optionValue">
+            <div className={styles.optionRow}>
+              <div className={styles.optionLabel}>Text label column</div>
+              <div className={styles.optionValue}>
                 <FormControl fullWidth>
                   <Select
                     labelId="text-column-label"
