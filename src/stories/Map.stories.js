@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from '../components/Map';
-import mapConfig from "../components/MapVizzard/config.json";
+import mapConfig from "./mapConfig.json";
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ';
 

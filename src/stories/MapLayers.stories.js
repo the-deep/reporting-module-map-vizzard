@@ -1,6 +1,6 @@
 import React from 'react';
 import {MapLayers} from '../components/MapLayers/MapLayers';
-import mapConfig from "../components/MapVizzard/config.json";
+import mapConfig from "./mapConfig.json";
 
 // import Plugin from '../packages/MapboxAnimatorPlugin';
 

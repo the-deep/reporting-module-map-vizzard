@@ -7,8 +7,6 @@ import Point from "ol/geom/Point";
 import { osm, vector, mask } from "./Source";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
-import SDN_ADM0 from "./Data/sdn_adm0.json";
-import SDN_ADM1 from "./Data/sdn_adm1.json";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
 import "ol/ol.css";

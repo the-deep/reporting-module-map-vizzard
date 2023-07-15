@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import fileConfig from "./config.json";
 import Map from "../Map";
 import MapLayers from "../MapLayers";
 import MapOptions from "../MapOptions";
 import MapContext from "../Map/MapContext";
 
-export const MapVizzard = ({mapConfig = fileConfig}) => {
-
-  const MapVizzardComponent = ({ mapConfig }) => {
+export const MapVizzard = ({mapConfig}) => {
 
     const [layers, setLayers] = useState(mapConfig.layers);
     const [mapOptions, setMapOptions] = useState(mapConfig.mapOptions);
@@ -58,19 +55,12 @@ export const MapVizzard = ({mapConfig = fileConfig}) => {
         </div>
       </div>
     );
-  };
-
-  return (
-      <MapVizzardComponent mapConfig={mapConfig} />         
-  );
-
-  
-};
+}
 
 export default MapVizzard;
 
 MapVizzard.propTypes = {};
 
-MapLayers.defaultProps = {
-  mapConfig: fileConfig
-};
+// MapLayers.defaultProps = {
+//   mapConfig: mapConfig
+// };
