@@ -111,7 +111,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
                 size="small"
               >
                 {symbols.map((symbol, i) => (
-                  <MenuItem key={symbol + i} value={symbol}>
+                  <MenuItem key={symbol} value={symbol}>
                     <img
                       className={styles.mapSymbolSelectIcon}
                       src={
@@ -138,8 +138,6 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
               />
             </div>
           </div>
-
-          
 
           <br />
           <br />
