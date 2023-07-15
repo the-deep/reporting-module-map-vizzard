@@ -42,7 +42,3 @@ const MaskLayer = ({ polygon, source, blur, style, zIndex = 1, opacity = 1 }) =>
 };
 
 export default MaskLayer;
-
-
-
-

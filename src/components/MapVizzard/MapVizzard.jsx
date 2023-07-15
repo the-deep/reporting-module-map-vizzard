@@ -58,9 +58,3 @@ export const MapVizzard = ({mapConfig}) => {
 }
 
 export default MapVizzard;
-
-MapVizzard.propTypes = {};
-
-// MapLayers.defaultProps = {
-//   mapConfig: mapConfig
-// };
