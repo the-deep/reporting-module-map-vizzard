@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./MapLayers.module.css";
 
-const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
+const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
   const addHover = () => setHovered(true);
@@ -9,56 +9,56 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
 
   const clickRow = (e) => {
     if(e.target.nodeName=='IMG') return;
-    if(setActiveLayer) setActiveLayer(d.id);
+    if(setActiveLayer) setActiveLayer(row.id);
   };
 
   const moveBack = () => {
-    d.zIndex = d.zIndex - 1.001;
-    update(d, d.id);
+    row.zIndex = row.zIndex - 1.001;
+    update(row, row.id);
   };
 
   const moveForward = () => {
-    d.zIndex = d.zIndex + 1.001;
-    update(d, d.id);
+    row.zIndex = row.zIndex + 1.001;
+    update(row, row.id);
   };
 
   const remove = () => {
-    update("remove", d.id);
+    update("remove", row.id);
   };
 
   const toggleVisibility = () => {
-    if (d.visible == 1) {
-      d.visible = 0;
+    if (row.visible == 1) {
+      row.visible = 0;
     } else {
-      d.visible = 1;
+      row.visible = 1;
     }
-    d.ts = Math.random();
-    update(d, d.id);
+    row.ts = Math.random();
+    update(row, row.id);
   };
 
   let icon;
-  if (d.type == "osm") {
+  if (row.type == "osm") {
     icon = (
       <img
         className={styles.MapLayers_raster}
         src={process.env.PUBLIC_URL + "/icons/raster.svg"}
       />
     );
-  } else if (d.type == "mask") {
+  } else if (row.type == "mask") {
     icon = (
       <img
         className={styles.MapLayers_point}
         src={process.env.PUBLIC_URL + "/icons/mask.svg"}
       />
     );
-  } else if (d.type == "symbol") {
+  } else if (row.type == "symbol") {
     icon = (
       <img
         className={styles.MapLayers_point}
         src={process.env.PUBLIC_URL + "/icons/point.svg"}
       />
     );
-  } else if (d.type == "polygon") {
+  } else if (row.type == "polygon") {
     icon = (
       <img
         className={styles.MapLayers_polygon}
@@ -74,14 +74,14 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
     );
   }
   let showIcon;
-  if (d.visible) {
+  if (row.visible) {
     showIcon = <img src={process.env.PUBLIC_URL + "/icons/show.svg"} />;
   } else {
     showIcon = <img src={process.env.PUBLIC_URL + "/icons/hide.svg"} />;
   }
 
   let activeClass = "";
-  if (activeLayer == d.id) {
+  if (activeLayer == row.id) {
     activeClass = styles.active;
   }
 
@@ -95,7 +95,7 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
       <div className={styles.MapLayers_icon_container}>
         <div className={styles.MapLayers_icon}>{icon}</div>
       </div>
-      <div className={`${styles.MapLayers_title} ${activeClass}`}>{d.name}</div>
+      <div className={`${styles.MapLayers_title} ${activeClass}`}>{row.name}</div>
       <div className={styles.MapLayers_buttons}>
         <div className={styles.MapLayers_buttons_forward} onClick={moveForward}>
           <img src={process.env.PUBLIC_URL + "/icons/up.svg"} />
@@ -108,7 +108,7 @@ const LayerRow = ({ d, update, activeLayer, setActiveLayer }) => {
         </div>
         <div
           className={
-            !d.visible
+            !row.visible
               ? `$(styles.MapLayers_buttons_show) $(MapLayers_buttons_hidden)`
               : styles.MapLayers_buttons_show
           }

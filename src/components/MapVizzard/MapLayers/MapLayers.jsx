@@ -33,7 +33,7 @@ export const MapLayers = ({
     renderLayers.push(
       <LayerRow
         key={"key" + i}
-        d={d}
+        row={d}
         update={updateLayers}
         activeLayer={activeLayer}
         setActiveLayer={setActiveLayer}
