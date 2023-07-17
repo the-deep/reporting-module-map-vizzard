@@ -14,15 +14,14 @@ export const MapLayers = ({
   const renderLayers = [];
 
   const updateLayers = (d, id) => {
-    let l = layers.filter((dd) => dd.id == id);
     if (d == "remove") {
-      l.forEach((f) =>
-        layers.splice(layers.findIndex((e) => e.id === f.id),1)
-      );
+        let newLayersObj = layers.filter(obj => obj.id !== id);
+        if(setLayers) setLayers([...newLayersObj]);
     } else {
-      l = d;
+      let updatedLayer = layers.filter((dd) => dd.id == id);
+      updatedLayer = d;
+      if(setLayers) setLayers([...layers]);
     }
-    if(setLayers) setLayers([...layers]);
   };
 
   const mLayers = layers.sort(function (a, b) {
