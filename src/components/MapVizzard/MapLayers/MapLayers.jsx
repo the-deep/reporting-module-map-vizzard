@@ -6,50 +6,45 @@ import LayerRow from "./LayerRow";
 export const MapLayers = ({
   layers,
   setLayers,
-  val,
-  setVal,
   activeLayer,
-  setActiveLayer,
+  setActiveLayer
 }) => {
-  const renderLayers = [];
 
   const updateLayers = (d, id) => {
     if (d == "remove") {
-        let newLayersObj = layers.filter(obj => obj.id !== id);
-        if(setLayers) setLayers([...newLayersObj]);
+      let newLayersObj = layers.filter((obj) => obj.id !== id);
+      if (setLayers) setLayers([...newLayersObj]);
     } else {
       let updatedLayer = layers.filter((dd) => dd.id == id);
       updatedLayer = d;
-      if(setLayers) setLayers([...layers]);
+      if (setLayers) setLayers([...layers]);
     }
   };
+
+  function layersBgClick() {
+    if (setActiveLayer) setActiveLayer(null);
+  }
 
   const mLayers = [...layers].sort(function (a, b) {
     return b["zIndex"] - a["zIndex"];
   });
 
-  mLayers.forEach(function (d, i) {
-    renderLayers.push(
-      <LayerRow
-        key={"key" + i}
-        row={d}
-        update={updateLayers}
-        activeLayer={activeLayer}
-        setActiveLayer={setActiveLayer}
-      />
-    );
-  });
+  const rows = mLayers.map((row) => (
+    <LayerRow
+      key={"key" + row.id}
+      row={row}
+      update={updateLayers}
+      activeLayer={activeLayer}
+      setActiveLayer={setActiveLayer}
+    />
+  ));
 
-  function layersBgClick(){
-    if(setActiveLayer) setActiveLayer(null);
-  }
-  
   return (
     <div className={styles.layersPanelContainer}>
       <div className={styles.layersPanel}>
         <h1>Layers</h1>
       </div>
-      <div className={styles.layersPanelBody}>{renderLayers}</div>
+      <div className={styles.layersPanelBody}>{rows}</div>
       <div className={styles.layersPanelBg} onClick={layersBgClick}></div>
     </div>
   );
