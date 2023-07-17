@@ -24,7 +24,7 @@ export const MapLayers = ({
     }
   };
 
-  const mLayers = layers.sort(function (a, b) {
+  const mLayers = [...layers].sort(function (a, b) {
     return b["zIndex"] - a["zIndex"];
   });
 
