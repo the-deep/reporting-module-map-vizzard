@@ -30,8 +30,8 @@ import polygon from "../assets/polygon.svg";
 
 const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
   // remove null columns for the text name dropdown select
-  let columns = layer.data.features[0].properties;
-  const allColumns = layer.data.features[0].properties;
+  let columns = {...layer.data.features[0].properties};
+  const allColumns = {...layer.data.features[0].properties};
 
   const removeEmpty = (obj) => {
     Object.entries(obj).forEach(
