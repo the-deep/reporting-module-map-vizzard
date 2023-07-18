@@ -7,6 +7,7 @@ import Draw from "ol/interaction/Draw";
 import WKT from 'ol/format/WKT.js';
 import Feature from 'ol/Feature';
 import MapContext from "../MapContext";
+import filters from '../filters.module.css';
 
 const MaskLayer = ({ id, polygon, source, blur, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
@@ -23,7 +24,7 @@ const MaskLayer = ({ id, polygon, source, blur, zIndex = 1, opacity = 1 }) => {
     let vectorLayer = new OLVectorLayer({
       source,
       style,
-      className: 'blur blur'+blur,
+      className: `${filters.blur} ${filters['blur'+blur]}`,
       id: id
     });
 

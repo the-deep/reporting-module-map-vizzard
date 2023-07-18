@@ -5,7 +5,6 @@ import { MouseWheelZoom } from "ol/interaction";
 import MapContext from "./MapContext";
 import styles from "./Map.module.css";
 import "ol/ol.css";
-import "./filters.css";
 
 const OpenLayersMap = ({
   children,
