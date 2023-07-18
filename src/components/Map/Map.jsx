@@ -85,15 +85,6 @@ const Map = ({
         );
       }
       if (d.type == "mask") {
-        var style = new Style({
-          stroke: new Stroke({
-            width: 1,
-            color: "transparent",
-          }),
-          fill: new Fill({
-            color: "#FFF",
-          }),
-        });
         renderLayersArr[i] = d.visible > 0 && (
           <MaskLayer
             key={"key" + d.id}
@@ -103,7 +94,6 @@ const Map = ({
             zIndex={d.zIndex}
             opacity={d.opacity}
             blur={d.blur}
-            style={style}
           />
         );
       }

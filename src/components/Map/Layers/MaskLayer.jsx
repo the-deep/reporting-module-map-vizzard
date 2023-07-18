@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import { Style, Fill } from "ol/style";
 import { Vector as VectorSource } from "ol/source";
 import OLVectorLayer from "ol/layer/Vector";
 import Draw from "ol/interaction/Draw";
@@ -7,12 +8,18 @@ import WKT from 'ol/format/WKT.js';
 import Feature from 'ol/Feature';
 import MapContext from "../MapContext";
 
-const MaskLayer = ({ id, polygon, source, blur, style, zIndex = 1, opacity = 1 }) => {
+const MaskLayer = ({ id, polygon, source, blur, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
 
   useEffect(() => {
     if (!map) return;
-    
+
+    let style = new Style({
+      fill: new Fill({
+        color: "#FFF",
+      }),
+    });
+
     let vectorLayer = new OLVectorLayer({
       source,
       style,
@@ -30,12 +37,13 @@ const MaskLayer = ({ id, polygon, source, blur, style, zIndex = 1, opacity = 1 }
 
     vectorLayer.setZIndex(zIndex);
     vectorLayer.setOpacity(opacity);
+
     return () => {
       if (map) {
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, source, zIndex, polygon]);
+  }, [map, source, zIndex, polygon, opacity, blur]);
 
   return null;
 };
