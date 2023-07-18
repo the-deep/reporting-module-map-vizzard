@@ -12,7 +12,7 @@ import removeIcon from "../assets/remove.svg";
 
 const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   const [hovered, setHovered] = useState(false);
-  const toggleHover = () => setHovered(!hovered);
+  const toggleHover = () => setHovered((prevHovered) => !prevHovered);
   const addHover = () => setHovered(true);
   const removeHover = () => setHovered(false);
 
