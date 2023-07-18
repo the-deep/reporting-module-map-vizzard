@@ -17,7 +17,7 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   const removeHover = () => setHovered(false);
 
   const clickRow = (e) => {
-    if (e.target.nodeName == "IMG") return;
+    if (e.target.nodeName === "IMG") return;
     if (setActiveLayer) setActiveLayer(row.id);
   };
 
@@ -36,7 +36,7 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   };
 
   const toggleVisibility = () => {
-    if (row.visible == 1) {
+    if (row.visible === 1) {
       row.visible = 0;
     } else {
       row.visible = 1;
@@ -46,13 +46,13 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   };
 
   let icon;
-  if (row.type == "osm") {
+  if (row.type === "osm") {
     icon = <img className={styles.MapLayers_raster} src={raster} />;
-  } else if (row.type == "mask") {
+  } else if (row.type === "mask") {
     icon = <img className={styles.MapLayers_point} src={mask} />;
-  } else if (row.type == "symbol") {
+  } else if (row.type === "symbol") {
     icon = <img className={styles.MapLayers_point} src={point} />;
-  } else if (row.type == "polygon") {
+  } else if (row.type === "polygon") {
     icon = <img className={styles.MapLayers_polygon} src={polygon} />;
   } else {
     icon = <img className={styles.MapLayers_raster} src={raster} />;
@@ -65,7 +65,7 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   }
 
   let activeClass = "";
-  if (activeLayer == row.id) {
+  if (activeLayer === row.id) {
     activeClass = styles.active;
   }
 
