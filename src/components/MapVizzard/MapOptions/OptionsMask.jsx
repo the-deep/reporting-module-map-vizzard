@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import OLVectorLayer from "ol/layer/Vector";
 import Slider from "@mui/material/Slider";
 import Chip from "@mui/material/Chip";
@@ -24,7 +24,6 @@ import {
 import MapContext from "../../Map/MapContext";
 import styles from "./MapOptions.module.css";
 import mask from "../assets/mask.svg";
-
 
 const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
 
@@ -63,7 +62,7 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
   });
 
   map.getLayers().forEach(function (el) {
-    if (el.values_.id && el.values_.id == 213) {
+    if (el.values_.id && el.values_.id == activeLayer) {
       var image = new Circle({
         radius: 4,
         fill: new Fill({

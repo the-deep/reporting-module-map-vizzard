@@ -96,7 +96,8 @@ const Map = ({
         });
         renderLayersArr[i] = d.visible > 0 && (
           <MaskLayer
-            key={"key" + i}
+            key={"key" + d.id}
+            id={d.id}
             source={mask()}
             polygon={d.mask}
             zIndex={d.zIndex}

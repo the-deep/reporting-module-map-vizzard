@@ -7,7 +7,7 @@ import WKT from 'ol/format/WKT.js';
 import Feature from 'ol/Feature';
 import MapContext from "../MapContext";
 
-const MaskLayer = ({ polygon, source, blur, style, zIndex = 1, opacity = 1 }) => {
+const MaskLayer = ({ id, polygon, source, blur, style, zIndex = 1, opacity = 1 }) => {
   const { map } = useContext(MapContext);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const MaskLayer = ({ polygon, source, blur, style, zIndex = 1, opacity = 1 }) =>
       source,
       style,
       className: 'blur blur'+blur,
-      id: 213
+      id: id
     });
 
     if(polygon){
