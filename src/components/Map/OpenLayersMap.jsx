@@ -76,7 +76,7 @@ const OpenLayersMap = ({
   useEffect(() => {
     if (!map) return;
     map.getView().setZoom(zoom);
-  }, [zoom, enableMouseWheelZoom]);
+  }, [zoom]);
 
   useEffect(() => {
     if (!map) return;
