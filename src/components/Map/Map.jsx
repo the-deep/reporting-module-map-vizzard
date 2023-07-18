@@ -39,7 +39,7 @@ const Map = ({
       if (d.type == "symbol") {
         renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
-            key={"key" + i}
+            key={"key" + d.id}
             source={vector({ features: addSymbols(d) })}
             zIndex={d.zIndex}
             opacity={d.opacity}
@@ -49,7 +49,7 @@ const Map = ({
       if (d.type == "osm") {
         renderLayersArr[i] = d.visible > 0 && (
           <TileLayer
-            key={"key" + i}
+            key={"key" + d.id}
             source={osm()}
             zIndex={d.zIndex}
             opacity={d.opacity}
@@ -59,7 +59,7 @@ const Map = ({
       if (d.type == "polygon") {
         renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
-            key={"key" + i}
+            key={"key" + d.id}
             source={vector({
               features: new GeoJSON().readFeatures(d.data, {
                 featureProjection: get("EPSG:3857"),
@@ -77,7 +77,7 @@ const Map = ({
       if (d.type == "mapbox") {
         renderLayersArr[i] = d.visible > 0 && (
           <MapboxLayer
-            key={"key" + i}
+            key={"key" + d.id}
             source={osm()}
             zIndex={d.zIndex}
             opacity={d.opacity}
