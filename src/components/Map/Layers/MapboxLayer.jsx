@@ -37,9 +37,7 @@ const MapboxLayer = ({ source, zIndex = 1, opacity = 1 }) => {
 
   useEffect(() => {
     if (!mapboxLayer) return;
-    return () => {
-      mapboxLayer.setOpacity(opacity);
-    };
+    mapboxLayer.setOpacity(opacity);
   }, [opacity]);
 
   return null;

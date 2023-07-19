@@ -28,9 +28,7 @@ const TileLayer = ({ source, zIndex = 0, opacity = 1 }) => {
 
   useEffect(() => {
     if (!tileLayer) return;
-    return () => {
-      tileLayer.setOpacity(opacity);
-    };
+    tileLayer.setOpacity(opacity);
   }, [opacity]);
 
   return null;
