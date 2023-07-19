@@ -51,7 +51,3 @@ export const MapLayers = ({
 };
 
 export default MapLayers;
-
-MapLayers.propTypes = {};
-
-MapLayers.defaultProps = {};
