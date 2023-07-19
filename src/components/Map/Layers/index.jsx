@@ -1,6 +1,8 @@
-import VectorLayer from "./VectorLayer";
-import TileLayer from "./TileLayer";
-import MapboxLayer from "./MapboxLayer";
-import MaskLayer from "./MaskLayer";
+import VectorLayer from './VectorLayer';
+import TileLayer from './TileLayer';
+import MapboxLayer from './MapboxLayer';
+import MaskLayer from './MaskLayer';
 
-export { VectorLayer, MapboxLayer, TileLayer, MaskLayer };
+export {
+  VectorLayer, MapboxLayer, TileLayer, MaskLayer,
+};

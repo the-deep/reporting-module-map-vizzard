@@ -1,18 +1,20 @@
-import { useEffect } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Chip from "@mui/material/Chip";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
-import { Draw, Modify, Snap } from "ol/interaction";
-import MultiPoint from "ol/geom/MultiPoint";
-import WKT from "ol/format/WKT.js";
-import Feature from "ol/Feature";
-import { Vector as VectorSource } from "ol/source";
-import { Style, Fill, Stroke, Circle } from "ol/style";
-import { transform } from "ol/proj";
-import TextField from "@mui/material/TextField";
+import { useEffect } from 'react';
+import OLVectorLayer from 'ol/layer/Vector';
+import Slider from '@mui/material/Slider';
+import Chip from '@mui/material/Chip';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
+import { MuiColorInput } from 'mui-color-input';
+import { Draw, Modify, Snap } from 'ol/interaction';
+import MultiPoint from 'ol/geom/MultiPoint';
+import WKT from 'ol/format/WKT.js';
+import Feature from 'ol/Feature';
+import { Vector as VectorSource } from 'ol/source';
+import {
+  Style, Fill, Stroke, Circle,
+} from 'ol/style';
+import { transform } from 'ol/proj';
+import TextField from '@mui/material/TextField';
 import {
   FormGroup,
   ToggleButton,
@@ -20,12 +22,13 @@ import {
   InputLabel,
   FormControl,
   FormControlLabel,
-} from "@mui/material";
-import styles from "./MapOptions.module.css";
-import raster from "../assets/raster.svg";
+} from '@mui/material';
+import styles from './MapOptions.module.css';
+import raster from '../assets/raster.svg';
 
-const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
-
+function OptionsTile({
+  layer, activeLayer, updateLayer, map,
+}) {
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -96,6 +99,6 @@ const OptionsTile = ({ layer, activeLayer, updateLayer, map }) => {
       </div>
     </div>
   );
-};
+}
 
 export default OptionsTile;

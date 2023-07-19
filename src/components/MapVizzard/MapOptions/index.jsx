@@ -1,1 +1,1 @@
-export {default} from "./MapOptions"
+export { default } from './MapOptions';

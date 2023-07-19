@@ -1,6 +1,6 @@
 import React from 'react';
-import {MapLayers} from '../components/MapVizzard/MapLayers/MapLayers';
-import mapConfig from "./mapConfig.json";
+import { MapLayers } from '../components/MapVizzard/MapLayers/MapLayers';
+import mapConfig from './mapConfig.json';
 
 // Story Config
 export default {
@@ -8,12 +8,12 @@ export default {
   component: MapLayers,
   tags: ['autodocs'],
   argTypes: {
-    children: { table: { disable: true}}
-  }
+    children: { table: { disable: true } },
+  },
 };
 
 export const Default = {
   args: {
     layers: mapConfig.layers,
-  }
+  },
 };

@@ -1,19 +1,19 @@
-import { useContext, useEffect } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Chip from "@mui/material/Chip";
-import Switch from "@mui/material/Switch";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import TextField from "@mui/material/TextField";
+import { useContext, useEffect } from 'react';
+import OLVectorLayer from 'ol/layer/Vector';
+import Slider from '@mui/material/Slider';
+import Chip from '@mui/material/Chip';
+import Switch from '@mui/material/Switch';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
+import { MuiColorInput } from 'mui-color-input';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import TextField from '@mui/material/TextField';
 import {
   FormGroup,
   ToggleButton,
@@ -21,23 +21,21 @@ import {
   InputLabel,
   FormControl,
   FormControlLabel,
-} from "@mui/material";
-import ColorPicker from "./ColorPicker";
-import MapContext from "../../Map/MapContext";
-import styles from "./MapOptions.module.css";
-import polygon from "../assets/polygon.svg";
+} from '@mui/material';
+import ColorPicker from './ColorPicker';
+import MapContext from '../../Map/MapContext';
+import styles from './MapOptions.module.css';
+import polygon from '../assets/polygon.svg';
 
-
-const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
+function OptionsVector({ layer, activeLayer, updateLayer }) {
   // remove null columns for the text name dropdown select
-  let columns = {...layer.data.features[0].properties};
-  const allColumns = {...layer.data.features[0].properties};
+  let columns = { ...layer.data.features[0].properties };
+  const allColumns = { ...layer.data.features[0].properties };
 
   const removeEmpty = (obj) => {
     Object.entries(obj).forEach(
-      ([key, val]) =>
-        (val && typeof val === "object" && removeEmpty(val)) ||
-        ((val === null || val === "") && delete obj[key])
+      ([key, val]) => (val && typeof val === 'object' && removeEmpty(val))
+        || ((val === null || val === '') && delete obj[key]),
     );
     return obj;
   };
@@ -91,9 +89,9 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
     <div>
       <div className={styles.mapOptionsPanel}>
         <h1>
-        <div className={styles.mapOptions_icon}><img src={polygon}/></div>
-      Polygon Options
-      </h1>
+          <div className={styles.mapOptions_icon}><img src={polygon} /></div>
+          Polygon Options
+        </h1>
       </div>
       <div className={styles.mapOptionsPanelBody}>
         <div className={styles.optionsPanel}>
@@ -176,7 +174,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
             </div>
           </div>
 
-          {layer.style.fillType == "single" && (
+          {layer.style.fillType == 'single' && (
             <div className={styles.optionRow}>
               <div className={styles.optionLabel}>Fill color</div>
               <div className={styles.optionValue}>
@@ -194,7 +192,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
                 checked={layer.showLabels}
                 color="default"
                 onChange={(e, val) => setShowLabels(val)}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
           </div>
@@ -210,13 +208,13 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
                     value={layer.labelColumn}
                     onChange={(e, val) => setLabelColumn(val.props.value)}
                     size="small"
-                    style={{ backgroundColor: "#fff", fontSize: 12}}
+                    style={{ backgroundColor: '#fff', fontSize: 12 }}
                     variant="standard"
                   >
                     {Object.keys(columns)
                       .sort()
                       .map((labelColumn, i) => (
-                        <MenuItem key={'textLabelColumn' + i} value={labelColumn}>
+                        <MenuItem key={`textLabelColumn${i}`} value={labelColumn}>
                           {labelColumn}
                         </MenuItem>
                       ))}
@@ -229,6 +227,6 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
       </div>
     </div>
   );
-};
+}
 
 export default OptionsVector;

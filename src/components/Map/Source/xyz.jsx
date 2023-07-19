@@ -1,4 +1,4 @@
-import * as olSource from "ol/source";
+import * as olSource from 'ol/source';
 
 function xyz({ url, attributions, maxZoom }) {
   return new olSource.XYZ({ url, attributions, maxZoom });

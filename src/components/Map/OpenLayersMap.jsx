@@ -1,12 +1,14 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
-import * as ol from "ol";
-import { ScaleLine, Zoom, defaults as defaultControls } from "ol/control.js";
-import { MouseWheelZoom } from "ol/interaction";
-import MapContext from "./MapContext";
-import styles from "./Map.module.css";
-import "ol/ol.css";
+import React, {
+  useRef, useContext, useState, useEffect,
+} from 'react';
+import * as ol from 'ol';
+import { ScaleLine, Zoom, defaults as defaultControls } from 'ol/control.js';
+import { MouseWheelZoom } from 'ol/interaction';
+import MapContext from './MapContext';
+import styles from './Map.module.css';
+import 'ol/ol.css';
 
-const OpenLayersMap = ({
+function OpenLayersMap({
   children,
   setMapObj,
   setMap,
@@ -18,28 +20,28 @@ const OpenLayersMap = ({
   scaleBarPosition,
   enableMouseWheelZoom,
   enableZoomControls,
-  zoomControlsPosition
-}) => {
+  zoomControlsPosition,
+}) {
   const mapRef = useRef();
   const { map } = useContext(MapContext);
-  
+
   // on component mount
   useEffect(() => {
-    let options = {
+    const options = {
       view: new ol.View({ zoom, center }),
       layers: [],
       overlays: [],
-      controls: []
+      controls: [],
     };
 
-    let mapObject = new ol.Map(options);
+    const mapObject = new ol.Map(options);
 
     if (showScale) {
-      let scaleClassName = "ol-scale-line";
-      if (scaleBar) scaleClassName = "ol-scale-bar";
-      let scalePosClass = 'scalePos'+scaleBarPosition;
+      let scaleClassName = 'ol-scale-line';
+      if (scaleBar) scaleClassName = 'ol-scale-bar';
+      const scalePosClass = `scalePos${scaleBarPosition}`;
       scaleClassName = `${styles[scalePosClass]} ${scaleClassName}`;
-      let control = new ScaleLine({
+      const control = new ScaleLine({
         units: scaleUnits,
         bar: scaleBar,
         className: scaleClassName,
@@ -49,13 +51,13 @@ const OpenLayersMap = ({
     }
 
     if (enableMouseWheelZoom) {
-      mapObject.getInteractions().forEach(function (interaction) {
+      mapObject.getInteractions().forEach((interaction) => {
         if (interaction instanceof MouseWheelZoom) {
           interaction.setActive(true);
         }
       }, this);
     } else {
-      mapObject.getInteractions().forEach(function (interaction) {
+      mapObject.getInteractions().forEach((interaction) => {
         if (interaction instanceof MouseWheelZoom) {
           interaction.setActive(false);
         }
@@ -63,13 +65,13 @@ const OpenLayersMap = ({
     }
 
     if (enableZoomControls) {
-      let zoomClass = `${styles.ol-zoom} ${styles['POS-'+zoomControlsPosition]}`;
-      mapObject.addControl(new Zoom({delta: 0.3, className: zoomClass}));
+      const zoomClass = `${styles.ol - zoom} ${styles[`POS-${zoomControlsPosition}`]}`;
+      mapObject.addControl(new Zoom({ delta: 0.3, className: zoomClass }));
     }
 
     mapObject.setTarget(mapRef.current);
-    if(setMapObj) setMapObj(mapObject);
-    if(setMap) setMap(mapObject);
+    if (setMapObj) setMapObj(mapObject);
+    if (setMap) setMap(mapObject);
     return () => mapObject.setTarget(undefined);
   }, []);
 
@@ -81,15 +83,15 @@ const OpenLayersMap = ({
   useEffect(() => {
     if (!map) return;
 
-    map.getControls().forEach(function (control) {
+    map.getControls().forEach((control) => {
       if (control instanceof Zoom) {
         map.removeControl(control);
       }
-    })
+    });
 
     if (enableZoomControls) {
-      let zoomClass = `ol-zoom ${styles['POS-'+zoomControlsPosition]}`;
-      map.addControl(new Zoom({delta: 0.3, className: zoomClass}));
+      const zoomClass = `ol-zoom ${styles[`POS-${zoomControlsPosition}`]}`;
+      map.addControl(new Zoom({ delta: 0.3, className: zoomClass }));
     }
   }, [enableZoomControls, zoomControlsPosition]);
 
@@ -102,13 +104,13 @@ const OpenLayersMap = ({
   useEffect(() => {
     if (!map) return;
     if (enableMouseWheelZoom) {
-      map.getInteractions().forEach(function (interaction) {
+      map.getInteractions().forEach((interaction) => {
         if (interaction instanceof MouseWheelZoom) {
           interaction.setActive(true);
         }
       }, this);
     } else {
-      map.getInteractions().forEach(function (interaction) {
+      map.getInteractions().forEach((interaction) => {
         if (interaction instanceof MouseWheelZoom) {
           interaction.setActive(false);
         }
@@ -118,17 +120,17 @@ const OpenLayersMap = ({
 
   useEffect(() => {
     if (!map) return;
-    map.getControls().forEach(function (control) {
+    map.getControls().forEach((control) => {
       if (control instanceof ScaleLine) {
         map.removeControl(control);
       }
     }, this);
     if (showScale) {
-      let scaleClassName = "ol-scale-line";
-      if (scaleBar) scaleClassName = "ol-scale-bar";
-      let scalePosClass = 'scalePos'+scaleBarPosition;
+      let scaleClassName = 'ol-scale-line';
+      if (scaleBar) scaleClassName = 'ol-scale-bar';
+      const scalePosClass = `scalePos${scaleBarPosition}`;
       scaleClassName = `${styles[scalePosClass]} ${scaleClassName}`;
-      let control = new ScaleLine({
+      const control = new ScaleLine({
         units: scaleUnits,
         bar: scaleBar,
         className: scaleClassName,
@@ -139,10 +141,10 @@ const OpenLayersMap = ({
   }, [showScale, scaleUnits, scaleBar, scaleBarPosition]);
 
   return (
-    <div ref={mapRef} className="ol-map" style={{ height: "100%" }}>
+    <div ref={mapRef} className="ol-map" style={{ height: '100%' }}>
       {children}
     </div>
   );
-};
+}
 
 export default OpenLayersMap;

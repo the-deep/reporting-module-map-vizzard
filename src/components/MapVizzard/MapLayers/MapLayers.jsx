@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import styles from "./MapLayers.module.css";
-import LayerRow from "./LayerRow";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styles from './MapLayers.module.css';
+import LayerRow from './LayerRow';
 
-export const MapLayers = ({
+export function MapLayers({
   layers,
   setLayers,
   activeLayer,
-  setActiveLayer
-}) => {
-
+  setActiveLayer,
+}) {
   const updateLayers = (d, id) => {
-    if (d == "remove") {
-      let newLayersObj = layers.filter((obj) => obj.id !== id);
+    if (d == 'remove') {
+      const newLayersObj = layers.filter((obj) => obj.id !== id);
       if (setLayers) setLayers([...newLayersObj]);
-    } else {
-      if (setLayers) setLayers([...layers]);
-    }
+    } else if (setLayers) setLayers([...layers]);
   };
 
   function layersBgClick() {
     if (setActiveLayer) setActiveLayer(null);
   }
 
-  const mLayers = [...layers].sort(function (a, b) {
-    return b["zIndex"] - a["zIndex"];
-  });
+  const mLayers = [...layers].sort((a, b) => b.zIndex - a.zIndex);
 
   const rows = mLayers.map((row) => (
     <LayerRow
-      key={"key" + row.id}
+      key={`key${row.id}`}
       row={row}
       update={updateLayers}
       activeLayer={activeLayer}
@@ -43,9 +38,9 @@ export const MapLayers = ({
         <h1>Layers</h1>
       </div>
       <div className={styles.layersPanelBody}>{rows}</div>
-      <div className={styles.layersPanelBg} onClick={layersBgClick}></div>
+      <div className={styles.layersPanelBg} onClick={layersBgClick} />
     </div>
   );
-};
+}
 
 export default MapLayers;

@@ -1,26 +1,25 @@
-import { useContext, useEffect } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Chip from "@mui/material/Chip";
-import Switch from "@mui/material/Switch";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
+import { useContext, useEffect } from 'react';
+import OLVectorLayer from 'ol/layer/Vector';
+import Slider from '@mui/material/Slider';
+import Chip from '@mui/material/Chip';
+import Switch from '@mui/material/Switch';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
+import { MuiColorInput } from 'mui-color-input';
 import {
   FormGroup,
   InputLabel,
   FormControl,
   FormControlLabel,
-} from "@mui/material";
-import MapContext from "../../Map/MapContext";
-import styles from "./MapOptions.module.css";
-import settings from "../assets/settings.svg";
+} from '@mui/material';
+import MapContext from '../../Map/MapContext';
+import styles from './MapOptions.module.css';
+import settings from '../assets/settings.svg';
 
-
-const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
+function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -176,7 +175,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                   mapOptions.enableZoomControls = val;
                   updateMapOptions(mapOptions);
                 }}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
           </div>
@@ -195,18 +194,17 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                     updateMapOptions(mapOptions);
                   }}
                   size="small"
-                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
                 >
-                    <MenuItem key="zoomControlsPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
-                    <MenuItem key="zoomControlsPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
-                    <MenuItem key="zoomControlsPositionTopRight" value="topRight">Top right</MenuItem>
+                  <MenuItem key="zoomControlsPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                  <MenuItem key="zoomControlsPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                  <MenuItem key="zoomControlsPositionTopRight" value="topRight">Top right</MenuItem>
                 </Select>
               </FormControl>
             </div>
           </div>
           )}
-
 
           <div className={styles.optionRow}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Mousewheel zoom</div>
@@ -218,7 +216,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                   mapOptions.enableMouseWheelZoom = val;
                   updateMapOptions(mapOptions);
                 }}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
           </div>
@@ -235,7 +233,7 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                   mapOptions.showScale = val;
                   updateMapOptions(mapOptions);
                 }}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
           </div>
@@ -254,12 +252,12 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                     updateMapOptions(mapOptions);
                   }}
                   size="small"
-                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
                 >
-                    <MenuItem key="scaleBarPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
-                    <MenuItem key="scaleBarPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
-                    <MenuItem key="scaleBarPositionTopRight" value="topRight">Top right</MenuItem>
+                  <MenuItem key="scaleBarPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                  <MenuItem key="scaleBarPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                  <MenuItem key="scaleBarPositionTopRight" value="topRight">Top right</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -280,11 +278,11 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                     updateMapOptions(mapOptions);
                   }}
                   size="small"
-                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
                 >
-                    <MenuItem key="scaleUnit1" value="metric">metric (km)</MenuItem>
-                    <MenuItem key="scaleUnit2" value="imperial">imperial (miles)</MenuItem>
+                  <MenuItem key="scaleUnit1" value="metric">metric (km)</MenuItem>
+                  <MenuItem key="scaleUnit2" value="imperial">imperial (miles)</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -305,11 +303,11 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
                     updateMapOptions(mapOptions);
                   }}
                   size="small"
-                  style={{ backgroundColor: "#fff", fontSize: 12}}
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
                 >
-                    <MenuItem key="scaleBarFalse" value="false">Line</MenuItem>
-                    <MenuItem key="scaleBarTrue" value="true">Bars</MenuItem>
+                  <MenuItem key="scaleBarFalse" value="false">Line</MenuItem>
+                  <MenuItem key="scaleBarTrue" value="true">Bars</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -320,6 +318,6 @@ const OptionsMapGeneral = ({ mapOptions, updateMapOptions }) => {
       </div>
     </div>
   );
-};
+}
 
 export default OptionsMapGeneral;

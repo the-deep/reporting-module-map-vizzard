@@ -1,18 +1,20 @@
-import { useContext, useState, useEffect } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Chip from "@mui/material/Chip";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
-import { Draw, Modify, Snap } from "ol/interaction";
-import MultiPoint from "ol/geom/MultiPoint";
-import WKT from "ol/format/WKT.js";
-import Feature from "ol/Feature";
-import { Vector as VectorSource } from "ol/source";
-import { Style, Fill, Stroke, Circle } from "ol/style";
-import { transform } from "ol/proj";
-import TextField from "@mui/material/TextField";
+import { useContext, useState, useEffect } from 'react';
+import OLVectorLayer from 'ol/layer/Vector';
+import Slider from '@mui/material/Slider';
+import Chip from '@mui/material/Chip';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
+import { MuiColorInput } from 'mui-color-input';
+import { Draw, Modify, Snap } from 'ol/interaction';
+import MultiPoint from 'ol/geom/MultiPoint';
+import WKT from 'ol/format/WKT.js';
+import Feature from 'ol/Feature';
+import { Vector as VectorSource } from 'ol/source';
+import {
+  Style, Fill, Stroke, Circle,
+} from 'ol/style';
+import { transform } from 'ol/proj';
+import TextField from '@mui/material/TextField';
 import {
   FormGroup,
   ToggleButton,
@@ -20,13 +22,14 @@ import {
   InputLabel,
   FormControl,
   FormControlLabel,
-} from "@mui/material";
-import MapContext from "../../Map/MapContext";
-import styles from "./MapOptions.module.css";
-import mask from "../assets/mask.svg";
+} from '@mui/material';
+import MapContext from '../../Map/MapContext';
+import styles from './MapOptions.module.css';
+import mask from '../assets/mask.svg';
 
-const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
-
+function OptionsMask({
+  layer, activeLayer, updateLayer, map,
+}) {
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -53,32 +56,33 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
     updateLayer(layer, activeLayer);
   };
 
-  let draw, snap, modify;
+  let draw; let snap; let
+    modify;
 
-  map.getLayers().forEach(function (el) {
-    if (el && el.values_.id == "drawLayerMask") {
+  map.getLayers().forEach((el) => {
+    if (el && el.values_.id == 'drawLayerMask') {
       map.removeLayer(el);
     }
   });
 
   map.getLayers().forEach(function (el) {
     if (el.values_.id && el.values_.id == activeLayer) {
-      var image = new Circle({
+      const image = new Circle({
         radius: 4,
         fill: new Fill({
-          color: "grey",
+          color: 'grey',
         }),
-        stroke: new Stroke({ color: "white", width: 1.5 }),
+        stroke: new Stroke({ color: 'white', width: 1.5 }),
       });
 
-      var drawLayerStyle = [
+      const drawLayerStyle = [
         new Style({
-          image: image,
-          geometry: function (feature) {
-            var coordinates = feature.getGeometry().getCoordinates()[1];
-            var coords = [];
-            coordinates.forEach(function (d, i) {
-              coords.push(transform(d, "EPSG:3857", "EPSG:3857"));
+          image,
+          geometry(feature) {
+            const coordinates = feature.getGeometry().getCoordinates()[1];
+            const coords = [];
+            coordinates.forEach((d, i) => {
+              coords.push(transform(d, 'EPSG:3857', 'EPSG:3857'));
             });
             return new MultiPoint(coords);
           },
@@ -86,40 +90,40 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
         new Style({
           stroke: new Stroke({
             width: 1,
-            color: "#a3a0a0",
+            color: '#a3a0a0',
             lineDash: [2, 4],
           }),
           fill: new Fill({
-            color: "transparent",
+            color: 'transparent',
           }),
         }),
       ];
 
-      let polygon = layer.mask;
+      const polygon = layer.mask;
 
-      let source = new VectorSource({ wrapX: false });
-      let orginalSource = el.getSource();
+      const source = new VectorSource({ wrapX: false });
+      const orginalSource = el.getSource();
 
-      let drawLayer = new OLVectorLayer({
+      const drawLayer = new OLVectorLayer({
         source,
         style: drawLayerStyle,
-        id: "drawLayerMask",
+        id: 'drawLayerMask',
       });
 
       drawLayer.setZIndex(1000);
 
       if (polygon) {
-        var format = new WKT(),
-          wkt = format.readGeometry(polygon, {
-            dataProjection: "EPSG:4326",
-            featureProjection: "EPSG:3857",
-          });
-        var feature = new Feature(wkt);
+        const format = new WKT();
+        const wkt = format.readGeometry(polygon, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857',
+        });
+        const feature = new Feature(wkt);
         source.addFeature(feature);
         map.addLayer(drawLayer);
       }
 
-      map.getInteractions().forEach(function (interaction) {
+      map.getInteractions().forEach((interaction) => {
         if (interaction instanceof Draw) {
           map.removeInteraction(interaction);
         }
@@ -132,70 +136,70 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
       });
 
       draw = new Draw({
-        source: source,
-        type: "Polygon",
+        source,
+        type: 'Polygon',
       });
       map.addInteraction(draw);
 
       // hide/show draw cursor on mouseout
       map.getViewport().addEventListener(
-        "mouseout",
-        function (evt) {
+        'mouseout',
+        (evt) => {
           draw.setActive(false);
         },
-        false
+        false,
       );
 
       map.getViewport().addEventListener(
-        "mouseover",
-        function (evt) {
+        'mouseover',
+        (evt) => {
           draw.setActive(true);
         },
-        false
+        false,
       );
 
-      modify = new Modify({ source: source });
-      snap = new Snap({ source: source });
+      modify = new Modify({ source });
+      snap = new Snap({ source });
 
       map.addInteraction(modify);
       map.addInteraction(snap);
 
-      modify.on("modifyend", function (evt) {
-        var collection = evt.features;
-        var feature = collection.item(0);
-        var format = new WKT(),
-          wkt = format.writeGeometry(feature.getGeometry(), {
-            dataProjection: "EPSG:4326",
-            featureProjection: "EPSG:3857",
-          });
+      modify.on('modifyend', (evt) => {
+        const collection = evt.features;
+        const feature = collection.item(0);
+        const format = new WKT();
+        const wkt = format.writeGeometry(feature.getGeometry(), {
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857',
+        });
         layer.mask = wkt;
         updateLayer(layer, activeLayer);
       });
 
-      draw.on("drawstart", function (e) {
+      draw.on('drawstart', (e) => {
         source.clear();
       });
 
       source.on(
-        "addfeature",
-        function (feature) {
-          var format = new WKT(),
-            wkt = format.writeGeometry(feature.feature.getGeometry(), {
-              dataProjection: "EPSG:4326",
-              featureProjection: "EPSG:3857",
-            });
-          var b = "(0 90,180 90,180 -90,0 -90,-180 -90,-180 0,-180 90,0 90),";
-          var position = 8;
-          var invertedPolygon = [
+        'addfeature',
+        (feature) => {
+          const format = new WKT();
+          const wkt = format.writeGeometry(feature.feature.getGeometry(), {
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857',
+          });
+          const b = '(0 90,180 90,180 -90,0 -90,-180 -90,-180 0,-180 90,0 90),';
+          const position = 8;
+          const invertedPolygon = [
             wkt.slice(0, position),
             b,
             wkt.slice(position),
-          ].join("");
+          ].join('');
           layer.mask = invertedPolygon;
           layer.opacity = 1;
           updateLayer(layer, activeLayer);
         },
-        this
+        this,
       );
     }
   });
@@ -268,6 +272,6 @@ const OptionsMask = ({ layer, activeLayer, updateLayer, map }) => {
       </div>
     </div>
   );
-};
+}
 
 export default OptionsMask;

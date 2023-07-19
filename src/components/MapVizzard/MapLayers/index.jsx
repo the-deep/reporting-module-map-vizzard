@@ -1,1 +1,1 @@
-export {default} from "./MapLayers"
+export { default } from './MapLayers';

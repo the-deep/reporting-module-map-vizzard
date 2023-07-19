@@ -1,31 +1,31 @@
-import { useContext, useState, useEffect } from "react";
-import Layer from "ol/layer/Layer";
-import Source from "ol/source/Source";
-import Map from "ol/Map";
-import MapboxVector from "ol/layer/MapboxVector";
-import { toLonLat, get } from "ol/proj";
-import MapContext from "../MapContext";
+import { useContext, useState, useEffect } from 'react';
+import Layer from 'ol/layer/Layer';
+import Source from 'ol/source/Source';
+import Map from 'ol/Map';
+import MapboxVector from 'ol/layer/MapboxVector';
+import { toLonLat, get } from 'ol/proj';
+import MapContext from '../MapContext';
 
-const MapboxLayer = ({ source, zIndex = 1, opacity = 1 }) => {
+function MapboxLayer({ source, zIndex = 1, opacity = 1 }) {
   const { map } = useContext(MapContext);
   const [mapboxLayer, setMapboxLayer] = useState(false);
 
   useEffect(() => {
     if (!map) return;
 
-    let mbLayer = new MapboxVector({
-      styleUrl: "mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv",
+    const mbLayer = new MapboxVector({
+      styleUrl: 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv',
       attributionControl: true,
       scrollZoom: false,
       background: false,
       accessToken:
-        "pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ",
+        'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ',
     });
 
     map.addLayer(mbLayer);
     mbLayer.setZIndex(zIndex);
     mbLayer.setOpacity(opacity);
-    
+
     setMapboxLayer(mbLayer);
 
     return () => {
@@ -41,6 +41,6 @@ const MapboxLayer = ({ source, zIndex = 1, opacity = 1 }) => {
   }, [opacity]);
 
   return null;
-};
+}
 
 export default MapboxLayer;
