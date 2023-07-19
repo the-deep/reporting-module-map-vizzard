@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from '../components/Map';
-import mapConfig from "./mapConfig.json";
+import mapConfig from './mapConfig.json';
 
 // Story Config
 export default {
@@ -8,15 +8,15 @@ export default {
   component: Map,
   tags: ['autodocs'],
   argTypes: {
-    height: { control: 'number', description: 'Viewbox height in pixels', table: {type: {summary: 'number'}}},
-    zoom: { control: 'number', description: 'Initial zoom level', table: {type: {summary: 'number'}}},
-    center: {  description: 'Viewbox centre coordinates', table: {type: {summary: 'array [lon,lat]'}} },
-    mainTitle: {  description: 'Main map title', table: {type: {summary: 'string'}} },
-    subTitle: {  description: 'Map sub-title', table: {type: {summary: 'string'}} },
-    layers: {  control: 'object', description: 'layers object', table: {type: {summary: 'JSON object'}} },
-    showScale: {  control: 'boolean', description: 'show scale', table: {type: {summary: 'boolean'}} },
-    children: { table: { disable: true}}
-  }
+    height: { control: 'number', description: 'Viewbox height in pixels', table: { type: { summary: 'number' } } },
+    zoom: { control: 'number', description: 'Initial zoom level', table: { type: { summary: 'number' } } },
+    center: { description: 'Viewbox centre coordinates', table: { type: { summary: 'array [lon,lat]' } } },
+    mainTitle: { description: 'Main map title', table: { type: { summary: 'string' } } },
+    subTitle: { description: 'Map sub-title', table: { type: { summary: 'string' } } },
+    layers: { control: 'object', description: 'layers object', table: { type: { summary: 'JSON object' } } },
+    showScale: { control: 'boolean', description: 'show scale', table: { type: { summary: 'boolean' } } },
+    children: { table: { disable: true } },
+  },
 };
 
 export const Default = {

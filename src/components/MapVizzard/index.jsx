@@ -1,1 +1,1 @@
-export {default} from "./MapVizzard"
+export { default } from './MapVizzard';

@@ -1,42 +1,40 @@
-import { useContext, useEffect } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Switch from "@mui/material/Switch";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Chip from "@mui/material/Chip";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
-import TextField from "@mui/material/TextField";
+import { useContext, useEffect } from 'react';
+import OLVectorLayer from 'ol/layer/Vector';
+import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Chip from '@mui/material/Chip';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
+import { MuiColorInput } from 'mui-color-input';
+import TextField from '@mui/material/TextField';
 import {
   FormGroup,
   InputLabel,
   FormControl,
   FormControlLabel,
-} from "@mui/material";
-import MapContext from "../../Map/MapContext";
-import styles from "./MapOptions.module.css";
-import point from "../assets/point.svg";
+} from '@mui/material';
+import MapContext from '../../Map/MapContext';
+import styles from './MapOptions.module.css';
+import point from '../assets/point.svg';
 
-import capital from "../../Map/assets/map-icons/capital.svg";
-import city from "../../Map/assets/map-icons/city.svg";
-import settlement from "../../Map/assets/map-icons/settlement.svg";
-import marker from "../../Map/assets/map-icons/marker.svg";
-import airport from "../../Map/assets/map-icons/airport.svg";
-import idpRefugeeCamp from "../../Map/assets/map-icons/idp-refugee-camp.svg";
+import capital from '../../Map/assets/map-icons/capital.svg';
+import city from '../../Map/assets/map-icons/city.svg';
+import settlement from '../../Map/assets/map-icons/settlement.svg';
+import marker from '../../Map/assets/map-icons/marker.svg';
+import airport from '../../Map/assets/map-icons/airport.svg';
+import idpRefugeeCamp from '../../Map/assets/map-icons/idp-refugee-camp.svg';
 
-
-const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
-
+function OptionsSymbol({ layer, activeLayer, updateLayer }) {
   const symbolIcons = {
-    "capital": capital,
-    "city": city,
-    "settlement": settlement,
-    "idp-refugee-camp": idpRefugeeCamp,
-    "airport": airport,
-    "marker": marker
-  }
+    capital,
+    city,
+    settlement,
+    'idp-refugee-camp': idpRefugeeCamp,
+    airport,
+    marker,
+  };
 
   const symbols = Object.keys(symbolIcons);
 
@@ -113,7 +111,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
               <Select
                 labelId="symbol-select-label"
                 id="symbol-select"
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: '#fff' }}
                 value={layer.symbol}
                 onChange={(e, val) => setSymbol(val.props.value)}
                 label="Symbol"
@@ -126,7 +124,8 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
                       className={styles.mapSymbolSelectIcon}
                       src={symbolIcons[symbol]}
                     />
-                    &nbsp;{symbol}
+                    &nbsp;
+                    {symbol}
                   </MenuItem>
                 ))}
               </Select>
@@ -144,7 +143,7 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
                 checked={layer.showLabels}
                 color="default"
                 onChange={(e, val) => setShowLabels(val)}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
           </div>
@@ -155,6 +154,6 @@ const OptionsSymbol = ({ layer, activeLayer, updateLayer }) => {
       </div>
     </div>
   );
-};
+}
 
 export default OptionsSymbol;

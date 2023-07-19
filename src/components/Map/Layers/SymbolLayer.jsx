@@ -1,25 +1,27 @@
-import { useContext, useEffect } from "react";
-import { Style, Icon, Fill, Stroke, Circle, Image, Text } from "ol/style";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import { fromLonLat, get } from "ol/proj";
-import MapContext from "../MapContext";
+import { useContext, useEffect } from 'react';
+import {
+  Style, Icon, Fill, Stroke, Circle, Image, Text,
+} from 'ol/style';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import { fromLonLat, get } from 'ol/proj';
+import MapContext from '../MapContext';
 
-import capital from "../assets/map-icons/capital.svg";
-import city from "../assets/map-icons/city.svg";
-import settlement from "../assets/map-icons/settlement.svg";
-import marker from "../assets/map-icons/marker.svg";
-import airport from "../assets/map-icons/airport.svg";
-import idpRefugeeCamp from "../assets/map-icons/idp-refugee-camp.svg";
+import capital from '../assets/map-icons/capital.svg';
+import city from '../assets/map-icons/city.svg';
+import settlement from '../assets/map-icons/settlement.svg';
+import marker from '../assets/map-icons/marker.svg';
+import airport from '../assets/map-icons/airport.svg';
+import idpRefugeeCamp from '../assets/map-icons/idp-refugee-camp.svg';
 
 const symbolIcons = {
-  "capital": capital,
-  "city": city,
-  "settlement": settlement,
-  "idp-refugee-camp": idpRefugeeCamp,
-  "airport": airport,
-  "marker": marker
-}
+  capital,
+  city,
+  settlement,
+  'idp-refugee-camp': idpRefugeeCamp,
+  airport,
+  marker,
+};
 
 const addCircles = (d) => {
   const iconStyle = [
@@ -41,13 +43,13 @@ const addCircles = (d) => {
         offsetY: 2,
         scale: 2,
         fill: new Fill({
-          color: "#black",
+          color: '#black',
         }),
       }),
     }),
   ];
 
-  let features = d.data.map((item) => {
+  const features = d.data.map((item) => {
     const feature = new Feature({
       geometry: new Point(fromLonLat([item.lon, item.lat])),
     });
@@ -60,26 +62,26 @@ const addCircles = (d) => {
 
 const addSymbols = (d) => {
   let scale = 0.9;
-  let font = "11px Arial";
+  let font = '11px Arial';
 
-  if (d.symbol == "city") {
+  if (d.symbol == 'city') {
     scale = 0.6;
   }
 
-  if (d.symbol == "settlement") {
+  if (d.symbol == 'settlement') {
     scale = 0.4;
-    font = "10px Arial";
+    font = '10px Arial';
   }
 
-  if (d.symbol == "capital") {
+  if (d.symbol == 'capital') {
     scale = 0.9;
-    font = "bold 11px Arial";
+    font = 'bold 11px Arial';
   }
 
-  const showLabels = d.showLabels;
+  const { showLabels } = d;
 
-  let features = d.data.map((item) => {
-    let feature = new Feature({
+  const features = d.data.map((item) => {
+    const feature = new Feature({
       geometry: new Point(fromLonLat([item.lon, item.lat])),
     });
 
@@ -87,9 +89,9 @@ const addSymbols = (d) => {
       new Style({
         image: new Icon({
           anchor: [0.5, 0.5],
-          anchorXUnits: "fraction",
-          anchorYUnits: "fraction",
-          scale: scale,
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction',
+          scale,
           src: symbolIcons[d.symbol],
         }),
       }),
@@ -100,16 +102,16 @@ const addSymbols = (d) => {
         new Style({
           text: new Text({
             text: item.title,
-            textAlign: "left",
-            font: font,
+            textAlign: 'left',
+            font,
             offsetY: 1,
             offsetX: 8,
             scale: 1,
             fill: new Fill({
-              color: "#black",
+              color: '#black',
             }),
           }),
-        })
+        }),
       );
     }
 

@@ -1,38 +1,40 @@
-import { useContext, useEffect, useState } from "react";
-import styles from "./MapLayers.module.css";
-import polygon from "../assets/polygon.svg";
-import point from "../assets/point.svg";
-import raster from "../assets/raster.svg";
-import mask from "../assets/mask.svg";
-import show from "../assets/show.svg";
-import hide from "../assets/hide.svg";
-import up from "../assets/up.svg";
-import down from "../assets/down.svg";
-import removeIcon from "../assets/remove.svg";
+import { useContext, useEffect, useState } from 'react';
+import styles from './MapLayers.module.css';
+import polygon from '../assets/polygon.svg';
+import point from '../assets/point.svg';
+import raster from '../assets/raster.svg';
+import mask from '../assets/mask.svg';
+import show from '../assets/show.svg';
+import hide from '../assets/hide.svg';
+import up from '../assets/up.svg';
+import down from '../assets/down.svg';
+import removeIcon from '../assets/remove.svg';
 
-const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
+function LayerRow({
+  row, update, activeLayer, setActiveLayer,
+}) {
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered((prevHovered) => !prevHovered);
   const addHover = () => setHovered(true);
   const removeHover = () => setHovered(false);
 
   const clickRow = (e) => {
-    if (e.target.nodeName === "IMG") return;
+    if (e.target.nodeName === 'IMG') return;
     if (setActiveLayer) setActiveLayer(row.id);
   };
 
   const moveBack = () => {
-    row.zIndex = row.zIndex - 1.001;
+    row.zIndex -= 1.001;
     update(row, row.id);
   };
 
   const moveForward = () => {
-    row.zIndex = row.zIndex + 1.001;
+    row.zIndex += 1.001;
     update(row, row.id);
   };
 
   const remove = () => {
-    update("remove", row.id);
+    update('remove', row.id);
   };
 
   const toggleVisibility = () => {
@@ -46,13 +48,13 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
   };
 
   let icon;
-  if (row.type === "osm") {
+  if (row.type === 'osm') {
     icon = <img className={styles.MapLayers_raster} src={raster} />;
-  } else if (row.type === "mask") {
+  } else if (row.type === 'mask') {
     icon = <img className={styles.MapLayers_point} src={mask} />;
-  } else if (row.type === "symbol") {
+  } else if (row.type === 'symbol') {
     icon = <img className={styles.MapLayers_point} src={point} />;
-  } else if (row.type === "polygon") {
+  } else if (row.type === 'polygon') {
     icon = <img className={styles.MapLayers_polygon} src={polygon} />;
   } else {
     icon = <img className={styles.MapLayers_raster} src={raster} />;
@@ -64,7 +66,7 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
     showIcon = <img src={hide} />;
   }
 
-  let activeClass = "";
+  let activeClass = '';
   if (activeLayer === row.id) {
     activeClass = styles.active;
   }
@@ -99,7 +101,7 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
         <div
           className={
             !row.visible
-              ? `$(styles.MapLayers_buttons_show) $(MapLayers_buttons_hidden)`
+              ? '$(styles.MapLayers_buttons_show) $(MapLayers_buttons_hidden)'
               : styles.MapLayers_buttons_show
           }
           onClick={toggleVisibility}
@@ -109,6 +111,6 @@ const LayerRow = ({ row, update, activeLayer, setActiveLayer }) => {
       </div>
     </div>
   );
-};
+}
 
 export default LayerRow;

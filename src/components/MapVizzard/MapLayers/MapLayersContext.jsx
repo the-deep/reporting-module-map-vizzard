@@ -1,5 +1,5 @@
-import React from "react";
-import mapConfig from "../MapVizzard/config.json";
+import React from 'react';
+import mapConfig from '../MapVizzard/config.json';
 
 const MapLayersContext = new React.createContext(mapConfig);
 

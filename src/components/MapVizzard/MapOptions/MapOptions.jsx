@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Draw, Modify, Snap } from "ol/interaction";
-import PropTypes from "prop-types";
-import OptionsVector from "./OptionsVector";
-import OptionsMask from "./OptionsMask";
-import OptionsSymbol from "./OptionsSymbol";
-import OptionsTile from "./OptionsTile";
-import OptionsMapGeneral from "./OptionsMapGeneral";
-import styles from "./MapOptions.module.css";
-import MapContext from "../../Map/MapContext";
+import React, { useState, useContext, useEffect } from 'react';
+import { Draw, Modify, Snap } from 'ol/interaction';
+import PropTypes from 'prop-types';
+import OptionsVector from './OptionsVector';
+import OptionsMask from './OptionsMask';
+import OptionsSymbol from './OptionsSymbol';
+import OptionsTile from './OptionsTile';
+import OptionsMapGeneral from './OptionsMapGeneral';
+import styles from './MapOptions.module.css';
+import MapContext from '../../Map/MapContext';
 
-export const MapOptions = ({
+export function MapOptions({
   layers,
   setLayers,
   val,
@@ -18,15 +18,15 @@ export const MapOptions = ({
   mapOptions,
   setMapOptions,
   mapObj,
-}) => {
-  let map = mapObj;
+}) {
+  const map = mapObj;
 
   useEffect(() => {
     if (!map) return;
-    layers.forEach(function (dd, ii) {
+    layers.forEach((dd, ii) => {
       if (dd.id == activeLayer) {
-        if (dd.type != "mask") {
-          map.getInteractions().forEach(function (interaction) {
+        if (dd.type != 'mask') {
+          map.getInteractions().forEach((interaction) => {
             if (interaction instanceof Draw) {
               map.removeInteraction(interaction);
             }
@@ -43,7 +43,7 @@ export const MapOptions = ({
   }, [activeLayer]);
 
   if (map) {
-    map.getInteractions().forEach(function (interaction) {
+    map.getInteractions().forEach((interaction) => {
       if (interaction instanceof Draw) {
         map.removeInteraction(interaction);
       }
@@ -54,15 +54,15 @@ export const MapOptions = ({
         map.removeInteraction(interaction);
       }
     });
-    map.getLayers().forEach(function (el) {
-      if (el && el.values_.id == "drawLayerMask") {
+    map.getLayers().forEach((el) => {
+      if (el && el.values_.id == 'drawLayerMask') {
         map.removeLayer(el);
       }
     });
   }
 
   const updateLayer = (d, id) => {
-    layers.forEach(function (dd, ii) {
+    layers.forEach((dd, ii) => {
       if (dd.id == id) {
         layers[ii] = d;
       }
@@ -79,64 +79,64 @@ export const MapOptions = ({
   if (activeLayer === null) {
     renderLayers.push(
       <OptionsMapGeneral
-        key={"generalMapOptions"}
+        key="generalMapOptions"
         mapOptions={mapOptions}
         updateMapOptions={updateMapOptions}
-      />
+      />,
     );
   } else {
-    layers.forEach(function (dd, ii) {
+    layers.forEach((dd, ii) => {
       if (dd.id == activeLayer) {
-        if (dd.type == "polygon") {
+        if (dd.type == 'polygon') {
           renderLayers.push(
             <OptionsVector
-              key={"polygonOptions"}
+              key="polygonOptions"
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
-            />
+            />,
           );
         }
-        if (dd.type == "symbol") {
+        if (dd.type == 'symbol') {
           renderLayers.push(
             <OptionsSymbol
-              key={"polygonOptions"}
+              key="polygonOptions"
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
-            />
+            />,
           );
         }
-        if (dd.type == "mask") {
+        if (dd.type == 'mask') {
           renderLayers.push(
             <OptionsMask
-              key={"maskOptions"}
+              key="maskOptions"
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
               map={map}
-            />
+            />,
           );
         }
-        if (dd.type == "mapbox") {
+        if (dd.type == 'mapbox') {
           renderLayers.push(
             <OptionsTile
-              key={"mapboxOptions"}
+              key="mapboxOptions"
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
-            />
+            />,
           );
         }
 
-        if (dd.type == "osm") {
+        if (dd.type == 'osm') {
           renderLayers.push(
             <OptionsTile
-              key={"osmOptions"}
+              key="osmOptions"
               layer={dd}
               updateLayer={updateLayer}
               activeLayer={activeLayer}
-            />
+            />,
           );
         }
       }
@@ -144,7 +144,7 @@ export const MapOptions = ({
   }
 
   return <div className={styles.mapOptions}>{renderLayers}</div>;
-};
+}
 
 export default MapOptions;
 
