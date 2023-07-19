@@ -15,8 +15,6 @@ export const MapLayers = ({
       let newLayersObj = layers.filter((obj) => obj.id !== id);
       if (setLayers) setLayers([...newLayersObj]);
     } else {
-      let updatedLayer = layers.filter((dd) => dd.id == id);
-      updatedLayer = d;
       if (setLayers) setLayers([...layers]);
     }
   };
