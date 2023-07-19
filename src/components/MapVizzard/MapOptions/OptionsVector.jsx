@@ -216,7 +216,7 @@ const OptionsVector = ({ layer, activeLayer, updateLayer }) => {
                     {Object.keys(columns)
                       .sort()
                       .map((labelColumn, i) => (
-                        <MenuItem key={labelColumn + i} value={labelColumn}>
+                        <MenuItem key={'textLabelColumn' + i} value={labelColumn}>
                           {labelColumn}
                         </MenuItem>
                       ))}
