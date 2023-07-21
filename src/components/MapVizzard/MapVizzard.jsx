@@ -6,7 +6,7 @@ import MapOptions from './MapOptions';
 import MapContext from '../Map/MapContext';
 import styles from './MapOptions/MapOptions.module.css';
 
-export function MapVizzard({ mapConfig }) {
+function MapVizzard({ mapConfig }) {
   const [layers, setLayers] = useState(mapConfig.layers);
   const [mapOptions, setMapOptions] = useState(mapConfig.mapOptions);
   const [activeLayer, setActiveLayer] = useState(null);

@@ -1,1 +1,3 @@
-export { default } from './MapVizzard';
+import MapVizzard from './MapVizzard';
+
+export default MapVizzard;

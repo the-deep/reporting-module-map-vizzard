@@ -7,7 +7,7 @@ import grey from '@mui/material/colors/grey';
 import { MuiColorInput } from 'mui-color-input';
 import { Draw, Modify, Snap } from 'ol/interaction';
 import MultiPoint from 'ol/geom/MultiPoint';
-import WKT from 'ol/format/WKT.js';
+import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
 import { Vector as VectorSource } from 'ol/source';
 import {
