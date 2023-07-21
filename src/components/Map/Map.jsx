@@ -12,7 +12,7 @@ import { osm, vector, mask } from './Source';
 import {
   TileLayer, VectorLayer, MapboxLayer, MaskLayer,
 } from './Layers';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import { addCircles, addSymbols } from './Layers/SymbolLayer';
 import MapContext from './MapContext';
 import OpenLayersMap from './OpenLayersMap';

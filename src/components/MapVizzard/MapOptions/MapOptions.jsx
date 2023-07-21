@@ -9,7 +9,7 @@ import OptionsMapGeneral from './OptionsMapGeneral';
 import styles from './MapOptions.module.css';
 import MapContext from '../../Map/MapContext';
 
-export function MapOptions({
+function MapOptions({
   layers,
   setLayers,
   val,

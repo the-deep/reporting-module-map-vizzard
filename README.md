@@ -23,8 +23,14 @@ Install map vizzard dependencies with npm
 npm install
 ```
 
-
 ### Run storybook
 ```bash
 npm run storybook
+```
+
+## Run linter
+```bash
+npm run lint
+# Or
+npm run lint:lenient
 ```
