@@ -1,10 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
 import OLVectorLayer from 'ol/layer/Vector';
 import Slider from '@mui/material/Slider';
-import Chip from '@mui/material/Chip';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
-import { MuiColorInput } from 'mui-color-input';
 import { Draw, Modify, Snap } from 'ol/interaction';
 import MultiPoint from 'ol/geom/MultiPoint';
 import WKT from 'ol/format/WKT';
@@ -16,12 +13,7 @@ import {
 import { transform } from 'ol/proj';
 import TextField from '@mui/material/TextField';
 import {
-  FormGroup,
-  ToggleButton,
-  ToggleButtonGroup,
-  InputLabel,
   FormControl,
-  FormControlLabel,
 } from '@mui/material';
 import styles from './MapOptions.module.css';
 import mask from '../assets/mask.svg';
@@ -29,45 +21,31 @@ import mask from '../assets/mask.svg';
 function OptionsMask({
   layer, activeLayer, updateLayer, map,
 }) {
-  if (!map) return;
-
   const theme = createTheme({
     palette: {
       primary: grey,
     },
   });
+  const layerClone = { ...layer };
 
-  const setOpacity = (d) => {
-    layer.opacity = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setFill = (d) => {
-    layer.style.fill = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setBlur = (d) => {
-    layer.blur = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setStrokeWidth = (d) => {
-    layer.style.strokeWidth = d;
-    updateLayer(layer, activeLayer);
+  const updateAttr = (attr, val) => {
+    layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
   };
 
   let draw; let snap; let
     modify;
 
   map.getLayers().forEach((el) => {
-    if (el && el.values_.id == 'drawLayerMask') {
+    // eslint-disable-next-line no-underscore-dangle
+    if (el && el.values_.id === 'drawLayerMask') {
       map.removeLayer(el);
     }
   });
 
   map.getLayers().forEach(function (el) {
-    if (el.values_.id && el.values_.id == activeLayer) {
+    // eslint-disable-next-line no-underscore-dangle
+    if (el.values_.id && el.values_.id === activeLayer) {
       const image = new Circle({
         radius: 4,
         fill: new Fill({
@@ -82,7 +60,7 @@ function OptionsMask({
           geometry(feature) {
             const coordinates = feature.getGeometry().getCoordinates()[1];
             const coords = [];
-            coordinates.forEach((d, i) => {
+            coordinates.forEach((d) => {
               coords.push(transform(d, 'EPSG:3857', 'EPSG:3857'));
             });
             return new MultiPoint(coords);
@@ -100,10 +78,9 @@ function OptionsMask({
         }),
       ];
 
-      const polygon = layer.mask;
+      const polygon = layerClone.mask;
 
       const source = new VectorSource({ wrapX: false });
-      const orginalSource = el.getSource();
 
       const drawLayer = new OLVectorLayer({
         source,
@@ -145,7 +122,7 @@ function OptionsMask({
       // hide/show draw cursor on mouseout
       map.getViewport().addEventListener(
         'mouseout',
-        (evt) => {
+        () => {
           draw.setActive(false);
         },
         false,
@@ -153,7 +130,7 @@ function OptionsMask({
 
       map.getViewport().addEventListener(
         'mouseover',
-        (evt) => {
+        () => {
           draw.setActive(true);
         },
         false,
@@ -173,11 +150,11 @@ function OptionsMask({
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:3857',
         });
-        layer.mask = wkt;
-        updateLayer(layer, activeLayer);
+        layerClone.mask = wkt;
+        updateLayer(layerClone, activeLayer);
       });
 
-      draw.on('drawstart', (e) => {
+      draw.on('drawstart', () => {
         source.clear();
       });
 
@@ -196,9 +173,9 @@ function OptionsMask({
             b,
             wkt.slice(position),
           ].join('');
-          layer.mask = invertedPolygon;
-          layer.opacity = 1;
-          updateLayer(layer, activeLayer);
+          layerClone.mask = invertedPolygon;
+          layerClone.opacity = 1;
+          updateLayer(layerClone, activeLayer);
         },
         this,
       );
@@ -210,7 +187,7 @@ function OptionsMask({
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={mask} />
+            <img src={mask} alt="" />
           </div>
           Mask Options
         </h1>
@@ -222,11 +199,8 @@ function OptionsMask({
               <TextField
                 label="Layer name"
                 variant="standard"
-                value={layer.name}
-                onChange={(e) => {
-                  layer.name = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                value={layerClone.name}
+                onChange={(e) => updateAttr('name', e.target.value)}
               />
             </FormControl>
           </div>
@@ -237,9 +211,9 @@ function OptionsMask({
             <div className={styles.optionLabel}>Opacity</div>
             <Slider
               aria-label="Opacity"
-              value={layer.opacity}
+              value={layerClone.opacity}
               size="small"
-              onChange={(e, val) => setOpacity(val)}
+              onChange={(e, val) => updateAttr('opacity', val)}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -255,9 +229,9 @@ function OptionsMask({
             <div className={styles.optionLabel}>Blur radius</div>
             <Slider
               aria-label="Blur radius"
-              value={layer.blur}
+              value={layerClone.blur}
               size="small"
-              onChange={(e, val) => setBlur(val)}
+              onChange={(e, val) => updateAttr('blur', val)}
               valueLabelDisplay="auto"
               step={1}
               color="primary"

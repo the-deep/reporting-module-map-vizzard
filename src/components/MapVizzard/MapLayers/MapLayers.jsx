@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styles from './MapLayers.module.css';
 import LayerRow from './LayerRow';
 
@@ -10,10 +9,18 @@ function MapLayers({
   setActiveLayer,
 }) {
   const updateLayers = (d, id) => {
-    if (d == 'remove') {
-      const newLayersObj = layers.filter((obj) => obj.id !== id);
+    const layersClone = [...layers];
+    if (d === 'remove') {
+      const newLayersObj = layersClone.filter((obj) => obj.id !== id);
       if (setLayers) setLayers([...newLayersObj]);
-    } else if (setLayers) setLayers([...layers]);
+    } else {
+      layersClone.forEach((dd, ii) => {
+        if (dd.id === id) {
+          layersClone[ii] = d;
+        }
+      });
+      if (setLayers) setLayers([...layersClone]);
+    }
   };
 
   function layersBgClick() {
@@ -38,7 +45,7 @@ function MapLayers({
         <h1>Layers</h1>
       </div>
       <div className={styles.layersPanelBody}>{rows}</div>
-      <div className={styles.layersPanelBg} onClick={layersBgClick} />
+      <div className={styles.layersPanelBg} onClick={layersBgClick} role="presentation" />
     </div>
   );
 }

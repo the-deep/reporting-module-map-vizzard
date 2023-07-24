@@ -7,7 +7,7 @@ function TileLayer({
   const [tileLayer, setTileLayer] = useState(false);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) return undefined;
 
     const tileRasterLayer = new OLTileLayer({
       source,

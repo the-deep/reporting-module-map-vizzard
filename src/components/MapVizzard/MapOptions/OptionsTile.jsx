@@ -1,33 +1,16 @@
-import { useEffect } from 'react';
-import OLVectorLayer from 'ol/layer/Vector';
 import Slider from '@mui/material/Slider';
 import Chip from '@mui/material/Chip';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
-import { MuiColorInput } from 'mui-color-input';
-import { Draw, Modify, Snap } from 'ol/interaction';
-import MultiPoint from 'ol/geom/MultiPoint';
-import WKT from 'ol/format/WKT';
-import Feature from 'ol/Feature';
-import { Vector as VectorSource } from 'ol/source';
-import {
-  Style, Fill, Stroke, Circle,
-} from 'ol/style';
-import { transform } from 'ol/proj';
 import TextField from '@mui/material/TextField';
 import {
-  FormGroup,
-  ToggleButton,
-  ToggleButtonGroup,
-  InputLabel,
   FormControl,
-  FormControlLabel,
 } from '@mui/material';
 import styles from './MapOptions.module.css';
 import raster from '../assets/raster.svg';
 
 function OptionsTile({
-  layer, activeLayer, updateLayer, map,
+  layer, activeLayer, updateLayer,
 }) {
   const theme = createTheme({
     palette: {
@@ -35,9 +18,10 @@ function OptionsTile({
     },
   });
 
-  const setOpacity = (d) => {
-    layer.opacity = d;
-    updateLayer(layer, activeLayer);
+  const updateAttr = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
   };
 
   return (
@@ -45,7 +29,7 @@ function OptionsTile({
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={raster} />
+            <img src={raster} alt="" />
           </div>
           Raster Options
         </h1>
@@ -58,10 +42,7 @@ function OptionsTile({
                 label="Layer name"
                 variant="standard"
                 value={layer.name}
-                onChange={(e) => {
-                  layer.name = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                onChange={(e) => updateAttr('name', e.target.value)}
               />
             </FormControl>
           </div>
@@ -74,7 +55,7 @@ function OptionsTile({
               aria-label="Opacity"
               value={layer.opacity}
               size="small"
-              onChange={(e, val) => setOpacity(val)}
+              onChange={(e, val) => updateAttr('opacity', val)}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"

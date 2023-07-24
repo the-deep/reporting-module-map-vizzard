@@ -20,11 +20,12 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
   const allColumns = { ...layer.data.features[0].properties };
 
   const removeEmpty = (obj) => {
-    Object.entries(obj).forEach(
+    const objClone = { ...obj };
+    Object.entries(objClone).forEach(
       ([key, val]) => (val && typeof val === 'object' && removeEmpty(val))
-        || ((val === null || val === '') && delete obj[key]),
+        || ((val === null || val === '') && delete objClone[key]),
     );
-    return obj;
+    return objClone;
   };
 
   columns = removeEmpty(allColumns);
@@ -36,40 +37,24 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
     },
   });
 
-  // update layer functions
-  const setOpacity = (d) => {
-    layer.opacity = d;
-    updateLayer(layer, activeLayer);
+  const updateAttr = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
+  };
+
+  const updateStyle = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone.style[attr] = val;
+    updateLayer(layerClone, activeLayer);
   };
 
   const setFill = (d) => {
-    layer.style.fill = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setFillType = (d) => {
-    layer.style.fillType = d;
-    updateLayer(layer, activeLayer);
+    updateStyle('fill', d);
   };
 
   const setStroke = (d) => {
-    layer.style.stroke = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setStrokeWidth = (d) => {
-    layer.style.strokeWidth = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setShowLabels = (d) => {
-    layer.showLabels = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setLabelColumn = (d) => {
-    layer.labelColumn = d;
-    updateLayer(layer, activeLayer);
+    updateStyle('stroke', d);
   };
 
   return (
@@ -89,10 +74,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
                 label="Layer name"
                 variant="standard"
                 value={layer.name}
-                onChange={(e) => {
-                  layer.name = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                onChange={(e) => updateAttr('name', e.target.value)}
               />
             </FormControl>
           </div>
@@ -105,7 +87,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
               aria-label="Opacity"
               value={layer.opacity}
               size="small"
-              onChange={(e, val) => setOpacity(val)}
+              onChange={(e, val) => updateAttr('opacity', val)}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -130,7 +112,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
               aria-label="Stroke width"
               value={layer.style.strokeWidth}
               size="small"
-              onChange={(e, val) => setStrokeWidth(val)}
+              onChange={(e, val) => updateStyle('strokeWidth', val)}
               valueLabelDisplay="auto"
               step={0.1}
               color="primary"
@@ -151,7 +133,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
                 color="primary"
                 exclusive
                 size="small"
-                onChange={(e, val) => setFillType(val)}
+                onChange={(e, val) => updateStyle('fillType', val)}
                 aria-label="Fill type"
               >
                 <ToggleButton value="single">Single</ToggleButton>
@@ -161,7 +143,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
             </div>
           </div>
 
-          {layer.style.fillType == 'single' && (
+          {layer.style.fillType === 'single' && (
             <div className={styles.optionRow}>
               <div className={styles.optionLabel}>Fill color</div>
               <div className={styles.optionValue}>
@@ -178,7 +160,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
               <Switch
                 checked={layer.showLabels}
                 color="default"
-                onChange={(e, val) => setShowLabels(val)}
+                onChange={(e, val) => updateAttr('showLabels', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
@@ -193,7 +175,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
                     labelId="text-column-label"
                     id="text-column"
                     value={layer.labelColumn}
-                    onChange={(e, val) => setLabelColumn(val.props.value)}
+                    onChange={(e, val) => updateAttr('labelColumn', val.props.value)}
                     size="small"
                     style={{ backgroundColor: '#fff', fontSize: 12 }}
                     variant="standard"

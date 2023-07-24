@@ -1,24 +1,16 @@
-import { useContext, useEffect } from 'react';
-import OLVectorLayer from 'ol/layer/Vector';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Chip from '@mui/material/Chip';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
-import { MuiColorInput } from 'mui-color-input';
 import TextField from '@mui/material/TextField';
 import {
-  FormGroup,
   InputLabel,
   FormControl,
-  FormControlLabel,
 } from '@mui/material';
-import MapContext from '../../Map/MapContext';
 import styles from './MapOptions.module.css';
 import point from '../assets/point.svg';
-
 import capital from '../../Map/assets/map-icons/capital.svg';
 import city from '../../Map/assets/map-icons/city.svg';
 import settlement from '../../Map/assets/map-icons/settlement.svg';
@@ -44,19 +36,10 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
     },
   });
 
-  const setOpacity = (d) => {
-    layer.opacity = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setShowLabels = (d) => {
-    layer.showLabels = d;
-    updateLayer(layer, activeLayer);
-  };
-
-  const setSymbol = (d) => {
-    layer.symbol = d;
-    updateLayer(layer, activeLayer);
+  const updateAttr = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
   };
 
   return (
@@ -64,7 +47,7 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={point} />
+            <img src={point} alt="" />
           </div>
           Symbol Options
         </h1>
@@ -77,10 +60,7 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                 label="Layer name"
                 variant="standard"
                 value={layer.name}
-                onChange={(e) => {
-                  layer.name = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                onChange={(e) => updateAttr('name', e.target.value)}
               />
             </FormControl>
           </div>
@@ -93,7 +73,7 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
               aria-label="Opacity"
               value={layer.opacity}
               size="small"
-              onChange={(e, val) => setOpacity(val)}
+              onChange={(e, val) => updateAttr('opacity', val)}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -113,16 +93,17 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                 id="symbol-select"
                 style={{ backgroundColor: '#fff' }}
                 value={layer.symbol}
-                onChange={(e, val) => setSymbol(val.props.value)}
+                onChange={(e, val) => updateAttr('symbol', val.props.value)}
                 label="Symbol"
                 variant="outlined"
                 size="small"
               >
-                {symbols.map((symbol, i) => (
+                {symbols.map((symbol) => (
                   <MenuItem key={symbol} value={symbol}>
                     <img
                       className={styles.mapSymbolSelectIcon}
                       src={symbolIcons[symbol]}
+                      alt=""
                     />
                     &nbsp;
                     {symbol}
@@ -142,7 +123,7 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
               <Switch
                 checked={layer.showLabels}
                 color="default"
-                onChange={(e, val) => setShowLabels(val)}
+                onChange={(e, val) => updateAttr('showLabels', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>

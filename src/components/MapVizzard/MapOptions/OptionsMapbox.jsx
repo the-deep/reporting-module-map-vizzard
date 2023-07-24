@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Slider from '@mui/material/Slider';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
@@ -20,14 +19,8 @@ function OptionsMapbox({
     { label: 'Light', value: 'mapbox://styles/mapbox/light-v11' },
     { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11' },
     { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9' },
-    {
-      label: 'Satellite-Streets',
-      value: 'mapbox://styles/mapbox/satellite-streets-v10',
-    },
-    {
-      label: 'Custom',
-      value: 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv',
-    },
+    { label: 'Satellite-Streets', value: 'mapbox://styles/mapbox/satellite-streets-v10' },
+    { label: 'Custom', value: 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv' },
   ];
 
   const theme = createTheme({
@@ -36,9 +29,10 @@ function OptionsMapbox({
     },
   });
 
-  const setOpacity = (d) => {
-    layer.opacity = d;
-    updateLayer(layer, activeLayer);
+  const updateAttr = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
   };
 
   return (
@@ -59,10 +53,7 @@ function OptionsMapbox({
                 label="Layer name"
                 variant="standard"
                 value={layer.name}
-                onChange={(e) => {
-                  layer.name = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                onChange={(e) => updateAttr('name', e.target.value)}
               />
             </FormControl>
           </div>
@@ -75,7 +66,7 @@ function OptionsMapbox({
               aria-label="Opacity"
               value={layer.opacity}
               size="small"
-              onChange={(e, val) => setOpacity(val)}
+              onChange={(e, val) => updateAttr('opacity', val)}
               valueLabelDisplay="auto"
               step={0.01}
               color="primary"
@@ -95,16 +86,7 @@ function OptionsMapbox({
                   labelId="text-column-label"
                   id="text-column"
                   value={layer.style}
-                  onChange={(e, val) => {
-                    // if(val.props.children==="Custom"){
-                    // setCustomStyle(true);
-                    // } else {
-                    // setCustomStyle(false);
-                    layer.style = val.props.value;
-                    updateLayer(layer, activeLayer);
-
-                    // }
-                  }}
+                  onChange={(e, val) => updateAttr('style', val.props.value)}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
@@ -125,10 +107,7 @@ function OptionsMapbox({
                 label="Style URL"
                 variant="standard"
                 value={layer.style}
-                onChange={(e) => {
-                  layer.style = e.target.value;
-                  updateLayer(layer, activeLayer);
-                }}
+                onChange={(e) => updateAttr('style', e.target.value)}
               />
             </FormControl>
           </div>

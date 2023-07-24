@@ -1,37 +1,32 @@
-import { useContext, useEffect } from 'react';
-import OLVectorLayer from 'ol/layer/Vector';
-import Slider from '@mui/material/Slider';
-import Chip from '@mui/material/Chip';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { createTheme } from '@mui/material/styles';
-import grey from '@mui/material/colors/grey';
-import { MuiColorInput } from 'mui-color-input';
 import {
-  FormGroup,
-  InputLabel,
   FormControl,
-  FormControlLabel,
 } from '@mui/material';
-import MapContext from '../../Map/MapContext';
 import styles from './MapOptions.module.css';
 import settings from '../assets/settings.svg';
 
 function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
-  const theme = createTheme({
-    palette: {
-      primary: grey,
-    },
-  });
+  const updateAttr = (attr, val) => {
+    const mapOptionsClone = { ...mapOptions };
+    mapOptionsClone[attr] = val;
+    updateMapOptions(mapOptionsClone);
+  };
+
+  const updateCenter = (attr, val) => {
+    const mapOptionsClone = { ...mapOptions };
+    mapOptionsClone.center[attr] = val;
+    updateMapOptions(mapOptionsClone);
+  };
 
   return (
     <div>
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={settings} />
+            <img src={settings} alt="" />
           </div>
           Map Options
         </h1>
@@ -44,10 +39,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 label="Main title"
                 variant="standard"
                 value={mapOptions.mainTitle}
-                onChange={(e) => {
-                  mapOptions.mainTitle = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateAttr('mainTitle', e.target.value)}
               />
             </FormControl>
           </div>
@@ -59,10 +51,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 size="small"
                 variant="standard"
                 value={mapOptions.subTitle}
-                onChange={(e) => {
-                  mapOptions.subTitle = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateAttr('subTitle', e.target.value)}
               />
             </FormControl>
           </div>
@@ -80,10 +69,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 1,
                 }}
-                onChange={(e) => {
-                  mapOptions.height = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateAttr('height', e.target.value)}
               />
             </FormControl>
           </div>
@@ -99,10 +85,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 1,
                 }}
-                onChange={(e) => {
-                  mapOptions.width = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateAttr('width', e.target.value)}
               />
             </FormControl>
           </div>
@@ -119,10 +102,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.1,
                 }}
-                onChange={(e) => {
-                  mapOptions.center.lat = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateCenter('lat', e.target.value)}
               />
             </FormControl>
           </div>
@@ -137,10 +117,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.1,
                 }}
-                onChange={(e) => {
-                  mapOptions.center.lon = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateCenter('lon', e.target.value)}
               />
             </FormControl>
           </div>
@@ -155,10 +132,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.05,
                 }}
-                onChange={(e) => {
-                  mapOptions.zoom = e.target.value;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e) => updateAttr('zoom', e.target.value)}
               />
             </FormControl>
           </div>
@@ -171,10 +145,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
               <Switch
                 checked={mapOptions.enableZoomControls}
                 color="default"
-                onChange={(e, val) => {
-                  mapOptions.enableZoomControls = val;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e, val) => updateAttr('enableZoomControls', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
@@ -189,10 +160,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                   labelId="text-column-label"
                   id="text-column"
                   value={mapOptions.zoomControlsPosition}
-                  onChange={(e, val) => {
-                    mapOptions.zoomControlsPosition = (val.props.value);
-                    updateMapOptions(mapOptions);
-                  }}
+                  onChange={(e, val) => updateAttr('zoomControlsPosition', val.props.value)}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
@@ -212,10 +180,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
               <Switch
                 checked={mapOptions.enableMouseWheelZoom}
                 color="default"
-                onChange={(e, val) => {
-                  mapOptions.enableMouseWheelZoom = val;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e, val) => updateAttr('enableMouseWheelZoom', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
@@ -229,10 +194,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
               <Switch
                 checked={mapOptions.showScale}
                 color="default"
-                onChange={(e, val) => {
-                  mapOptions.showScale = val;
-                  updateMapOptions(mapOptions);
-                }}
+                onChange={(e, val) => updateAttr('showScale', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
@@ -247,10 +209,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                   labelId="text-column-label"
                   id="text-column"
                   value={mapOptions.scaleBarPosition}
-                  onChange={(e, val) => {
-                    mapOptions.scaleBarPosition = (val.props.value);
-                    updateMapOptions(mapOptions);
-                  }}
+                  onChange={(e, val) => updateAttr('scaleBarPosition', val.props.value)}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
@@ -273,10 +232,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                   labelId="text-column-label"
                   id="text-column"
                   value={mapOptions.scaleUnits}
-                  onChange={(e, val) => {
-                    mapOptions.scaleUnits = val.props.value;
-                    updateMapOptions(mapOptions);
-                  }}
+                  onChange={(e, val) => updateAttr('scaleUnits', val.props.value)}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
@@ -298,10 +254,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                   labelId="text-column-label"
                   id="text-column"
                   value={mapOptions.scaleBar}
-                  onChange={(e, val) => {
-                    mapOptions.scaleBar = eval(val.props.value);
-                    updateMapOptions(mapOptions);
-                  }}
+                  onChange={(e, val) => updateAttr('scaleBar', val.props.value)}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"

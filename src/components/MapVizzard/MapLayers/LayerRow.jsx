@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './MapLayers.module.css';
 import polygon from '../assets/polygon.svg';
 import point from '../assets/point.svg';
@@ -14,7 +14,6 @@ function LayerRow({
   row, update, activeLayer, setActiveLayer,
 }) {
   const [hovered, setHovered] = useState(false);
-  const toggleHover = () => setHovered((prevHovered) => !prevHovered);
   const addHover = () => setHovered(true);
   const removeHover = () => setHovered(false);
 
@@ -24,13 +23,15 @@ function LayerRow({
   };
 
   const moveBack = () => {
-    row.zIndex -= 1.001;
-    update(row, row.id);
+    const newRow = { ...row };
+    newRow.zIndex -= 1.001;
+    update(newRow, newRow.id);
   };
 
   const moveForward = () => {
-    row.zIndex += 1.001;
-    update(row, row.id);
+    const newRow = { ...row };
+    newRow.zIndex += 1.001;
+    update(newRow, newRow.id);
   };
 
   const remove = () => {
@@ -38,32 +39,33 @@ function LayerRow({
   };
 
   const toggleVisibility = () => {
-    if (row.visible === 1) {
-      row.visible = 0;
+    const newRow = { ...row };
+    if (newRow.visible === 1) {
+      newRow.visible = 0;
     } else {
-      row.visible = 1;
+      newRow.visible = 1;
     }
-    row.ts = Math.random();
-    update(row, row.id);
+    newRow.ts = Math.random();
+    update(newRow, newRow.id);
   };
 
   let icon;
   if (row.type === 'osm') {
-    icon = <img className={styles.MapLayers_raster} src={raster} />;
+    icon = <img className={styles.MapLayers_raster} src={raster} alt="" />;
   } else if (row.type === 'mask') {
-    icon = <img className={styles.MapLayers_point} src={mask} />;
+    icon = <img className={styles.MapLayers_point} src={mask} alt="" />;
   } else if (row.type === 'symbol') {
-    icon = <img className={styles.MapLayers_point} src={point} />;
+    icon = <img className={styles.MapLayers_point} src={point} alt="" />;
   } else if (row.type === 'polygon') {
-    icon = <img className={styles.MapLayers_polygon} src={polygon} />;
+    icon = <img className={styles.MapLayers_polygon} src={polygon} alt="" />;
   } else {
-    icon = <img className={styles.MapLayers_raster} src={raster} />;
+    icon = <img className={styles.MapLayers_raster} src={raster} alt="" />;
   }
   let showIcon;
   if (row.visible) {
-    showIcon = <img src={show} />;
+    showIcon = <img src={show} alt="" />;
   } else {
-    showIcon = <img src={hide} />;
+    showIcon = <img src={hide} alt="" />;
   }
 
   let activeClass = '';
@@ -81,6 +83,7 @@ function LayerRow({
       onClick={clickRow}
       onMouseEnter={addHover}
       onMouseLeave={removeHover}
+      role="presentation"
     >
       <div className={styles.MapLayers_icon_container}>
         <div className={styles.MapLayers_icon}>{icon}</div>
@@ -89,14 +92,14 @@ function LayerRow({
         {row.name}
       </div>
       <div className={styles.MapLayers_buttons}>
-        <div className={styles.MapLayers_buttons_forward} onClick={moveForward}>
-          <img src={up} />
+        <div className={styles.MapLayers_buttons_forward} onClick={moveForward} role="presentation">
+          <img src={up} alt="" />
         </div>
-        <div className={styles.MapLayers_buttons_back} onClick={moveBack}>
-          <img src={down} />
+        <div className={styles.MapLayers_buttons_back} onClick={moveBack} role="presentation">
+          <img src={down} alt="" />
         </div>
-        <div className={styles.MapLayers_buttons_remove} onClick={remove}>
-          <img src={removeIcon} />
+        <div className={styles.MapLayers_buttons_remove} onClick={remove} role="presentation">
+          <img src={removeIcon} alt="" />
         </div>
         <div
           className={
@@ -105,6 +108,7 @@ function LayerRow({
               : styles.MapLayers_buttons_show
           }
           onClick={toggleVisibility}
+          role="presentation"
         >
           {showIcon}
         </div>
