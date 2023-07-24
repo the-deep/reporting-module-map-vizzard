@@ -45,7 +45,9 @@
             "type": "mapbox",
             "opacity": 0.39,
             "zIndex": 0,
-            "visible": 1
+            "visible": 1,
+            "style": "mapbox://styles/mapbox/light-v11",
+            "accessToken": "pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ"
         },
         {
             "id": 12,

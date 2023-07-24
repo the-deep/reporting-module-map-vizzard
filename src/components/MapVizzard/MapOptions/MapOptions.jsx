@@ -5,6 +5,7 @@ import OptionsVector from './OptionsVector';
 import OptionsMask from './OptionsMask';
 import OptionsSymbol from './OptionsSymbol';
 import OptionsTile from './OptionsTile';
+import OptionsMapbox from './OptionsMapbox';
 import OptionsMapGeneral from './OptionsMapGeneral';
 import styles from './MapOptions.module.css';
 import MapContext from '../../Map/MapContext';
@@ -120,7 +121,7 @@ export function MapOptions({
         }
         if (dd.type == 'mapbox') {
           renderLayers.push(
-            <OptionsTile
+            <OptionsMapbox
               key="mapboxOptions"
               layer={dd}
               updateLayer={updateLayer}

@@ -84,9 +84,10 @@ function Map({
         renderLayersArr[i] = d.visible > 0 && (
           <MapboxLayer
             key={`mapboxLayer${d.id}`}
-            source={osm()}
             zIndex={d.zIndex}
             opacity={d.opacity}
+            styleUrl={d.style}
+            accessToken={d.accessToken}
           />
         );
       }
