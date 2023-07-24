@@ -5,8 +5,6 @@ import {
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { fromLonLat, get } from 'ol/proj';
-import MapContext from '../MapContext';
-
 import capital from '../assets/map-icons/capital.svg';
 import city from '../assets/map-icons/city.svg';
 import settlement from '../assets/map-icons/settlement.svg';

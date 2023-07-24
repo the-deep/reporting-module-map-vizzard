@@ -23,13 +23,14 @@ import {
   FormControl,
   FormControlLabel,
 } from '@mui/material';
-import MapContext from '../../Map/MapContext';
 import styles from './MapOptions.module.css';
 import mask from '../assets/mask.svg';
 
 function OptionsMask({
   layer, activeLayer, updateLayer, map,
 }) {
+  if (!map) return;
+
   const theme = createTheme({
     palette: {
       primary: grey,

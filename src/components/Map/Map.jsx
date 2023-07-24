@@ -1,24 +1,16 @@
-import React, {
-  useState, useMemo, useContext, useEffect,
-} from 'react';
-import {
-  Style, Icon, Fill, Stroke, Circle, Image,
-} from 'ol/style';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
+import React, { useState, useMemo, useEffect } from 'react';
 import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { osm, vector, mask } from './Source';
 import {
   TileLayer, VectorLayer, MapboxLayer, MaskLayer,
 } from './Layers';
-// import 'bootstrap/dist/css/bootstrap.css';
-import { addCircles, addSymbols } from './Layers/SymbolLayer';
-import MapContext from './MapContext';
+import { addSymbols } from './Layers/SymbolLayer';
 import OpenLayersMap from './OpenLayersMap';
 import styles from './Map.module.css';
 
 function Map({
+  mapObj,
   setMapObj,
   layers,
   height,
@@ -42,9 +34,10 @@ function Map({
     const renderLayersArr = [];
 
     layers.forEach((d, i) => {
-      if (d.type == 'symbol') {
+      if (d.type === 'symbol') {
         renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
+            map={map}
             key={`symbolLayer${d.id}`}
             source={vector({ features: addSymbols(d) })}
             zIndex={d.zIndex}
@@ -52,9 +45,10 @@ function Map({
           />
         );
       }
-      if (d.type == 'osm') {
+      if (d.type === 'osm') {
         renderLayersArr[i] = d.visible > 0 && (
           <TileLayer
+            map={map}
             key={`tileLayer${d.id}`}
             source={osm()}
             zIndex={d.zIndex}
@@ -62,9 +56,10 @@ function Map({
           />
         );
       }
-      if (d.type == 'polygon') {
+      if (d.type === 'polygon') {
         renderLayersArr[i] = d.visible > 0 && (
           <VectorLayer
+            map={map}
             key={`vectorLayer${d.id}`}
             source={vector({
               features: new GeoJSON().readFeatures(d.data, {
@@ -80,9 +75,10 @@ function Map({
           />
         );
       }
-      if (d.type == 'mapbox') {
+      if (d.type === 'mapbox') {
         renderLayersArr[i] = d.visible > 0 && (
           <MapboxLayer
+            map={map}
             key={`mapboxLayer${d.id}`}
             zIndex={d.zIndex}
             opacity={d.opacity}
@@ -91,9 +87,10 @@ function Map({
           />
         );
       }
-      if (d.type == 'mask') {
+      if (d.type === 'mask') {
         renderLayersArr[i] = d.visible > 0 && (
           <MaskLayer
+            map={map}
             key={`maskLayer${d.id}`}
             id={d.id}
             source={mask()}
@@ -106,36 +103,39 @@ function Map({
       }
     });
     setRenderLayers(renderLayersArr);
-  }, [layers]);
+  }, [map, layers]);
 
-  return (
-    <MapContext.Provider value={{ map }}>
-      <div
-        className={styles.mapContainer}
-        style={{ height: `${height}px`, width: `${width}px` }}
-      >
-        <div className={styles.mapTitle}>
-          <div className={styles.mainTitle}>{mainTitle}</div>
-          <div className={styles.subTitle}>{subTitle}</div>
-        </div>
-        <OpenLayersMap
-          center={fromLonLat([center.lon, center.lat])}
-          zoom={zoom}
-          setMapObj={setMapObj}
-          setMap={setMap}
-          showScale={showScale}
-          scaleUnits={scaleUnits}
-          scaleBar={scaleBar}
-          scaleBarPosition={scaleBarPosition}
-          enableMouseWheelZoom={enableMouseWheelZoom}
-          enableZoomControls={enableZoomControls}
-          zoomControlsPosition={zoomControlsPosition}
-        >
-          {renderLayers}
-        </OpenLayersMap>
+  const mapContext = (
+    <div
+      className={styles.mapContainer}
+      style={{ height: `${height}px`, width: `${width}px` }}
+    >
+      <div className={styles.mapTitle}>
+        <div className={styles.mainTitle}>{mainTitle}</div>
+        <div className={styles.subTitle}>{subTitle}</div>
       </div>
-    </MapContext.Provider>
+      <OpenLayersMap
+        map={map}
+        mapObj={mapObj}
+        setMapObj={setMapObj}
+        center={fromLonLat([center.lon, center.lat])}
+        zoom={zoom}
+        setMap={setMap}
+        showScale={showScale}
+        scaleUnits={scaleUnits}
+        scaleBar={scaleBar}
+        scaleBarPosition={scaleBarPosition}
+        enableMouseWheelZoom={enableMouseWheelZoom}
+        enableZoomControls={enableZoomControls}
+        zoomControlsPosition={zoomControlsPosition}
+      >
+        {renderLayers}
+      </OpenLayersMap>
+    </div>
   );
+  // });
+
+  return mapContext;
 }
 
 export default Map;

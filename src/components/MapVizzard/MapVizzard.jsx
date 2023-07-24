@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import Map from '../Map';
 import MapLayers from './MapLayers';
 import MapOptions from './MapOptions';
-import MapContext from '../Map/MapContext';
 import styles from './MapOptions/MapOptions.module.css';
 
 function MapVizzard({ mapConfig }) {
