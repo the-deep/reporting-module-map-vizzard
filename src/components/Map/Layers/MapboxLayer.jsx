@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TileLayer from 'ol/layer/Tile';
 import * as olSource from 'ol/source';
 
@@ -8,14 +8,7 @@ function MapboxLayer({
   const [mapboxLayer, setMapboxLayer] = useState(false);
 
   useEffect(() => {
-    if (!map) return;
-
-    // const mbLayer = new MapboxVector({
-    //   styleUrl: styleUrl,
-    //   attributionControl: true,
-    //   scrollZoom: false,
-    //   accessToken: accessToken,
-    // });
+    if (!map) return undefined;
 
     let styleUrlParsed = styleUrl.replace('mapbox://', '');
     styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
@@ -43,7 +36,12 @@ function MapboxLayer({
   useEffect(() => {
     if (!mapboxLayer) return;
     mapboxLayer.setOpacity(opacity);
-  }, [opacity]);
+  }, [mapboxLayer, opacity]);
+
+  useEffect(() => {
+    if (!mapboxLayer) return;
+    mapboxLayer.setZIndex(zIndex);
+  }, [mapboxLayer, zIndex]);
 
   return null;
 }

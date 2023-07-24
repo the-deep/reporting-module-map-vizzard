@@ -1,10 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import OLVectorLayer from 'ol/layer/Vector';
 import {
-  Style, Icon, Fill, Stroke, Circle, Image, Text,
+  Style, Fill, Stroke, Text,
 } from 'ol/style';
 import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
-import MapContext from '../MapContext';
 
 function VectorLayer({
   map,
@@ -12,12 +11,11 @@ function VectorLayer({
   style,
   zIndex = 1,
   opacity = 1,
-  declutter = true,
   showLabels = false,
   labelColumn = '',
 }) {
   useEffect(() => {
-    if (!map) return;
+    if (!map) return undefined;
     let vectorLayer;
     const styles = [];
     let labelStyle;

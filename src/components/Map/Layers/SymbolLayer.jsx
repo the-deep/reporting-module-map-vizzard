@@ -1,10 +1,9 @@
-import { useContext, useEffect } from 'react';
 import {
-  Style, Icon, Fill, Stroke, Circle, Image, Text,
+  Style, Icon, Fill, Stroke, Circle, Text,
 } from 'ol/style';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { fromLonLat, get } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 import capital from '../assets/map-icons/capital.svg';
 import city from '../assets/map-icons/city.svg';
 import settlement from '../assets/map-icons/settlement.svg';
@@ -62,16 +61,16 @@ const addSymbols = (d) => {
   let scale = 0.9;
   let font = '11px Arial';
 
-  if (d.symbol == 'city') {
+  if (d.symbol === 'city') {
     scale = 0.6;
   }
 
-  if (d.symbol == 'settlement') {
+  if (d.symbol === 'settlement') {
     scale = 0.4;
     font = '10px Arial';
   }
 
-  if (d.symbol == 'capital') {
+  if (d.symbol === 'capital') {
     scale = 0.9;
     font = 'bold 11px Arial';
   }

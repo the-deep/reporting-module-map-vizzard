@@ -1,9 +1,6 @@
-import { useContext, useEffect } from 'react';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { useEffect } from 'react';
 import { Style, Fill } from 'ol/style';
-import { Vector as VectorSource } from 'ol/source';
 import OLVectorLayer from 'ol/layer/Vector';
-import Draw from 'ol/interaction/Draw';
 import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
 import filters from '../filters.module.css';
@@ -12,7 +9,7 @@ function MaskLayer({
   map, id, polygon, source, blur, zIndex = 1, opacity = 1,
 }) {
   useEffect(() => {
-    if (!map) return;
+    if (!map) return undefined;
 
     const style = new Style({
       fill: new Fill({
