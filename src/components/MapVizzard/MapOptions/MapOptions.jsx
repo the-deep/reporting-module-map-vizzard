@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Draw, Modify, Snap } from 'ol/interaction';
-import PropTypes from 'prop-types';
 import OptionsVector from './OptionsVector';
 import OptionsMask from './OptionsMask';
 import OptionsSymbol from './OptionsSymbol';
@@ -8,13 +7,10 @@ import OptionsTile from './OptionsTile';
 import OptionsMapbox from './OptionsMapbox';
 import OptionsMapGeneral from './OptionsMapGeneral';
 import styles from './MapOptions.module.css';
-import MapContext from '../../Map/MapContext';
 
 function MapOptions({
   layers,
   setLayers,
-  val,
-  setVal,
   activeLayer,
   mapOptions,
   setMapOptions,
@@ -24,9 +20,9 @@ function MapOptions({
 
   useEffect(() => {
     if (!map) return;
-    layers.forEach((dd, ii) => {
-      if (dd.id == activeLayer) {
-        if (dd.type != 'mask') {
+    layers.forEach((dd) => {
+      if (dd.id === activeLayer) {
+        if (dd.type !== 'mask') {
           map.getInteractions().forEach((interaction) => {
             if (interaction instanceof Draw) {
               map.removeInteraction(interaction);
@@ -56,19 +52,21 @@ function MapOptions({
       }
     });
     map.getLayers().forEach((el) => {
-      if (el && el.values_.id == 'drawLayerMask') {
+      // eslint-disable-next-line no-underscore-dangle
+      if (el && el.values_.id === 'drawLayerMask') {
         map.removeLayer(el);
       }
     });
   }
 
   const updateLayer = (d, id) => {
-    layers.forEach((dd, ii) => {
-      if (dd.id == id) {
-        layers[ii] = d;
+    const layersClone = [...layers];
+    layersClone.forEach((dd, ii) => {
+      if (dd.id === id) {
+        layersClone[ii] = d;
       }
     });
-    if (setLayers) setLayers([...layers]);
+    if (setLayers) setLayers([...layersClone]);
   };
 
   const updateMapOptions = (d) => {
@@ -86,9 +84,9 @@ function MapOptions({
       />,
     );
   } else {
-    layers.forEach((dd, ii) => {
-      if (dd.id == activeLayer) {
-        if (dd.type == 'polygon') {
+    layers.forEach((dd) => {
+      if (dd.id === activeLayer) {
+        if (dd.type === 'polygon') {
           renderLayers.push(
             <OptionsVector
               key="polygonOptions"
@@ -98,7 +96,7 @@ function MapOptions({
             />,
           );
         }
-        if (dd.type == 'symbol') {
+        if (dd.type === 'symbol') {
           renderLayers.push(
             <OptionsSymbol
               key="polygonOptions"
@@ -108,7 +106,7 @@ function MapOptions({
             />,
           );
         }
-        if (dd.type == 'mask') {
+        if (dd.type === 'mask') {
           renderLayers.push(
             <OptionsMask
               key="maskOptions"
@@ -119,7 +117,7 @@ function MapOptions({
             />,
           );
         }
-        if (dd.type == 'mapbox') {
+        if (dd.type === 'mapbox') {
           renderLayers.push(
             <OptionsMapbox
               key="mapboxOptions"
@@ -130,7 +128,7 @@ function MapOptions({
           );
         }
 
-        if (dd.type == 'osm') {
+        if (dd.type === 'osm') {
           renderLayers.push(
             <OptionsTile
               key="osmOptions"
