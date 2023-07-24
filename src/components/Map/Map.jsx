@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { osm, vector, mask } from './Source';
@@ -27,10 +27,9 @@ function Map({
   enableZoomControls,
   zoomControlsPosition,
 }) {
-  const [renderLayers, setRenderLayers] = useState([]);
   const [map, setMap] = useState(null);
 
-  useEffect(() => {
+  const renderLayers = useMemo(() => {
     const renderLayersArr = [];
 
     layers.forEach((d, i) => {
@@ -102,7 +101,7 @@ function Map({
         );
       }
     });
-    setRenderLayers(renderLayersArr);
+    return renderLayersArr;
   }, [map, layers]);
 
   const mapContext = (
