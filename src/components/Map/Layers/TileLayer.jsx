@@ -1,30 +1,30 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import OLTileLayer from 'ol/layer/Tile';
-import MapContext from '../MapContext';
 
-function TileLayer({ source, zIndex = 0, opacity = 1 }) {
-  const { map } = useContext(MapContext);
+function TileLayer({
+  map, source, zIndex = 0, opacity = 1,
+}) {
   const [tileLayer, setTileLayer] = useState(false);
 
   useEffect(() => {
     if (!map) return;
 
-    const tileLayer = new OLTileLayer({
+    const tileRasterLayer = new OLTileLayer({
       source,
       zIndex,
     });
-    map.addLayer(tileLayer);
-    tileLayer.setZIndex(zIndex);
-    tileLayer.setOpacity(opacity);
+    map.addLayer(tileRasterLayer);
+    tileRasterLayer.setZIndex(zIndex);
+    tileRasterLayer.setOpacity(opacity);
 
-    setTileLayer(tileLayer);
+    setTileLayer(tileRasterLayer);
 
     return () => {
       if (map) {
-        map.removeLayer(tileLayer);
+        map.removeLayer(tileRasterLayer);
       }
     };
-  }, [JSON.stringify(source.urls)]);
+  }, [map, JSON.stringify(source.urls)]);
 
   useEffect(() => {
     if (!tileLayer) return;

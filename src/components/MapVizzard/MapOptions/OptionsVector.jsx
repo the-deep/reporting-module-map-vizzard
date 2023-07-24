@@ -1,29 +1,16 @@
-import { useContext, useEffect } from 'react';
-import OLVectorLayer from 'ol/layer/Vector';
 import Slider from '@mui/material/Slider';
-import Chip from '@mui/material/Chip';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
-import { MuiColorInput } from 'mui-color-input';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import TextField from '@mui/material/TextField';
 import {
-  FormGroup,
   ToggleButton,
   ToggleButtonGroup,
-  InputLabel,
   FormControl,
-  FormControlLabel,
 } from '@mui/material';
 import ColorPicker from './ColorPicker';
-import MapContext from '../../Map/MapContext';
 import styles from './MapOptions.module.css';
 import polygon from '../assets/polygon.svg';
 
@@ -89,7 +76,7 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
     <div>
       <div className={styles.mapOptionsPanel}>
         <h1>
-          <div className={styles.mapOptions_icon}><img src={polygon} /></div>
+          <div className={styles.mapOptions_icon}><img src={polygon} alt="" /></div>
           Polygon Options
         </h1>
       </div>
@@ -213,8 +200,8 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
                   >
                     {Object.keys(columns)
                       .sort()
-                      .map((labelColumn, i) => (
-                        <MenuItem key={`textLabelColumn${i}`} value={labelColumn}>
+                      .map((labelColumn) => (
+                        <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
                           {labelColumn}
                         </MenuItem>
                       ))}

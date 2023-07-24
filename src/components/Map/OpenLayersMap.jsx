@@ -4,13 +4,14 @@ import React, {
 import * as ol from 'ol';
 import { ScaleLine, Zoom, defaults as defaultControls } from 'ol/control';
 import { MouseWheelZoom } from 'ol/interaction';
-import MapContext from './MapContext';
 import styles from './Map.module.css';
 import 'ol/ol.css';
 
 function OpenLayersMap({
-  children,
+  mapObj,
   setMapObj,
+  map,
+  children,
   setMap,
   zoom,
   center,
@@ -23,7 +24,6 @@ function OpenLayersMap({
   zoomControlsPosition,
 }) {
   const mapRef = useRef();
-  const { map } = useContext(MapContext);
 
   // on component mount
   useEffect(() => {
@@ -70,8 +70,8 @@ function OpenLayersMap({
     }
 
     mapObject.setTarget(mapRef.current);
-    if (setMapObj) setMapObj(mapObject);
     if (setMap) setMap(mapObject);
+    if (setMapObj) setMapObj(mapObject);
     return () => mapObject.setTarget(undefined);
   }, []);
 

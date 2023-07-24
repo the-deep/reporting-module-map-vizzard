@@ -13,8 +13,8 @@ function ColorPicker({ color, setColor }) {
     setDisplayColorPicker(false);
   };
 
-  const handleChange = (color) => {
-    setColor(color.rgb);
+  const handleChange = (c) => {
+    setColor(c.rgb);
   };
 
   return (

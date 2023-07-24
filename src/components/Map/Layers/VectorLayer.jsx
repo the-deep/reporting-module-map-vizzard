@@ -7,6 +7,7 @@ import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
 import MapContext from '../MapContext';
 
 function VectorLayer({
+  map,
   source,
   style,
   zIndex = 1,
@@ -15,8 +16,6 @@ function VectorLayer({
   showLabels = false,
   labelColumn = '',
 }) {
-  const { map } = useContext(MapContext);
-
   useEffect(() => {
     if (!map) return;
     let vectorLayer;

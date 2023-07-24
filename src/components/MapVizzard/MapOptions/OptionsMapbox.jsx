@@ -1,46 +1,33 @@
-import { useState } from "react";
-import OLVectorLayer from "ol/layer/Vector";
-import Slider from "@mui/material/Slider";
-import Chip from "@mui/material/Chip";
-import { createTheme } from "@mui/material/styles";
-import grey from "@mui/material/colors/grey";
-import { MuiColorInput } from "mui-color-input";
-import { Draw, Modify, Snap } from "ol/interaction";
-import MultiPoint from "ol/geom/MultiPoint";
-import WKT from "ol/format/WKT.js";
-import Feature from "ol/Feature";
-import { Vector as VectorSource } from "ol/source";
-import { Style, Fill, Stroke, Circle } from "ol/style";
-import { transform } from "ol/proj";
+import { useState } from 'react';
+import Slider from '@mui/material/Slider';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from "@mui/material/TextField";
-import {
-  FormGroup,
-  FormLabel,
-  ToggleButton,
-  ToggleButtonGroup,
-  Radio,
-  RadioGroup,
-  InputLabel,
-  FormControl,
-  FormControlLabel,
-} from "@mui/material";
-import styles from "./MapOptions.module.css";
-import raster from "../assets/raster.svg";
+import TextField from '@mui/material/TextField';
+import { FormControl } from '@mui/material';
+import styles from './MapOptions.module.css';
+import raster from '../assets/raster.svg';
 
-function OptionsMapbox({ layer, activeLayer, updateLayer, map }) {
-
-  const [customStyle, setCustomStyle] = useState(false);
-  
+function OptionsMapbox({
+  layer,
+  activeLayer,
+  updateLayer,
+}) {
   const styleOptions = [
-    {'label': 'Streets', 'value': 'mapbox://styles/mapbox/streets-v12'},
-    {'label': 'Outdoors', 'value': 'mapbox://styles/mapbox/outdoors-v12'},
-    {'label': 'Light', 'value': 'mapbox://styles/mapbox/light-v11'},
-    {'label': 'Dark', 'value': 'mapbox://styles/mapbox/dark-v11'},
-    {'label': 'Satellite', 'value': 'mapbox://styles/mapbox/satellite-v9'},
-    {'label': 'Satellite-Streets', 'value': 'mapbox://styles/mapbox/satellite-streets-v10'},
-    {'label': 'Custom', 'value': 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv'},
+    { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v12' },
+    { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v12' },
+    { label: 'Light', value: 'mapbox://styles/mapbox/light-v11' },
+    { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11' },
+    { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9' },
+    {
+      label: 'Satellite-Streets',
+      value: 'mapbox://styles/mapbox/satellite-streets-v10',
+    },
+    {
+      label: 'Custom',
+      value: 'mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv',
+    },
   ];
 
   const theme = createTheme({
@@ -59,7 +46,7 @@ function OptionsMapbox({ layer, activeLayer, updateLayer, map }) {
       <div className={styles.mapOptionsPanel}>
         <h1>
           <div className={styles.mapOptions_icon}>
-            <img src={raster} />
+            <img src={raster} alt="" />
           </div>
           Mapbox Options
         </h1>
@@ -110,11 +97,11 @@ function OptionsMapbox({ layer, activeLayer, updateLayer, map }) {
                   value={layer.style}
                   onChange={(e, val) => {
                     // if(val.props.children==="Custom"){
-                      // setCustomStyle(true);
+                    // setCustomStyle(true);
                     // } else {
-                      // setCustomStyle(false);
-                      layer.style = (val.props.value);
-                      updateLayer(layer, activeLayer)
+                    // setCustomStyle(false);
+                    layer.style = val.props.value;
+                    updateLayer(layer, activeLayer);
 
                     // }
                   }}
@@ -122,7 +109,7 @@ function OptionsMapbox({ layer, activeLayer, updateLayer, map }) {
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
                 >
-                   {styleOptions.map((style, i) => (
+                  {styleOptions.map((style) => (
                     <MenuItem key={style.label} value={style.value}>
                       {style.label}
                     </MenuItem>

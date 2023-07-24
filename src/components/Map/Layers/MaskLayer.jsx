@@ -6,14 +6,11 @@ import OLVectorLayer from 'ol/layer/Vector';
 import Draw from 'ol/interaction/Draw';
 import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
-import MapContext from '../MapContext';
 import filters from '../filters.module.css';
 
 function MaskLayer({
-  id, polygon, source, blur, zIndex = 1, opacity = 1,
+  map, id, polygon, source, blur, zIndex = 1, opacity = 1,
 }) {
-  const { map } = useContext(MapContext);
-
   useEffect(() => {
     if (!map) return;
 
