@@ -37,7 +37,7 @@
     "build-storybook": "storybook build",
     "deploy-storybook": "storybook-to-ghpages",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "DISABLE_ESLINT_PLUGIN=true gh-pages -d build"
   },
   "browserslist": {
     "production": [
