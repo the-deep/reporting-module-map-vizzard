@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import reactCSS from 'reactcss';
 import { SketchPicker } from 'react-color';
 import styles from './ColorPicker.module.css';
 
-export function ColorPicker({ color, setColor }) {
+function ColorPicker({ color, setColor }) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleClick = () => {

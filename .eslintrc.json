@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "./.eslintrc-lenient.json",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:storybook/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "no-param-reassign": "error",
+
+    "react/require-default-props": ["warn", { "ignoreFunctionalComponents": true }],
+    "react/prop-types": "warn",
+    "react/react-in-jsx-scope": "off"
+  }
+}

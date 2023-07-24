@@ -4,7 +4,7 @@ import { Style, Fill } from 'ol/style';
 import { Vector as VectorSource } from 'ol/source';
 import OLVectorLayer from 'ol/layer/Vector';
 import Draw from 'ol/interaction/Draw';
-import WKT from 'ol/format/WKT.js';
+import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
 import MapContext from '../MapContext';
 import filters from '../filters.module.css';

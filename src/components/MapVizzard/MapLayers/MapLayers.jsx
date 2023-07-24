@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './MapLayers.module.css';
 import LayerRow from './LayerRow';
 
-export function MapLayers({
+function MapLayers({
   layers,
   setLayers,
   activeLayer,
