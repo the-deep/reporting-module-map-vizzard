@@ -19,12 +19,12 @@ function ColorPicker({ color, setColor }) {
 
   return (
     <div>
-      <div className={styles.swatch} onClick={handleClick}>
+      <div className={styles.swatch} onClick={handleClick} role="presentation">
         <div className={styles.color} style={{ background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` }} />
       </div>
       {displayColorPicker ? (
         <div className={styles.popover}>
-          <div className={styles.cover} onClick={handleClose} />
+          <div className={styles.cover} onClick={handleClose} role="presentation" />
           <SketchPicker color={color} onChange={handleChange} />
         </div>
       ) : null}
