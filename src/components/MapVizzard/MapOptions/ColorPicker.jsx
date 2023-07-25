@@ -35,7 +35,7 @@ function ColorPicker({ color, setColor }) {
 export default ColorPicker;
 
 export function rgba(rgb) {
-  if (rgb && typeof rgb !== 'undefined' && rgb.a > 0) {
+  if (rgb && typeof rgb !== 'undefined' && rgb.a >= 0) {
     return `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`;
   }
   return null;
