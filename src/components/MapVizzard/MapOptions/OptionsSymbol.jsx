@@ -30,6 +30,8 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
 
   const symbols = Object.keys(symbolIcons);
 
+  const columns = Object.keys({ ...layer.data[0] });
+
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -128,6 +130,33 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
               />
             </div>
           </div>
+
+          {layer.showLabels && (
+            <div className={styles.optionRow}>
+              <div className={styles.optionLabel}>Text label column</div>
+              <div className={styles.optionValue}>
+                <FormControl fullWidth>
+                  <Select
+                    labelId="text-column-label"
+                    id="text-column"
+                    value={layer.labelColumn}
+                    onChange={(e, val) => updateAttr('labelColumn', val.props.value)}
+                    size="small"
+                    style={{ backgroundColor: '#fff', fontSize: 12 }}
+                    variant="standard"
+                  >
+                    {columns
+                      .sort()
+                      .map((labelColumn) => (
+                        <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
+                          {labelColumn}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+          )}
 
           <br />
           <br />
