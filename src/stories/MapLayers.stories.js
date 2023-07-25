@@ -1,4 +1,3 @@
-import React from 'react';
 import MapLayers from '../components/MapVizzard/MapLayers/MapLayers';
 import mapConfig from './mapConfig.json';
 

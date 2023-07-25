@@ -1,4 +1,3 @@
-import React from 'react';
 import MapOptions from '../components/MapVizzard/MapOptions';
 import mapConfig from './mapConfig.json';
 
