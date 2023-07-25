@@ -272,7 +272,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                   labelId="text-column-label"
                   id="text-column"
                   value={mapOptions.scaleBar}
-                  onChange={(e, val) => updateAttr('scaleBar', val.props.value)}
+                  onChange={(e, val) => updateAttr('scaleBar', (val.props.value === 'true'))}
                   size="small"
                   style={{ backgroundColor: '#fff', fontSize: 12 }}
                   variant="standard"
