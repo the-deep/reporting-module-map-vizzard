@@ -10,7 +10,7 @@
         "showScale": true,
         "scaleUnits": "metric",
         "scaleBar": false,
-        "scaleBarPosition": "bottomLeft",
+        "scaleBarPosition": "bottomRight",
         "enableMouseWheelZoom": false,
         "enableZoomControls": true,
         "zoomControlsPosition": "topRight",
