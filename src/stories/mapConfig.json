@@ -55,7 +55,7 @@
             "type": "symbol",
             "symbol": "capital",
             "showLabels": true,
-            "labelColumn": null,
+            "labelColumn": "name_en",
             "opacity": 1,
             "zIndex": 5,
             "visible": 1,
@@ -66,7 +66,7 @@
                 "fill": "#FFF"
             },
             "data": [
-                {"lat": 15.5007, "lon": 32.559994, "title": "Khartoum", "value": null}
+                {"lat": 15.5007, "lon": 32.559994, "name_en": "Khartoum", "name_ar": "الخرطوم", "value": null}
             ]
         },
         {
@@ -75,7 +75,7 @@
             "type": "symbol",
             "symbol": "city",
             "showLabels": true,
-            "labelColumn": null,
+            "labelColumn": "name_en",
             "opacity": 1,
             "zIndex": 4,
             "visible": 1,
@@ -86,8 +86,8 @@
                 "fill": "#FFF"
             },
             "data": [
-                {"lat": 14.3783, "lon": 24.9042, "title": "Darfur", "value": null},
-                {"lat": 19.5903, "lon": 37.1902, "title": "Port Sudan", "value": null}
+                {"lat": 14.3783, "lon": 24.9042, "name_en": "Darfur", "name_ar": "دار فور", "value": null},
+                {"lat": 19.5903, "lon": 37.1902, "name_en": "Port Sudan", "name_ar": "بور سودان", "value": null}
             ]
         },
         {

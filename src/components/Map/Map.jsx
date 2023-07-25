@@ -3,9 +3,8 @@ import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { osm, vector, mask } from './Source';
 import {
-  TileLayer, VectorLayer, MapboxLayer, MaskLayer,
+  TileLayer, VectorLayer, MapboxLayer, MaskLayer, SymbolLayer,
 } from './Layers';
-import { addSymbols } from './Layers/SymbolLayer';
 import OpenLayersMap from './OpenLayersMap';
 import styles from './Map.module.css';
 
@@ -35,12 +34,17 @@ function Map({
     layers.forEach((d, i) => {
       if (d.type === 'symbol') {
         renderLayersArr[i] = d.visible > 0 && (
-          <VectorLayer
+          <SymbolLayer
             map={map}
             key={`symbolLayer${d.id}`}
-            source={vector({ features: addSymbols(d) })}
+            source={d.data}
             zIndex={d.zIndex}
             opacity={d.opacity}
+            style={d.style}
+            symbol={d.symbol}
+            data={d.data}
+            showLabels={d.showLabels}
+            labelColumn={d.labelColumn}
           />
         );
       }
