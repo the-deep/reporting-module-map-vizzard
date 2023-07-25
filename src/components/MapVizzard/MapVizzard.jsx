@@ -39,6 +39,7 @@ function MapVizzard({ mapConfig }) {
             width={mapOptions.width}
             center={mapOptions.center}
             zoom={mapOptions.zoom}
+            showHeader={mapOptions.showHeader}
             mainTitle={mapOptions.mainTitle}
             subTitle={mapOptions.subTitle}
             showScale={mapOptions.showScale}
@@ -49,6 +50,7 @@ function MapVizzard({ mapConfig }) {
             enableZoomControls={mapOptions.enableZoomControls}
             zoomControlsPosition={mapOptions.zoomControlsPosition}
             setMapObj={setMapObj}
+            showFooter={mapOptions.showFooter}
           />
         </div>
       </div>

@@ -34,27 +34,45 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
       <div className={styles.mapOptionsPanelBody}>
         <div className={styles.optionsPanel}>
           <div className={styles.optionRow}>
-            <FormControl fullWidth>
-              <TextField
-                label="Main title"
-                variant="standard"
-                value={mapOptions.mainTitle}
-                onChange={(e) => updateAttr('mainTitle', e.target.value)}
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
+              Show header
+            </div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.showHeader}
+                color="default"
+                onChange={(e, val) => updateAttr('showHeader', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
-            </FormControl>
+            </div>
           </div>
 
-          <div className={styles.optionRow}>
-            <FormControl fullWidth>
-              <TextField
-                label="Sub-title"
-                size="small"
-                variant="standard"
-                value={mapOptions.subTitle}
-                onChange={(e) => updateAttr('subTitle', e.target.value)}
-              />
-            </FormControl>
-          </div>
+          {mapOptions.showHeader && (
+            <div>
+              <div className={styles.optionRow}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Main title"
+                    variant="standard"
+                    value={mapOptions.mainTitle}
+                    onChange={(e) => updateAttr('mainTitle', e.target.value)}
+                  />
+                </FormControl>
+              </div>
+
+              <div className={styles.optionRow}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Sub-title"
+                    size="small"
+                    variant="standard"
+                    value={mapOptions.subTitle}
+                    onChange={(e) => updateAttr('subTitle', e.target.value)}
+                  />
+                </FormControl>
+              </div>
+            </div>
+          )}
 
           <hr />
 
