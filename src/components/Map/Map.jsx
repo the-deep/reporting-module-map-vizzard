@@ -16,6 +16,7 @@ function Map({
   width,
   zoom,
   center,
+  showHeader,
   mainTitle,
   subTitle,
   showScale,
@@ -113,10 +114,12 @@ function Map({
       className={styles.mapContainer}
       style={{ height: `${height}px`, width: `${width}px` }}
     >
-      <div className={styles.mapTitle}>
-        <div className={styles.mainTitle}>{mainTitle}</div>
-        <div className={styles.subTitle}>{subTitle}</div>
-      </div>
+      {showHeader && (
+        <div className={styles.mapTitle}>
+          <div className={styles.mainTitle}>{mainTitle}</div>
+          <div className={styles.subTitle}>{subTitle}</div>
+        </div>
+      )}
       <OpenLayersMap
         map={map}
         mapObj={mapObj}
