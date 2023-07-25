@@ -51,6 +51,7 @@ function MapVizzard({ mapConfig }) {
             zoomControlsPosition={mapOptions.zoomControlsPosition}
             setMapObj={setMapObj}
             showFooter={mapOptions.showFooter}
+            sources={mapOptions.sources}
           />
         </div>
       </div>

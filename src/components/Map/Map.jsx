@@ -26,6 +26,8 @@ function Map({
   enableMouseWheelZoom,
   enableZoomControls,
   zoomControlsPosition,
+  showFooter,
+  sources,
 }) {
   const [map, setMap] = useState(null);
 
@@ -137,6 +139,15 @@ function Map({
       >
         {renderLayers}
       </OpenLayersMap>
+      {showFooter && (
+        <div className={styles.mapFooter}>
+          <b>Sources</b>
+          <div className={styles.sources}>
+            &nbsp;
+            {sources}
+          </div>
+        </div>
+      )}
     </div>
   );
   // });

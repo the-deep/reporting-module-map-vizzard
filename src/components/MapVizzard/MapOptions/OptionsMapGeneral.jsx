@@ -285,6 +285,37 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
           </div>
           )}
 
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
+              Show footer
+            </div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.showFooter}
+                color="default"
+                onChange={(e, val) => updateAttr('showFooter', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          {mapOptions.showFooter && (
+            <div>
+              <div className={styles.optionRow}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Sources"
+                    variant="standard"
+                    value={mapOptions.sources}
+                    onChange={(e) => updateAttr('sources', e.target.value)}
+                  />
+                </FormControl>
+              </div>
+            </div>
+          )}
+
+          <hr />
+
         </div>
       </div>
     </div>
