@@ -27,6 +27,8 @@ function SymbolLayer({
   opacity = 1,
   showLabels = false,
   labelColumn = '',
+  scale = 1,
+  textScale = 1,
 }) {
   const [symbolLayer, setSymbolLayer] = useState(false);
 
@@ -41,23 +43,6 @@ function SymbolLayer({
 
   useEffect(() => {
     if (!map) return undefined;
-
-    let scale = 0.9;
-    let font = '11px Arial';
-
-    if (symbol === 'city') {
-      scale = 0.6;
-    }
-
-    if (symbol === 'settlement') {
-      scale = 0.4;
-      font = '10px Arial';
-    }
-
-    if (symbol === 'capital') {
-      scale = 0.9;
-      font = 'bold 11px Arial';
-    }
 
     const features = data.map((item) => {
       const feature = new Feature({
@@ -83,10 +68,9 @@ function SymbolLayer({
             text: new Text({
               text: String(label),
               textAlign: 'left',
-              font,
               offsetY: 1,
-              offsetX: 8,
-              scale: 1,
+              offsetX: (13 * (scale / 1.4)),
+              scale: textScale,
               fill: new Fill({
                 color: '#black',
               }),
@@ -114,7 +98,7 @@ function SymbolLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, source, zIndex, data, symbol, showLabels, labelColumn]);
+  }, [map, source, zIndex, data, symbol, showLabels, labelColumn, scale, textScale]);
 
   useEffect(() => {
     if (!symbolLayer) return;

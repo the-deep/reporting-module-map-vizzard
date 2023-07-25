@@ -61,10 +61,10 @@
             "labelColumn": "name_en",
             "opacity": 1,
             "zIndex": 5,
+            "scale": 1,
+            "textScale": 1.1,
             "visible": 1,
             "style": {
-                "radius": 7,
-                "strokeWidth": 1.4,
                 "stroke": "#000",
                 "fill": "#FFF"
             },
@@ -79,11 +79,12 @@
             "symbol": "city",
             "showLabels": true,
             "labelColumn": "name_en",
+            "scale": 0.7,
+            "textScale": 1,
             "opacity": 1,
             "zIndex": 4,
             "visible": 1,
             "style": {
-                "radius": 7,
                 "strokeWidth": 1.4,
                 "stroke": "#000",
                 "fill": "#FFF"

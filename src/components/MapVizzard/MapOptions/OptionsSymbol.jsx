@@ -115,6 +115,22 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
             </FormControl>
           </div>
 
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Symbol size</div>
+            <Slider
+              aria-label="Opacity"
+              value={layer.scale}
+              size="small"
+              onChange={(e, val) => updateAttr('scale', val)}
+              valueLabelDisplay="auto"
+              step={0.01}
+              color="primary"
+              theme={theme}
+              min={0}
+              max={2}
+            />
+          </div>
+
           <hr />
 
           <div className={styles.optionRow}>
@@ -132,28 +148,46 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
           </div>
 
           {layer.showLabels && (
-            <div className={styles.optionRow}>
-              <div className={styles.optionLabel}>Text label column</div>
-              <div className={styles.optionValue}>
-                <FormControl fullWidth>
-                  <Select
-                    labelId="text-column-label"
-                    id="text-column"
-                    value={layer.labelColumn}
-                    onChange={(e, val) => updateAttr('labelColumn', val.props.value)}
-                    size="small"
-                    style={{ backgroundColor: '#fff', fontSize: 12 }}
-                    variant="standard"
-                  >
-                    {columns
-                      .sort()
-                      .map((labelColumn) => (
-                        <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
-                          {labelColumn}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+            <div>
+              <div className={styles.optionRow}>
+                <div className={styles.optionLabel}>Text label column</div>
+                <div className={styles.optionValue}>
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="text-column-label"
+                      id="text-column"
+                      value={layer.labelColumn}
+                      onChange={(e, val) => updateAttr('labelColumn', val.props.value)}
+                      size="small"
+                      style={{ backgroundColor: '#fff', fontSize: 12 }}
+                      variant="standard"
+                    >
+                      {columns
+                        .sort()
+                        .map((labelColumn) => (
+                          <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
+                            {labelColumn}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+
+              <div className={styles.optionRow}>
+                <div className={styles.optionLabel}>Text size</div>
+                <Slider
+                  aria-label="Opacity"
+                  value={layer.textScale}
+                  size="small"
+                  onChange={(e, val) => updateAttr('textScale', val)}
+                  valueLabelDisplay="auto"
+                  step={0.01}
+                  color="primary"
+                  theme={theme}
+                  min={0}
+                  max={2}
+                />
               </div>
             </div>
           )}

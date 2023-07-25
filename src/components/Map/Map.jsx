@@ -45,6 +45,8 @@ function Map({
             opacity={d.opacity}
             style={d.style}
             symbol={d.symbol}
+            scale={d.scale}
+            textScale={d.textScale}
             data={d.data}
             showLabels={d.showLabels}
             labelColumn={d.labelColumn}
