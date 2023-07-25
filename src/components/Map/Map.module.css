@@ -78,3 +78,16 @@
   right: unset !important;
   bottom: 8px;
 }
+
+.mapFooter {
+  font-size: 8px;
+  padding-left: 10px;
+  opacity: 0.7;
+}
+
+.mapFooter .sources {
+  font-weight: 300;
+  display: inline;
+  padding-left: 2px;
+}
+

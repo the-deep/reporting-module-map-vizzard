@@ -13,7 +13,9 @@
         "scaleBarPosition": "bottomLeft",
         "enableMouseWheelZoom": false,
         "enableZoomControls": true,
-        "zoomControlsPosition": "topRight"
+        "zoomControlsPosition": "topRight",
+        "showFooter": true,
+        "sources": "Danish Refugee Council (DRC), Data Friendly Space (DFS), Mapbox"
     },
     "layers": [
         {
