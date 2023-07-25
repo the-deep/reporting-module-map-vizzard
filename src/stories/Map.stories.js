@@ -1,4 +1,3 @@
-import React from 'react';
 import Map from '../components/Map';
 import mapConfig from './mapConfig.json';
 
