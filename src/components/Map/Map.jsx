@@ -106,6 +106,7 @@ function Map({
             zIndex={d.zIndex}
             opacity={d.opacity}
             blur={d.blur}
+            smoothing={d.smoothing}
           />
         );
       }
