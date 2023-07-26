@@ -241,6 +241,22 @@ function OptionsMask({
             />
           </div>
 
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Smoothing</div>
+            <Slider
+              aria-label="Smoothing"
+              value={layerClone.smoothing}
+              size="small"
+              onChange={(e, val) => updateAttr('smoothing', val)}
+              valueLabelDisplay="auto"
+              step={0.01}
+              color="primary"
+              theme={theme}
+              min={0}
+              max={1}
+            />
+          </div>
+
           <br />
           <br />
         </div>
