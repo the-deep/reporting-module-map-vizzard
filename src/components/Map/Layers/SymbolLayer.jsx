@@ -44,6 +44,10 @@ function SymbolLayer({
   useEffect(() => {
     if (!map) return undefined;
 
+    let xOffset = 1.7;
+
+    if (symbol === 'capital') xOffset = 0.7;
+
     const features = data.map((item) => {
       const feature = new Feature({
         geometry: new Point(fromLonLat([item.lon, item.lat])),
@@ -69,7 +73,7 @@ function SymbolLayer({
               text: String(label),
               textAlign: 'left',
               offsetY: 1,
-              offsetX: (13 * (scale / 1.4)),
+              offsetX: (11 * (scale / 1.3) + xOffset),
               scale: textScale,
               fill: new Fill({
                 color: '#black',
