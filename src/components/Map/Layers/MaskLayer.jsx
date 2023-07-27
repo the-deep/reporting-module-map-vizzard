@@ -3,7 +3,7 @@ import { Style, Fill } from 'ol/style';
 import OLVectorLayer from 'ol/layer/Vector';
 import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
-import Cspline from 'ol-ext/render/Cspline';
+import Cspline from 'ol-ext/render/Cspline'; // eslint-disable-line
 import filters from '../filters.module.css';
 
 function MaskLayer({
@@ -17,7 +17,6 @@ function MaskLayer({
         color: '#FFF',
       }),
     });
-
 
     const vectorLayer = new OLVectorLayer({
       source,
