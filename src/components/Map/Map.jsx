@@ -7,6 +7,9 @@ import {
 } from './Layers';
 import OpenLayersMap from './OpenLayersMap';
 import styles from './Map.module.css';
+import drc from './assets/logos/drc.jpg';
+import dfs from './assets/logos/dfs.svg';
+import immap from './assets/logos/immap.png';
 
 function Map({
   mapObj,
@@ -30,6 +33,7 @@ function Map({
   zoomControlsPosition,
   showFooter,
   sources,
+  showLogos,
 }) {
   const [map, setMap] = useState(null);
 
@@ -122,9 +126,24 @@ function Map({
       style={{ height: `${height}px`, width: `${width}px` }}
     >
       {showHeader && (
-        <div className={styles.mapTitle}>
-          <div className={styles.mainTitle}>{mainTitle}</div>
-          <div className={styles.subTitle}>{subTitle}</div>
+        <div>
+          <div className={styles.mapTitle}>
+            {showLogos && (
+            <div className={styles.logos}>
+              { showLogos.map((logo) => (
+                <div className={styles.headerLogo}>
+                  { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
+                  { logo === 'iMMAP' && <img className={styles.logoImmap} src={immap} alt="" /> }
+                  { logo === 'DRC' && <img className={styles.logoDrc} src={drc} alt="" /> }
+                </div>
+              ))}
+            </div>
+            )}
+            <div className={styles.titleContainer}>
+              <div className={styles.mainTitle}>{mainTitle}</div>
+              <div className={styles.subTitle}>{subTitle}</div>
+            </div>
+          </div>
         </div>
       )}
       <OpenLayersMap

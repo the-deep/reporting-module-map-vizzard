@@ -39,11 +39,50 @@
   box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
 }
 
+.logos {
+  display: inline-block;
+  float: left;
+  margin-top: 5px;
+}
+
+.headerLogo {
+  display: inline-block;
+  height: 30px;
+  padding-right: 5px;
+  padding-top: 3px;
+  vertical-align: middle;
+  
+}
+
+.headerLogo img {
+  padding-right: 4px;
+}
+
+.logoDrc {
+  height: 33px;
+}
+
+.logoDfs {
+  height: 34px;
+}
+
+.logoImmap {
+  height: 45px;
+  margin-top: -6px;
+}
+
+.titleContainer {
+  float: right;
+}
+
 .mapTitle {
   position: absolute;
   z-index: 3;
   padding: 3px 8px;
-  line-height: 1.4;
+  margin-top: 2px;
+  line-height: 1.21;
+  display: inline-block;
+
 }
 
 .mainTitle {
