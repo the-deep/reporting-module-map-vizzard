@@ -10,6 +10,7 @@ import styles from './Map.module.css';
 import drc from './assets/logos/drc.jpg';
 import dfs from './assets/logos/dfs.svg';
 import immap from './assets/logos/immap.png';
+import deep from './assets/logos/deep.svg';
 
 function Map({
   mapObj,
@@ -131,10 +132,11 @@ function Map({
             {showLogos && (
             <div className={styles.logos}>
               { showLogos.map((logo) => (
-                <div className={styles.headerLogo}>
+                <div key={logo} className={styles.headerLogo}>
                   { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
-                  { logo === 'iMMAP' && <img className={styles.logoImmap} src={immap} alt="" /> }
+                  { logo === 'DEEP' && <img className={styles.logoDeep} src={deep} alt="" /> }
                   { logo === 'DRC' && <img className={styles.logoDrc} src={drc} alt="" /> }
+                  { logo === 'iMMAP' && <img className={styles.logoImmap} src={immap} alt="" /> }
                 </div>
               ))}
             </div>
