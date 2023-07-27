@@ -9,7 +9,7 @@ import filters from '../filters.module.css';
 function MaskLayer({
   map, id, polygon, source, blur, zIndex = 1, opacity = 1, smoothing,
 }) {
-  const [maskLayer, setMaskLayer] = useState(false);
+  const [maskLayer, setMaskLayer] = useState(null);
 
   useEffect(() => {
     if (!map) return undefined;
@@ -41,10 +41,10 @@ function MaskLayer({
 
     return () => {
       if (map) {
-        map.removeLayer(maskLayer);
+        map.removeLayer(vectorLayer);
       }
     };
-  }, [map, source, zIndex, polygon, smoothing]);
+  }, [id, source, zIndex, polygon, smoothing]);
 
   useEffect(() => {
     if (!maskLayer) return;
