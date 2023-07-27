@@ -2,7 +2,11 @@
   background-color: #f9f9f9b0;
   max-width: 223px;
   min-width: 223px;
-  min-height: 94vh;
+  min-height: 97vh;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: relative;
+  height: 100%;
 }
 
 .mapOptions {
@@ -13,8 +17,6 @@
 .mapOptionsPanel {
     background-color:rgb(241, 241, 241);
     padding: 6px 9px;
-    margin-left: -12px;
-    margin-right: -12px;
     height: 33px;
 }
 
@@ -50,9 +52,16 @@
 }
 
 .mapOptionsPanelBody {
-    margin-top: 3px;
-    font-size: 12px;
-    padding: 3px;
+  font-size: 12px;
+  padding: 3px;
+  padding-right: 16px;
+  padding-left: 12px;
+  position: absolute;
+  top: 33px;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  width: 100%;
 }
 
 .mapOptionsPanelBody input {

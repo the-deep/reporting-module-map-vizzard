@@ -33,7 +33,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
       </div>
       <div className={styles.mapOptionsPanelBody}>
         <div className={styles.optionsPanel}>
-          <div className={styles.optionRow}>
+          <div className={styles.optionRow} style={{ marginTop: 8 }}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
               Show header
             </div>
