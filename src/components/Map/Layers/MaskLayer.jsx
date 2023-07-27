@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Style, Fill } from 'ol/style';
 import OLVectorLayer from 'ol/layer/Vector';
 import WKT from 'ol/format/WKT';
@@ -9,6 +9,8 @@ import filters from '../filters.module.css';
 function MaskLayer({
   map, id, polygon, source, blur, zIndex = 1, opacity = 1, smoothing,
 }) {
+  const [maskLayer, setMaskLayer] = useState(false);
+
   useEffect(() => {
     if (!map) return undefined;
 
@@ -18,7 +20,7 @@ function MaskLayer({
       }),
     });
 
-    const vectorLayer = new OLVectorLayer({
+    const maskLayer = new OLVectorLayer({
       source,
       style,
       className: `${filters.blur} ${filters[`blur${blur}`]}`,
@@ -31,18 +33,28 @@ function MaskLayer({
       const feature = new Feature(wkt);
       feature.setGeometry(feature.getGeometry().cspline({ tension: smoothing }));
       source.addFeature(feature);
-      map.addLayer(vectorLayer);
+      map.addLayer(maskLayer);
+      setMaskLayer(maskLayer);
+      maskLayer.setZIndex(zIndex);
+      maskLayer.setOpacity(opacity);
     }
-
-    vectorLayer.setZIndex(zIndex);
-    vectorLayer.setOpacity(opacity);
 
     return () => {
       if (map) {
-        map.removeLayer(vectorLayer);
+        map.removeLayer(maskLayer);
       }
     };
-  }, [map, source, zIndex, polygon, opacity, blur, smoothing]);
+  }, [map, source, zIndex, polygon, smoothing]);
+
+  useEffect(() => {
+    if (!maskLayer) return;
+    maskLayer.set('className', `${filters.blur} ${filters[`blur${blur}`]}`);
+  }, [maskLayer, blur]);
+
+  useEffect(() => {
+    if (!maskLayer) return;
+    maskLayer.setOpacity(opacity);
+  }, [maskLayer, opacity]);
 
   return null;
 }
