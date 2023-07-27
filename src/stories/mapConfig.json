@@ -7,6 +7,8 @@
         "subTitle": "Country map",
         "center": {"lon": 30.21, "lat": 15.86},
         "zoom": 5,
+        "maxZoom": 7,
+        "minZoom": 4.8,
         "showScale": true,
         "scaleUnits": "metric",
         "scaleBar": false,
