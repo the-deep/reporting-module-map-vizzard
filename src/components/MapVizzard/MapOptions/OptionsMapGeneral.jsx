@@ -13,6 +13,7 @@ import settings from '../assets/settings.svg';
 function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const logos = [
     { name: 'Data Friendly Space', image: 'dfs' },
+    { name: 'DEEP', image: 'deep' },
     { name: 'DRC', image: 'drc' },
     { name: 'iMMAP', image: 'immap' },
   ];
