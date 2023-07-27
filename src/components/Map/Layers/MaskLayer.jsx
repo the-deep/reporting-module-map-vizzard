@@ -20,7 +20,7 @@ function MaskLayer({
       }),
     });
 
-    const maskLayer = new OLVectorLayer({
+    const vectorLayer = new OLVectorLayer({
       source,
       style,
       className: `${filters.blur} ${filters[`blur${blur}`]}`,
@@ -33,10 +33,10 @@ function MaskLayer({
       const feature = new Feature(wkt);
       feature.setGeometry(feature.getGeometry().cspline({ tension: smoothing }));
       source.addFeature(feature);
-      map.addLayer(maskLayer);
-      setMaskLayer(maskLayer);
-      maskLayer.setZIndex(zIndex);
-      maskLayer.setOpacity(opacity);
+      map.addLayer(vectorLayer);
+      vectorLayer.setZIndex(zIndex);
+      vectorLayer.setOpacity(opacity);
+      setMaskLayer(vectorLayer);
     }
 
     return () => {
