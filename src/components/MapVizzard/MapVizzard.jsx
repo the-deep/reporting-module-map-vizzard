@@ -39,6 +39,8 @@ function MapVizzard({ mapConfig }) {
             width={mapOptions.width}
             center={mapOptions.center}
             zoom={mapOptions.zoom}
+            minZoom={mapOptions.minZoom}
+            maxZoom={mapOptions.maxZoom}
             showHeader={mapOptions.showHeader}
             mainTitle={mapOptions.mainTitle}
             subTitle={mapOptions.subTitle}

@@ -11,6 +11,8 @@ function OpenLayersMap({
   children,
   setMap,
   zoom,
+  minZoom,
+  maxZoom,
   center,
   showScale,
   scaleUnits,
@@ -25,7 +27,12 @@ function OpenLayersMap({
   // on component mount
   useEffect(() => {
     const options = {
-      view: new ol.View({ zoom, center }),
+      view: new ol.View({
+        zoom,
+        center,
+        minZoom,
+        maxZoom,
+      }),
       layers: [],
       overlays: [],
       controls: [],
@@ -74,8 +81,11 @@ function OpenLayersMap({
 
   useEffect(() => {
     if (!map) return;
+    // console.log([zoom, minZoom, maxZoom]);
+    map.getView().setMinZoom(parseFloat(minZoom));
+    map.getView().setMaxZoom(parseFloat(maxZoom));
     map.getView().setZoom(zoom);
-  }, [zoom]);
+  }, [zoom, minZoom, maxZoom]);
 
   useEffect(() => {
     if (!map) return;

@@ -15,6 +15,8 @@ function Map({
   height,
   width,
   zoom,
+  minZoom,
+  maxZoom,
   center,
   showHeader,
   mainTitle,
@@ -131,6 +133,8 @@ function Map({
         setMapObj={setMapObj}
         center={fromLonLat([center.lon, center.lat])}
         zoom={zoom}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
         setMap={setMap}
         showScale={showScale}
         scaleUnits={scaleUnits}

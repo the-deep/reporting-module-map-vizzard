@@ -155,6 +155,36 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
             </FormControl>
           </div>
 
+          <div className={styles.optionRow}>
+            <FormControl fullWidth>
+              <TextField
+                label="Minimum zoom extent"
+                variant="standard"
+                value={mapOptions.minZoom}
+                type="number"
+                inputProps={{
+                  step: 0.05,
+                }}
+                onChange={(e) => updateAttr('minZoom', e.target.value)}
+              />
+            </FormControl>
+          </div>
+
+          <div className={styles.optionRow}>
+            <FormControl fullWidth>
+              <TextField
+                label="Maximum zoom extent"
+                variant="standard"
+                value={mapOptions.maxZoom}
+                type="number"
+                inputProps={{
+                  step: 0.05,
+                }}
+                onChange={(e) => updateAttr('maxZoom', e.target.value)}
+              />
+            </FormControl>
+          </div>
+
           <hr />
 
           <div className={styles.optionRow}>
