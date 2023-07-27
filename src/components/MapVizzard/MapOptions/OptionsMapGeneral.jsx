@@ -2,6 +2,8 @@ import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
 import {
   FormControl,
 } from '@mui/material';
@@ -9,6 +11,12 @@ import styles from './MapOptions.module.css';
 import settings from '../assets/settings.svg';
 
 function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
+  const logos = [
+    { name: 'Data Friendly Space', image: 'dfs' },
+    { name: 'DRC', image: 'drc' },
+    { name: 'iMMAP', image: 'immap' },
+  ];
+
   const updateAttr = (attr, val) => {
     const mapOptionsClone = { ...mapOptions };
     mapOptionsClone[attr] = val;
@@ -73,6 +81,32 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
               </div>
             </div>
           )}
+
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Show logos</div>
+            <div className={styles.optionValue}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  multiple
+                  value={mapOptions.showLogos}
+                  onChange={(e) => updateAttr('showLogos', typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value)}
+                  renderValue={(selected) => selected.join(', ')}
+                  size="small"
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
+                  variant="standard"
+                >
+                  { logos.map((logo) => (
+                    <MenuItem key={logo.name} value={logo.name}>
+                      <Checkbox size="small" checked={mapOptions.showLogos.indexOf(logo.name) > -1} />
+                      <ListItemText size="small" primary={logo.name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </div>
 
           <hr />
 

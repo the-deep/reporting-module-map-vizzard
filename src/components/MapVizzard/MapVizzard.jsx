@@ -54,6 +54,7 @@ function MapVizzard({ mapConfig }) {
             setMapObj={setMapObj}
             showFooter={mapOptions.showFooter}
             sources={mapOptions.sources}
+            showLogos={mapOptions.showLogos}
           />
         </div>
       </div>
