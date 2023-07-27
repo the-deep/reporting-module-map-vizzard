@@ -72,7 +72,7 @@
                 "fill": "#FFF"
             },
             "data": [
-                {"lat": 15.5007, "lon": 32.559994, "name_en": "Khartoum", "name_ar": "الخرطوم", "value": null}
+                {"lat": 15.5007, "lon": 32.559994, "name_en": "Khartoum", "name_ar": "الخرطوم", "population": 1410858}
             ]
         },
         {
@@ -93,8 +93,9 @@
                 "fill": "#FFF"
             },
             "data": [
-                {"lat": 14.3783, "lon": 24.9042, "name_en": "Darfur", "name_ar": "دار فور", "value": null},
-                {"lat": 19.5903, "lon": 37.1902, "name_en": "Port Sudan", "name_ar": "بور سودان", "value": null}
+                {"lat": 13.1833, "lon": 30.2166, "name_en": "El-Obeid", "name_ar": "الأبيض", "population": 345126},                {"lat": 14.3783, "lon": 24.9042, "name_en": "Nyala", "name_ar": "نيالا", "population": 492984},
+                {"lat": 15.45, "lon": 36.4, "name_en": "Kassala", "name_ar": "كسلا", "population": 298529},
+                {"lat": 19.5903, "lon": 37.1902, "name_en": "Port Sudan", "name_ar": "بور سودان", "population": 394561}
             ]
         },
         {
