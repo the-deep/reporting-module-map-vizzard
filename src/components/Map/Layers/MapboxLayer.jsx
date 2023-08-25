@@ -5,7 +5,7 @@ import * as olSource from 'ol/source';
 function MapboxLayer({
   map, zIndex = 1, opacity = 1, styleUrl, accessToken,
 }) {
-  const [mapboxLayer, setMapboxLayer] = useState(false);
+  const [mapboxLayer, setMapboxLayer] = useState(undefined);
 
   useEffect(() => {
     if (!map) return undefined;

@@ -14,11 +14,10 @@ function MapLayers({
       const newLayersObj = layersClone.filter((obj) => obj.id !== id);
       if (setLayers) setLayers([...newLayersObj]);
     } else {
-      layersClone.forEach((dd, ii) => {
-        if (dd.id === id) {
-          layersClone[ii] = d;
-        }
-      });
+      const layerIndex = layersClone.findIndex((layer) => layer.id === id);
+      if (layerIndex !== -1) {
+        layersClone[layerIndex] = d;
+      }
       if (setLayers) setLayers([...layersClone]);
     }
   };

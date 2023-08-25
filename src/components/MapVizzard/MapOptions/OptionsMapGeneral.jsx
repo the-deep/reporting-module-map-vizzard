@@ -7,12 +7,14 @@ import ListItemText from '@mui/material/ListItemText';
 import {
   FormControl,
 } from '@mui/material';
+import FontPicker from './FontPicker';
 import styles from './MapOptions.module.css';
 import settings from '../assets/settings.svg';
 
 function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const logos = [
     { name: 'Data Friendly Space', image: 'dfs' },
+    { name: 'DEEP (small)', image: 'deepSmall' },
     { name: 'DEEP', image: 'deep' },
     { name: 'DRC', image: 'drc' },
     { name: 'iMMAP', image: 'immap' },
@@ -21,6 +23,12 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const updateAttr = (attr, val) => {
     const mapOptionsClone = { ...mapOptions };
     mapOptionsClone[attr] = val;
+    updateMapOptions(mapOptionsClone);
+  };
+
+  const updateFontStyle = (attr, val) => {
+    const mapOptionsClone = { ...mapOptions };
+    mapOptionsClone.fontStyle[attr] = val;
     updateMapOptions(mapOptionsClone);
   };
 
@@ -40,8 +48,47 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
           Map Options
         </h1>
       </div>
+
       <div className={styles.mapOptionsPanelBody}>
         <div className={styles.optionsPanel}>
+          <div className={styles.optionRow}>
+            <FormControl fullWidth>
+              <TextField
+                label="Width (px)"
+                variant="standard"
+                value={mapOptions.width}
+                type="number"
+                size="medium"
+                inputProps={{
+                  step: 1,
+                }}
+                onChange={(e) => updateAttr('width', parseInt(e.target.value, 10))}
+              />
+            </FormControl>
+          </div>
+
+          <div className={styles.optionRow}>
+            <FormControl fullWidth>
+              <TextField
+                label="Height (px)"
+                variant="standard"
+                value={mapOptions.height}
+                type="number"
+                size="small"
+                inputProps={{
+                  step: 1,
+                }}
+                onChange={(e) => updateAttr('height', parseInt(e.target.value, 10))}
+              />
+            </FormControl>
+          </div>
+
+          <hr />
+
+          <FontPicker style={mapOptions.fontStyle} updateFontStyle={updateFontStyle} variant="general" />
+
+          <hr />
+
           <div className={styles.optionRow} style={{ marginTop: 8 }}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
               Show header
@@ -114,40 +161,6 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
           <div className={styles.optionRow}>
             <FormControl fullWidth>
               <TextField
-                label="Height (px)"
-                variant="standard"
-                value={mapOptions.height}
-                type="number"
-                size="small"
-                inputProps={{
-                  step: 1,
-                }}
-                onChange={(e) => updateAttr('height', e.target.value)}
-              />
-            </FormControl>
-          </div>
-
-          <div className={styles.optionRow}>
-            <FormControl fullWidth>
-              <TextField
-                label="Width (px)"
-                variant="standard"
-                value={mapOptions.width}
-                type="number"
-                size="medium"
-                inputProps={{
-                  step: 1,
-                }}
-                onChange={(e) => updateAttr('width', e.target.value)}
-              />
-            </FormControl>
-          </div>
-
-          <hr />
-
-          <div className={styles.optionRow}>
-            <FormControl fullWidth>
-              <TextField
                 label="Center latitude"
                 variant="standard"
                 value={mapOptions.center.lat}
@@ -155,7 +168,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.1,
                 }}
-                onChange={(e) => updateCenter('lat', e.target.value)}
+                onChange={(e) => updateCenter('lat', parseFloat(e.target.value))}
               />
             </FormControl>
           </div>
@@ -170,7 +183,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.1,
                 }}
-                onChange={(e) => updateCenter('lon', e.target.value)}
+                onChange={(e) => updateCenter('lon', parseFloat(e.target.value))}
               />
             </FormControl>
           </div>
@@ -185,7 +198,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.05,
                 }}
-                onChange={(e) => updateAttr('zoom', e.target.value)}
+                onChange={(e) => updateAttr('zoom', parseFloat(e.target.value))}
               />
             </FormControl>
           </div>
@@ -200,7 +213,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.05,
                 }}
-                onChange={(e) => updateAttr('minZoom', e.target.value)}
+                onChange={(e) => updateAttr('minZoom', parseFloat(e.target.value))}
               />
             </FormControl>
           </div>
@@ -215,7 +228,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 inputProps={{
                   step: 0.05,
                 }}
-                onChange={(e) => updateAttr('maxZoom', e.target.value)}
+                onChange={(e) => updateAttr('maxZoom', parseFloat(e.target.value))}
               />
             </FormControl>
           </div>
@@ -264,6 +277,18 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                 checked={mapOptions.enableMouseWheelZoom}
                 color="default"
                 onChange={(e, val) => updateAttr('enableMouseWheelZoom', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Double-click zoom</div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.enableDoubleClickZoom}
+                color="default"
+                onChange={(e, val) => updateAttr('enableDoubleClickZoom', val)}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
