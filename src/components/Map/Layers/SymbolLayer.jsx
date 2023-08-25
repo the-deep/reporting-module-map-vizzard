@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import OLVectorLayer from 'ol/layer/Vector';
 import {
   Style,
+  Stroke,
   Icon,
   Fill,
   Text,
@@ -11,11 +12,14 @@ import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 // import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
 import { vector } from '../Source';
+import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
 import capital from '../assets/map-icons/capital.svg';
 import city from '../assets/map-icons/city.svg';
 import settlement from '../assets/map-icons/settlement.svg';
 import marker from '../assets/map-icons/marker.svg';
 import airport from '../assets/map-icons/airport.svg';
+import borderCrossing from '../assets/map-icons/borderCrossing.svg';
+import triangle from '../assets/map-icons/triangle.svg';
 import idpRefugeeCamp from '../assets/map-icons/idp-refugee-camp.svg';
 
 function SymbolLayer({
@@ -28,9 +32,9 @@ function SymbolLayer({
   showLabels = false,
   labelColumn = '',
   scale = 1,
-  textScale = 1,
+  style,
 }) {
-  const [symbolLayer, setSymbolLayer] = useState(false);
+  const [symbolLayer, setSymbolLayer] = useState(undefined);
 
   const symbolIcons = {
     capital,
@@ -39,14 +43,16 @@ function SymbolLayer({
     'idp-refugee-camp': idpRefugeeCamp,
     airport,
     marker,
+    borderCrossing,
+    triangle,
   };
 
   useEffect(() => {
     if (!map) return undefined;
 
-    let xOffset = 1.7;
+    let xOffset = 1;
 
-    if (symbol === 'capital') xOffset = 0.7;
+    if (symbol === 'capital') xOffset = 1.9;
 
     const features = data.map((item) => {
       const feature = new Feature({
@@ -66,18 +72,26 @@ function SymbolLayer({
       ];
 
       if (showLabels === true) {
-        const label = (item[labelColumn]) || '';
+        const label = (item[labelColumn]) ?? '';
+
+        let stroke = new Stroke({
+          color: 'rgba(255,255,255,0.5)',
+          width: 2,
+        });
+        if (style.labelStyle.showHalo === false) stroke = null;
+
         iconStyle.push(
           new Style({
             text: new Text({
               text: String(label),
+              font: `${style.labelStyle.fontWeight} ${style.labelStyle.fontSize}px/1.07 ${style.labelStyle.fontFamily},sans-serif`,
               textAlign: 'left',
               offsetY: 1,
-              offsetX: (11 * (scale / 1.3) + xOffset),
-              scale: textScale,
+              offsetX: 7 + xOffset,
               fill: new Fill({
-                color: '#black',
+                color: rgba(style.labelStyle.color),
               }),
+              stroke,
             }),
           }),
         );
@@ -102,7 +116,7 @@ function SymbolLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, source, zIndex, data, symbol, showLabels, labelColumn, scale, textScale]);
+  }, [map, source, data, symbol, showLabels, labelColumn, scale, JSON.stringify(style)]);
 
   useEffect(() => {
     if (!symbolLayer) return;

@@ -44,7 +44,7 @@ function MaskLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [id, source, zIndex, polygon, smoothing]);
+  }, [map, id, polygon, smoothing]);
 
   useEffect(() => {
     if (!maskLayer) return;
@@ -55,6 +55,11 @@ function MaskLayer({
     if (!maskLayer) return;
     maskLayer.setOpacity(opacity);
   }, [maskLayer, opacity]);
+
+  useEffect(() => {
+    if (!maskLayer) return;
+    maskLayer.setZIndex(zIndex);
+  }, [maskLayer, zIndex]);
 
   return null;
 }

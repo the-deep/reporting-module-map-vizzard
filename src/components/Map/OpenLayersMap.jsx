@@ -1,9 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import * as ol from 'ol';
 import { ScaleLine, Zoom } from 'ol/control';
-import { MouseWheelZoom } from 'ol/interaction';
+import { MouseWheelZoom, DoubleClickZoom, defaults } from 'ol/interaction';
 import styles from './Map.module.css';
-import 'ol/ol.css';
 
 function OpenLayersMap({
   setMapObj,
@@ -19,10 +18,12 @@ function OpenLayersMap({
   scaleBar,
   scaleBarPosition,
   enableMouseWheelZoom,
+  enableDoubleClickZoom,
   enableZoomControls,
   zoomControlsPosition,
 }) {
   const mapRef = useRef();
+  const zoomDelta = 0.4;
 
   // on component mount
   useEffect(() => {
@@ -36,6 +37,9 @@ function OpenLayersMap({
       layers: [],
       overlays: [],
       controls: [],
+      interactions: defaults({
+        zoomDelta,
+      }),
     };
 
     const mapObject = new ol.Map(options);
@@ -68,9 +72,24 @@ function OpenLayersMap({
       }, this);
     }
 
+    // enableDoubleClickZoom
+    if (enableDoubleClickZoom) {
+      mapObject.getInteractions().forEach((interaction) => {
+        if (interaction instanceof DoubleClickZoom) {
+          interaction.setActive(true);
+        }
+      }, this);
+    } else {
+      mapObject.getInteractions().forEach((interaction) => {
+        if (interaction instanceof DoubleClickZoom) {
+          interaction.setActive(false);
+        }
+      }, this);
+    }
+
     if (enableZoomControls) {
       const zoomClass = `${styles.ol - zoom} ${styles[`POS-${zoomControlsPosition}`]}`;
-      mapObject.addControl(new Zoom({ delta: 0.3, className: zoomClass }));
+      mapObject.addControl(new Zoom({ delta: zoomDelta, className: zoomClass }));
     }
 
     mapObject.setTarget(mapRef.current);
@@ -98,7 +117,7 @@ function OpenLayersMap({
 
     if (enableZoomControls) {
       const zoomClass = `ol-zoom ${styles[`POS-${zoomControlsPosition}`]}`;
-      map.addControl(new Zoom({ delta: 0.3, className: zoomClass }));
+      map.addControl(new Zoom({ delta: zoomDelta, className: zoomClass }));
     }
   }, [enableZoomControls, zoomControlsPosition]);
 
@@ -124,6 +143,23 @@ function OpenLayersMap({
       }, this);
     }
   }, [enableMouseWheelZoom]);
+
+  useEffect(() => {
+    if (!map) return;
+    if (enableDoubleClickZoom) {
+      map.getInteractions().forEach((interaction) => {
+        if (interaction instanceof DoubleClickZoom) {
+          interaction.setActive(true);
+        }
+      }, this);
+    } else {
+      map.getInteractions().forEach((interaction) => {
+        if (interaction instanceof DoubleClickZoom) {
+          interaction.setActive(false);
+        }
+      }, this);
+    }
+  }, [enableDoubleClickZoom]);
 
   useEffect(() => {
     if (!map) return;

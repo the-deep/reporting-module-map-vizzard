@@ -23,6 +23,7 @@ export const Default = {
     center: mapConfig.mapOptions.center,
     zoom: mapConfig.mapOptions.zoom,
     layers: mapConfig.layers,
+    fontStyle: mapConfig.mapOptions.fontStyle,
     height: mapConfig.mapOptions.height,
     width: mapConfig.mapOptions.width,
     mainTitle: 'Main title',

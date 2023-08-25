@@ -1,12 +1,20 @@
+.container {
+  display: grid;
+  grid-template-areas:
+  'layers options map'
+  /* grid-template-columns: repeat(12, 1fr); */
+  /* grid-gap: 20px; */
+}
+
 .mapOptionsContainer {
+  grid-area: options;
   background-color: #f9f9f9b0;
-  max-width: 223px;
-  min-width: 223px;
   min-height: 97vh;
   padding-left: 0px;
   padding-right: 0px;
   position: relative;
   height: 100%;
+  min-width: 230px;
 }
 
 .mapOptions {
@@ -16,32 +24,36 @@
 
 .mapOptionsPanel {
     background-color:rgb(241, 241, 241);
-    padding: 6px 9px;
+    padding: 0px;
     height: 33px;
+    border-right: 1px solid #fbfbfb;
 }
 
 .mapOptions_icon {
   background-color: #fff;
   display: inline-block;
-  width: 29px;
-  height: 29px;
+  width: 27px;
+  height: 27px;
   font-size: 8px;
   border-radius: 30px;
   position: relative;
-  left: -6px;
-  top: -6px;
+  left: 4px;
+  top: 3px;
+  margin-right: 10px;
 }
 
 .mapOptions_icon img {
   width: 20px;
   height: 20px;
-  margin-top: 5px;
-  margin-left: 5px;
-  opacity: 0.2
+  margin-top: 4px;
+  margin-left: 4px;
+  opacity: 0.2;
+  padding-right: 6px;
 }
 
 .mapOptionsPanel h1 {
     padding: 0px;
+    padding-left: 0px;
     margin: 0px;
     font-size: 18px;
     color: rgb(59, 59, 59);
@@ -61,7 +73,7 @@
   bottom: 0;
   left: 0;
   overflow-y: scroll;
-  width: 100%;
+  width: 205px;
 }
 
 .mapOptionsPanelBody input {
@@ -92,6 +104,7 @@
     padding-bottom: 3px;
     font-size: 1em !important;
     color: rgba(0, 0, 0, 0.7);
+    font-weight: normal;
 }
 
 .optionLabelSm {
@@ -145,3 +158,54 @@ hr {
   padding: 4px 7px;
 }
 
+.columnDataTypeIcon {
+  height: 18px;
+  opacity: 0.3;
+  padding-right: 3px;
+}
+
+.mapPanel {
+  background-color: #f6f6f6;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.mapLayersContainer {
+  padding-right: 0px;
+  grid-area: layers;
+  min-width: 270px;
+}
+
+.mapObjectContainer {
+  grid-area: map;
+  height: 40vh;
+  overflow: scroll;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  background-color: #fbfbfb;
+  padding-right: 5px;
+  padding-left: 0px;
+}
+
+.mapObjectBody {
+  height: 40vh;
+  overflow: scroll;
+  font-size: 10px;
+  padding: 6px 9px;
+}
+
+.mapObjectTitle {
+  background-color:rgb(241, 241, 241);
+  padding: 6px 8px;
+  border-right: 1px solid #fbfbfb;
+  padding-left: 5px;
+}
+
+.mapObjectTitle h1 {
+  padding: 0px;
+  margin: 0px;
+  font-size: 18px;
+  color: rgb(59, 59, 59);
+  padding-left: 4px;
+}

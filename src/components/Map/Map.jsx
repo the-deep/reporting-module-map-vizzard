@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import WebFont from 'webfontloader'; // eslint-disable-line import/no-extraneous-dependencies
 import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { osm, vector, mask } from './Source';
@@ -6,30 +7,34 @@ import {
   TileLayer, VectorLayer, MapboxLayer, MaskLayer, SymbolLayer,
 } from './Layers';
 import OpenLayersMap from './OpenLayersMap';
+import './ol.css';
 import styles from './Map.module.css';
 import drc from './assets/logos/drc.jpg';
 import dfs from './assets/logos/dfs.svg';
 import immap from './assets/logos/immap.png';
 import deep from './assets/logos/deep.svg';
+import deepSmall from './assets/logos/deep_small.png';
 
 function Map({
   mapObj,
   setMapObj,
   layers,
-  height,
-  width,
-  zoom,
+  height = 400,
+  width = 700,
+  fontStyle,
+  zoom = 5,
   minZoom,
   maxZoom,
-  center,
+  center = { lon: 30.21, lat: 15.86 },
   showHeader,
-  mainTitle,
-  subTitle,
+  mainTitle = 'Main title',
+  subTitle = 'Sub-title',
   showScale,
   scaleUnits,
   scaleBar,
   scaleBarPosition,
   enableMouseWheelZoom,
+  enableDoubleClickZoom,
   enableZoomControls,
   zoomControlsPosition,
   showFooter,
@@ -37,6 +42,34 @@ function Map({
   showLogos,
 }) {
   const [map, setMap] = useState(null);
+  const [fonts, setFonts] = useState(null);
+
+  useEffect(() => {
+    if (fonts) {
+      WebFont.load({
+        google: {
+          families: fonts,
+        },
+      });
+    }
+  }, [fonts]);
+
+  useEffect(() => {
+    const usedFonts = [];
+    layers.forEach((d) => {
+      if (!d.style) return false;
+      if ((typeof d.style.labelStyle === 'undefined') || (typeof d.style.labelStyle.fontFamily === 'undefined')) return false;
+      const { fontFamily } = d.style.labelStyle;
+      if (!usedFonts.includes(fontFamily)) {
+        usedFonts.push(fontFamily);
+      }
+      return null;
+    });
+    if (!usedFonts.includes(fontStyle.fontFamily)) {
+      usedFonts.push(fontStyle.fontFamily);
+    }
+    setFonts(usedFonts);
+  }, [layers, fontStyle.fontFamily]);
 
   const renderLayers = useMemo(() => {
     const renderLayersArr = [];
@@ -53,7 +86,6 @@ function Map({
             style={d.style}
             symbol={d.symbol}
             scale={d.scale}
-            textScale={d.textScale}
             data={d.data}
             showLabels={d.showLabels}
             labelColumn={d.labelColumn}
@@ -135,6 +167,7 @@ function Map({
                 <div key={logo} className={styles.headerLogo}>
                   { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
                   { logo === 'DEEP' && <img className={styles.logoDeep} src={deep} alt="" /> }
+                  { logo === 'DEEP (small)' && <img className={styles.logoDeepSmall} src={deepSmall} alt="" /> }
                   { logo === 'DRC' && <img className={styles.logoDrc} src={drc} alt="" /> }
                   { logo === 'iMMAP' && <img className={styles.logoImmap} src={immap} alt="" /> }
                 </div>
@@ -162,6 +195,7 @@ function Map({
         scaleBar={scaleBar}
         scaleBarPosition={scaleBarPosition}
         enableMouseWheelZoom={enableMouseWheelZoom}
+        enableDoubleClickZoom={enableDoubleClickZoom}
         enableZoomControls={enableZoomControls}
         zoomControlsPosition={zoomControlsPosition}
       >
@@ -184,13 +218,3 @@ function Map({
 }
 
 export default Map;
-
-Map.defaultProps = {
-  zoom: 5,
-  mainTitle: 'Main title',
-  subTitle: 'Sub-title',
-  center: { lon: 30.21, lat: 15.86 },
-  height: 400,
-  width: 700,
-  children: null,
-};

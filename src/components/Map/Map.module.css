@@ -28,18 +28,27 @@
   visibility: visible;
 }
 
+.ol-scale-line-inner {
+  color: inherit !important;
+}
+
+.ol-scale-step-text {
+  color: inherit !important;
+}
+
 .ol-map {
   background-color: #fafafa;
   border: 1px solid rgb(211, 211, 211);
 }
 
 .mapContainer {
-  -webkit-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 11px -8px rgba(0,0,0,0.45);
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  background-color: white;
 }
 
 .logos {
@@ -66,18 +75,26 @@
 }
 
 .logoDeep {
-  height: 30px;
+  height: 36px;
   margin-right: 2px;
-  margin-top: 0px;
+  margin-top: -2px;
+}
+
+.logoDeepSmall {
+  height: 56px;
+  margin-right: -2px;
+  margin-top: -12px;
+  margin-left: -10px;
 }
 
 .logoDfs {
   height: 34px;
+  margin-top: -1px;
 }
 
 .logoImmap {
   height: 45px;
-  margin-top: -6px;
+  margin-top: -7px;
 }
 
 .titleContainer {
@@ -88,10 +105,10 @@
   position: absolute;
   z-index: 3;
   padding: 3px 8px;
-  margin-top: 2px;
+  margin-top: 1px;
   line-height: 1.21;
   display: inline-block;
-
+  margin-left: 3px;
 }
 
 .mainTitle {
@@ -104,6 +121,7 @@
   left: unset !important;
   right: 8px;
   bottom: 8px !important;
+  color: inherit !important;
   opacity: 0.8;
 }
 
@@ -112,6 +130,7 @@
   left: unset !important;
   right: 8px;
   bottom: 8px !important;
+  color: inherit !important;
   opacity: 0.8;
 }
 
@@ -121,6 +140,7 @@
   top: 8px;
   right: 8px;
   opacity: 0.8;
+  color: inherit !important;
 }
 
 .scalePosbottomLeft, .POS-bottomLeft {
@@ -129,6 +149,7 @@
   right: unset !important;
   bottom: 8px;
   opacity: 0.8;
+  color: inherit !important;
 }
 
 .mapFooter {
@@ -143,4 +164,3 @@
   display: inline;
   padding-left: 2px;
 }
-

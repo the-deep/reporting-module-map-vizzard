@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
@@ -9,6 +10,7 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
+import FontPicker from './FontPicker';
 import styles from './MapOptions.module.css';
 import point from '../assets/point.svg';
 import capital from '../../Map/assets/map-icons/capital.svg';
@@ -16,21 +18,62 @@ import city from '../../Map/assets/map-icons/city.svg';
 import settlement from '../../Map/assets/map-icons/settlement.svg';
 import marker from '../../Map/assets/map-icons/marker.svg';
 import airport from '../../Map/assets/map-icons/airport.svg';
+import borderCrossing from '../../Map/assets/map-icons/borderCrossing.svg';
+import triangle from '../../Map/assets/map-icons/triangle.svg';
 import idpRefugeeCamp from '../../Map/assets/map-icons/idp-refugee-camp.svg';
+import nullType from '../assets/nullType.svg';
+import string from '../assets/string.svg';
+import number from '../assets/number.svg';
+import date from '../assets/date.svg';
+import coordinates from '../assets/coordinates.svg';
+
+function isValidDate(dateString) {
+  const dt = new Date(dateString);
+  // eslint-disable-next-line
+  return dt instanceof Date && !isNaN(dt);
+}
+
+const columnDataTypeIcons = {
+  nullType,
+  string,
+  number,
+  date,
+  coordinates,
+};
+
+const symbolIcons = {
+  capital,
+  city,
+  settlement,
+  'idp-refugee-camp': idpRefugeeCamp,
+  airport,
+  marker,
+  borderCrossing,
+  triangle,
+};
 
 function OptionsSymbol({ layer, activeLayer, updateLayer }) {
-  const symbolIcons = {
-    capital,
-    city,
-    settlement,
-    'idp-refugee-camp': idpRefugeeCamp,
-    airport,
-    marker,
-  };
-
   const symbols = Object.keys(symbolIcons);
 
-  const columns = Object.keys({ ...layer.data[0] });
+  const columns = useMemo(() => {
+    const types = {};
+    Object.entries(layer.data).forEach((feature) => {
+      Object.entries(feature[1]).forEach((property) => {
+        const [key, value] = property;
+        let type = typeof value;
+        if (type === 'string') {
+          if (isValidDate(value)) type = 'date';
+        }
+        if (value === '') type = 'nullType';
+        if ((key === 'lat') || (key === 'lon') || (key === 'Lat') || (key === 'Lon') || (key === 'LAT') || (key === 'LON') || (key === 'LATITUDE') || (key === 'LONGITUDE') || (key === 'latitude') || (key === 'longitude')) {
+          type = 'coordinates';
+        }
+        // remove null columns
+        if (type !== 'nullType') types[key] = type;
+      });
+    });
+    return types;
+  }, [layer.data]);
 
   const theme = createTheme({
     palette: {
@@ -41,6 +84,12 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
   const updateAttr = (attr, val) => {
     const layerClone = { ...layer };
     layerClone[attr] = val;
+    updateLayer(layerClone, activeLayer);
+  };
+
+  const updateFontStyle = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone.style.labelStyle[attr] = val;
     updateLayer(layerClone, activeLayer);
   };
 
@@ -162,10 +211,15 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                       style={{ backgroundColor: '#fff', fontSize: 12 }}
                       variant="standard"
                     >
-                      {columns
+                      {Object.keys(columns)
                         .sort()
                         .map((labelColumn) => (
                           <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
+                            <img
+                              className={styles.columnDataTypeIcon}
+                              src={columnDataTypeIcons[columns[labelColumn]]}
+                              alt={labelColumn}
+                            />
                             {labelColumn}
                           </MenuItem>
                         ))}
@@ -174,21 +228,9 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                 </div>
               </div>
 
-              <div className={styles.optionRow}>
-                <div className={styles.optionLabel}>Text size</div>
-                <Slider
-                  aria-label="Opacity"
-                  value={layer.textScale}
-                  size="small"
-                  onChange={(e, val) => updateAttr('textScale', val)}
-                  valueLabelDisplay="auto"
-                  step={0.01}
-                  color="primary"
-                  theme={theme}
-                  min={0}
-                  max={2}
-                />
-              </div>
+              <hr />
+
+              <FontPicker style={layer.style.labelStyle} updateFontStyle={updateFontStyle} variant="symbol" />
             </div>
           )}
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css'; // eslint-disable-line import/no-extraneous-dependencies
+import '../Map/ol.css';
+import styles from './MapOptions/MapOptions.module.css';
+import { rgba } from './MapOptions/ColorPicker';
 import Map from '../Map';
 import MapLayers from './MapLayers';
 import MapOptions from './MapOptions';
-import styles from './MapOptions/MapOptions.module.css';
 
 function MapVizzard({ mapConfig }) {
   const [layers, setLayers] = useState(mapConfig.layers);
@@ -13,8 +14,8 @@ function MapVizzard({ mapConfig }) {
 
   return (
     <div className="">
-      <div className="row flex-nowrap">
-        <div id="map_layers" className="col-3">
+      <div className={`${styles.container}`}>
+        <div id="map_layers" className={`${styles.mapLayersContainer}`}>
           <MapLayers
             layers={layers}
             setLayers={setLayers}
@@ -22,7 +23,7 @@ function MapVizzard({ mapConfig }) {
             setActiveLayer={setActiveLayer}
           />
         </div>
-        <div className={`${styles.mapOptionsContainer} col`}>
+        <div className={`${styles.mapOptionsContainer}`}>
           <MapOptions
             layers={layers}
             setLayers={setLayers}
@@ -32,11 +33,12 @@ function MapVizzard({ mapConfig }) {
             mapObj={mapObj}
           />
         </div>
-        <div id="map_panel" className="col-7">
+        <div id="map_panel" className={`${styles.mapPanel}`} style={{ fontFamily: mapOptions.fontStyle.fontFamily, color: rgba(mapOptions.fontStyle.color) }}>
           <Map
             layers={layers}
             height={mapOptions.height}
             width={mapOptions.width}
+            fontStyle={mapOptions.fontStyle}
             center={mapOptions.center}
             zoom={mapOptions.zoom}
             minZoom={mapOptions.minZoom}
@@ -49,6 +51,7 @@ function MapVizzard({ mapConfig }) {
             scaleBar={mapOptions.scaleBar}
             scaleBarPosition={mapOptions.scaleBarPosition}
             enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
+            enableDoubleClickZoom={mapOptions.enableDoubleClickZoom}
             enableZoomControls={mapOptions.enableZoomControls}
             zoomControlsPosition={mapOptions.zoomControlsPosition}
             setMapObj={setMapObj}

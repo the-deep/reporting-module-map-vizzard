@@ -4,7 +4,7 @@ import OLTileLayer from 'ol/layer/Tile';
 function TileLayer({
   map, source, zIndex = 0, opacity = 1,
 }) {
-  const [tileLayer, setTileLayer] = useState(false);
+  const [tileLayer, setTileLayer] = useState(undefined);
 
   useEffect(() => {
     if (!map) return undefined;
