@@ -54,6 +54,8 @@ function MapVizzard({ mapConfig }) {
             enableDoubleClickZoom={mapOptions.enableDoubleClickZoom}
             enableZoomControls={mapOptions.enableZoomControls}
             zoomControlsPosition={mapOptions.zoomControlsPosition}
+            showLegend={mapOptions.showLegend}
+            legendPosition={mapOptions.legendPosition}
             setMapObj={setMapObj}
             showFooter={mapOptions.showFooter}
             sources={mapOptions.sources}

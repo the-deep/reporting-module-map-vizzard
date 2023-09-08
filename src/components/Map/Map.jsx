@@ -8,12 +8,22 @@ import {
 } from './Layers';
 import OpenLayersMap from './OpenLayersMap';
 import './ol.css';
+import ColorScale from '../MapVizzard/MapOptions/ColorScale';
+import { rgba } from '../MapVizzard/MapOptions/ColorPicker';
 import styles from './Map.module.css';
 import drc from './assets/logos/drc.jpg';
 import dfs from './assets/logos/dfs.svg';
 import immap from './assets/logos/immap.png';
 import deep from './assets/logos/deep.svg';
 import deepSmall from './assets/logos/deep_small.png';
+import capital from './assets/map-icons/capital.svg';
+import city from './assets/map-icons/city.svg';
+import settlement from './assets/map-icons/settlement.svg';
+import marker from './assets/map-icons/marker.svg';
+import airport from './assets/map-icons/airport.svg';
+import borderCrossing from './assets/map-icons/borderCrossing.svg';
+import triangle from './assets/map-icons/triangle.svg';
+import idpRefugeeCamp from './assets/map-icons/idp-refugee-camp.svg';
 
 function Map({
   mapObj,
@@ -37,12 +47,25 @@ function Map({
   enableDoubleClickZoom,
   enableZoomControls,
   zoomControlsPosition,
+  showLegend,
+  legendPosition,
   showFooter,
   sources,
   showLogos,
 }) {
   const [map, setMap] = useState(null);
   const [fonts, setFonts] = useState(null);
+
+  const symbolIcons = {
+    capital,
+    city,
+    settlement,
+    'idp-refugee-camp': idpRefugeeCamp,
+    airport,
+    marker,
+    borderCrossing,
+    triangle,
+  };
 
   useEffect(() => {
     if (fonts) {
@@ -153,6 +176,126 @@ function Map({
     return renderLayersArr;
   }, [map, layers]);
 
+  const legendRows = useMemo(() => {
+    const legendArr = [];
+
+    layers.forEach((d) => {
+      if (d.type === 'symbol') {
+        const row = d.visible > 0 && d.showInLegend > 0 && (
+          <div key={`legendSymbol${d.id}`}>
+            <div className={styles.legendSymbol}>
+              <img src={symbolIcons[d.symbol]} alt={d.symbol} style={{ transform: `scale(${d.scale})` }} />
+            </div>
+            <div className={styles.legendSeriesTitle}>
+              {d.legendSeriesTitle}
+            </div>
+          </div>
+        );
+        legendArr.push(row);
+      }
+      if (d.type === 'polygon') {
+        let legendPolygonRow;
+        if (d.style.fillType === 'single') {
+          legendPolygonRow = (
+            <div
+              className={styles.legendPolygonSingle}
+              style={{
+                backgroundColor: rgba(d.style.fill),
+                borderWidth: d.style.strokeWidth,
+                borderColor: rgba(d.style.stroke),
+              }}
+            />
+          );
+          const row = d.visible > 0 && d.showInLegend > 0 && (
+            <div key={`legendSymbol${d.id}`}>
+              <div style={{ opacity: d.opacity, display: 'inline' }}>
+                {legendPolygonRow}
+              </div>
+              <div className={styles.legendSeriesTitle}>
+                {d.legendSeriesTitle}
+              </div>
+            </div>
+          );
+          legendArr.push(row);
+        }
+        if (d.style.fillType === 'graduated') {
+          legendPolygonRow = (
+            <div>
+              <div className={styles.legendPolygonGraduated} style={{ opacity: d.opacity }}>
+                <ColorScale
+                  colorScale={d.style.fillPalette}
+                  steps={d.style.fillSteps}
+                  colorScaleType={d.style.fillScaleType}
+                  pow={d.style.fillPow}
+                  containerClass="colorScaleDiv"
+                  inverted={d.style.fillScaleInvert}
+                />
+              </div>
+              <div className={styles.legendPolygonScaleUnits}>
+                <div className={styles.legendPolygonScaleUnit1}>
+                  {d.style.fillDataMin}
+                </div>
+                <div className={styles.legendPolygonScaleUnit2}>
+                  {d.style.fillDataMax}
+                </div>
+              </div>
+            </div>
+
+          );
+          const row = d.visible > 0 && d.showInLegend > 0 && (
+            <div key={`legendPolygon${d.id}`}>
+              <div className={styles.legendSeriesTitle}>
+                <b style={{ fontSize: 10 }}>{d.legendSeriesTitle}</b>
+              </div>
+              {legendPolygonRow}
+            </div>
+          );
+          legendArr.push(row);
+        }
+      }
+    });
+    return legendArr;
+  }, [layers]);
+
+  const bottomPos = useMemo(() => {
+    let bottom = 10;
+    if (legendPosition === 'bottomLeft') {
+      if (showFooter === true) {
+        bottom = 30;
+        return { bottom: 30, left: 10 };
+      }
+    }
+    if (legendPosition === 'topLeft') {
+      if (showHeader === true) {
+        return { top: 60, left: 10 };
+      }
+      return { top: 10, left: 10 };
+    }
+    if (legendPosition === 'topRight') {
+      if ((enableZoomControls === true) && (zoomControlsPosition === 'topRight')) {
+        return { top: 60, right: 10 };
+      }
+      return { top: 10, right: 10 };
+    }
+    if (legendPosition === 'bottomRight') {
+      if ((showScale === true) && (scaleBarPosition === 'bottomRight')) {
+        return { bottom: 35, right: 10 };
+      }
+      return { bottom: 10, right: 10 };
+    }
+    return { bottom, left: 10 };
+  }, [
+    showHeader,
+    enableZoomControls,
+    zoomControlsPosition,
+    showScale,
+    scaleBarPosition,
+    showFooter,
+    showLegend,
+    legendPosition,
+    showScale,
+  ]);
+
   const mapContext = (
     <div
       className={styles.mapContainer}
@@ -201,6 +344,7 @@ function Map({
       >
         {renderLayers}
       </OpenLayersMap>
+
       {showFooter && (
         <div className={styles.mapFooter}>
           <b>Sources</b>
@@ -210,6 +354,16 @@ function Map({
           </div>
         </div>
       )}
+
+      {showLegend && (
+        <div className={styles.mapLegend} style={bottomPos}>
+          <div className={styles.mapLegendTitle}>Legend</div>
+          <div className={styles.legendRow}>
+            {legendRows}
+          </div>
+        </div>
+      )}
+
     </div>
   );
   // });
