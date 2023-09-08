@@ -5,8 +5,8 @@
         "showHeader": true,
         "mainTitle": "Sudan",
         "subTitle": "Country map",
-        "center": {"lon": 30.2, "lat": 16.1},
-        "zoom": 5.1,
+        "center": {"lon": 29.6, "lat": 16.1},
+        "zoom": 5.05,
         "maxZoom": 7,
         "minZoom": 4.8,
         "showScale": true,
@@ -18,6 +18,8 @@
         "enableDoubleClickZoom": false,
         "enableZoomControls": true,
         "zoomControlsPosition": "topRight",
+        "showLegend": true,
+        "legendPosition": "bottomLeft",
         "showFooter": true,
         "sources": "Danish Refugee Council (DRC), Data Friendly Space (DFS), Mapbox",
         "fontStyle": {
@@ -36,7 +38,7 @@
             "visible": 1,
             "blur": 10,
             "smoothing": 0.4,
-            "mask": "POLYGON((0 90,180 90,180 -90,0 -90,-180 -90,-180 0,-180 90,0 90),(21.893756216246157 21.291128381499988,25.042803365525856 23.208409696277272,33.10440785620573 23.267792738410122,36.02205782260023 23.918369412587296,37.77477196802118 22.638144453281228,38.32679202268262 20.423941713803288,39.6644364362147 18.606867554433464,39.658943045730986 16.95185710741319,38.004481704869676 15.830770955299002,37.808095731718964 13.602991580239774,36.88829655352942 11.433305226805828,36.484999619402004 9.911642356924503,35.59057521789716 8.524045982915396,34.1517087869711 8.163805611563404,32.15369354369629 8.421490043858867,26.795265064041278 8.296293081274342,25.633893282559068 7.6208574931361,22.150073488759485 7.796222856913104,19.88541475502667 13.276187746008475,22.03737779852074 17.857138139527336,21.893756216246157 21.291128381499988))",
+            "mask": "POLYGON((0 90,180 90,180 -90,0 -90,-180 -90,-180 0,-180 90,0 90),(21.893756216246157 21.291128381499988,25.042803365525856 23.208409696277272,33.10440785620573 23.267792738410122,36.02205782260023 23.918369412587296,37.77477196802118 22.638144453281228,38.32679202268262 20.423941713803288,39.6644364362147 18.606867554433464,39.658943045730986 16.95185710741319,38.004481704869676 15.830770955299002,37.808095731718964 13.602991580239774,36.88829655352942 11.433305226805828,36.484999619402004 9.911642356924503,35.59057521789716 8.524045982915396,34.1517087869711 8.163805611563404,32.15369354369629 8.421490043858867,26.795265064041278 8.296293081274342,25.633893282559068 7.6208574931361,22.841985192260683 8.350758487336336,22.12797214342632 10.800016470049584,20.641149451782283 13.289746825771672,22.03737779852074 17.857138139527336,21.893756216246157 21.291128381499988))",
             "style": {
                 "radius": 7,
                 "strokeWidth": 1.4,
@@ -73,6 +75,8 @@
             "zIndex": 10,
             "scale": 1,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "Capital cities",
             "style": {
                 "stroke": "#000",
                 "fill": "#FFF",
@@ -99,6 +103,8 @@
             "opacity": 1,
             "zIndex": 9,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "Cities",
             "style": {
                 "strokeWidth": 1.4,
                 "stroke": "#000",
@@ -124,10 +130,12 @@
             "symbol": "borderCrossing",
             "showLabels": false,
             "labelColumn": "",
-            "scale": 0.66,
+            "scale": 0.76,
             "opacity": 0.8,
             "zIndex": 8,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "Border crossing points",
             "style": {
                 "strokeWidth": 1.4,
                 "stroke": "#000",
@@ -189,6 +197,8 @@
             "opacity": 0.6,
             "zIndex": 3,
             "visible": 1,
+            "showInLegend": false,
+            "legendSeriesTitle": "ADM0",
             "style": {
                 "fillType": "single",
                 "fillSingleType": "solid",
@@ -227,6 +237,8 @@
             "labelColumn": "ADM1_EN",
             "zIndex": 4,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "ADM1",
             "style": {
                 "fillType": "graduated",
                 "fillColumn": "idps_current",
@@ -286,6 +298,8 @@
             "labelColumn": "ADM2_EN",
             "zIndex": 5,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "ADM2",
             "style": {
                 "fillType": "single",
                 "fillSingleType": "solid",
@@ -516,6 +530,8 @@
             "opacity": 0.5,
             "zIndex": 6,
             "visible": 1,
+            "showInLegend": true,
+            "legendSeriesTitle": "Darfur region",
             "style": {
                 "fillType": "single",
                 "fillSingleType": "pattern",

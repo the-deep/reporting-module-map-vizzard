@@ -42,6 +42,7 @@ function MapOptions({
 
   const updateLayer = (d, id) => {
     const layersClone = [...layers];
+    console.log(d);
     layersClone.forEach((dd, ii) => {
       if (dd.id === id) {
         layersClone[ii] = d;
@@ -122,7 +123,7 @@ function MapOptions({
       });
     }
     return renderLayers;
-  }, [map, activeLayer, layers]);
+  }, [map, activeLayer, layers, mapOptions]);
 
   return <div className={styles.mapOptions}>{render}</div>;
 }

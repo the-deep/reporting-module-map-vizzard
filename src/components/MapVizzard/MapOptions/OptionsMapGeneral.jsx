@@ -297,6 +297,44 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
           <hr />
 
           <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show legend</div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.showLegend}
+                color="default"
+                onChange={(e, val) => updateAttr('showLegend', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          {mapOptions.showLegend && (
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Legend position</div>
+            <div className={styles.optionValue}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.legendPosition}
+                  onChange={(e, val) => updateAttr('legendPosition', val.props.value)}
+                  size="small"
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
+                  variant="standard"
+                >
+                  <MenuItem key="legendPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                  <MenuItem key="legendPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                  <MenuItem key="legendPositionTopRight" value="topRight">Top right</MenuItem>
+                  <MenuItem key="legendPositionTopLeft" value="topLeft">Top left</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
+
+          <hr />
+
+          <div className={styles.optionRow}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show scale bar</div>
             <div className={styles.optionValueFloat}>
               <Switch

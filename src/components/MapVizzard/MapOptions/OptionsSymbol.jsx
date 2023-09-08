@@ -234,8 +234,35 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
             </div>
           )}
 
-          <br />
-          <br />
+          <hr />
+
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
+              Show in legend
+            </div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={layer.showInLegend}
+                color="default"
+                onChange={(e, val) => updateAttr('showInLegend', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          {layer.showInLegend && (
+            <div className={styles.optionRow}>
+              <FormControl fullWidth>
+                <TextField
+                  label="Layer name"
+                  variant="standard"
+                  value={layer.legendSeriesTitle}
+                  onChange={(e) => updateAttr('legendSeriesTitle', e.target.value)}
+                />
+              </FormControl>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
