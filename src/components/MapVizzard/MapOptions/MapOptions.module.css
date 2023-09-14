@@ -209,3 +209,15 @@ hr {
   color: rgb(59, 59, 59);
   padding-left: 4px;
 }
+
+.embed .mapPanel {
+  padding: 0px;
+}
+
+.embed .container {
+  display: block !important;
+}
+
+.embed .mapPanel {
+  background-color: transparent;
+}

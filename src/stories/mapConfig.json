@@ -238,7 +238,7 @@
             "zIndex": 4,
             "visible": 1,
             "showInLegend": true,
-            "legendSeriesTitle": "ADM1",
+            "legendSeriesTitle": "Total IDPs",
             "style": {
                 "fillType": "graduated",
                 "fillColumn": "idps_current",

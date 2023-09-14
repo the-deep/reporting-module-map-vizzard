@@ -234,3 +234,7 @@
   float: right;
   display: inline;
 }
+
+.embedMap {
+  box-shadow: none;
+}
