@@ -52,6 +52,7 @@ function Map({
   showFooter,
   sources,
   showLogos,
+  embed = false,
 }) {
   const [map, setMap] = useState(null);
   const [fonts, setFonts] = useState(null);
@@ -296,10 +297,13 @@ function Map({
     showScale,
   ]);
 
+  let w = `${width}px`;
+  if (embed) w = '100%';
+
   const mapContext = (
     <div
-      className={styles.mapContainer}
-      style={{ height: `${height}px`, width: `${width}px` }}
+      className={`${styles.mapContainer} ${(embed ? styles.embedMap : '')}`}
+      style={{ height: `${height}px`, width: w }}
     >
       {showHeader && (
         <div>
