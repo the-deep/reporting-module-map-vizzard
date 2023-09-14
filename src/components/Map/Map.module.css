@@ -216,6 +216,7 @@
 
 .legendSeriesTitle {
   display: inline-block;
+  padding-top: 2px;
 }
 
 .legendPolygonScaleUnits {

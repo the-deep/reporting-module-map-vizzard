@@ -197,16 +197,30 @@ function Map({
       if (d.type === 'polygon') {
         let legendPolygonRow;
         if (d.style.fillType === 'single') {
-          legendPolygonRow = (
-            <div
-              className={styles.legendPolygonSingle}
-              style={{
-                backgroundColor: rgba(d.style.fill),
-                borderWidth: d.style.strokeWidth,
-                borderColor: rgba(d.style.stroke),
-              }}
-            />
-          );
+          if (d.style.fillSingleType === 'solid') {
+            legendPolygonRow = (
+              <div
+                className={styles.legendPolygonSingle}
+                style={{
+                  backgroundColor: rgba(d.style.fill),
+                  borderWidth: d.style.strokeWidth,
+                  borderColor: rgba(d.style.stroke),
+                }}
+              />
+            );
+          }
+          if (d.style.fillSingleType === 'pattern') {
+            legendPolygonRow = (
+              <div
+                className={styles.legendPolygonSingle}
+                style={{
+                  background: `repeating-linear-gradient(${90 + d.style.fillPatternAngle}deg, transparent, transparent ${d.style.fillPatternSpacing / 1.5}px, ${rgba(d.style.fill)} ${d.style.fillPatternSpacing / 1.5}px, ${rgba(d.style.fill)} ${(d.style.fillPatternSize + d.style.fillPatternSpacing / 1.5)}px)`,
+                  borderWidth: d.style.strokeWidth,
+                  borderColor: rgba(d.style.stroke),
+                }}
+              />
+            );
+          }
           const row = d.visible > 0 && d.showInLegend > 0 && (
             <div key={`legendSymbol${d.id}`}>
               <div style={{ opacity: d.opacity, display: 'inline' }}>

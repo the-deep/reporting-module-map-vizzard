@@ -14,8 +14,6 @@ function MapVizzard({ mapConfig }) {
   const queryParameters = new URLSearchParams(window.location.search);
   const embed = queryParameters.get('embed') || false;
 
-  console.log(mapOptions);
-
   return (
     <div className={`${(embed ? styles.embed : '')}`}>
       <div className={`${styles.container}`}>
