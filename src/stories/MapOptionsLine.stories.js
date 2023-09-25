@@ -3,7 +3,7 @@ import mapConfig from './sudan.json';
 
 // Story Config
 export default {
-  title: 'Map Vizzard/Layer options panel/Vector',
+  title: 'Map Vizzard/Layer options panel/Line',
   component: MapOptions,
   tags: ['autodocs'],
   argTypes: {
@@ -14,6 +14,6 @@ export default {
 export const Default = {
   args: {
     layers: mapConfig.layers,
-    activeLayer: 14,
+    activeLayer: 19,
   },
 };

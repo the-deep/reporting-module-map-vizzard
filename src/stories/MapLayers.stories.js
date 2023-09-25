@@ -1,5 +1,5 @@
 import MapLayers from '../components/MapVizzard/MapLayers/MapLayers';
-import mapConfig from './mapConfig.json';
+import mapConfig from './sudan.json';
 
 // Story Config
 export default {

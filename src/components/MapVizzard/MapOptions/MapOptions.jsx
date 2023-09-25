@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Draw, Modify, Snap } from 'ol/interaction';
 import OptionsVector from './OptionsVector';
+import OptionsLine from './OptionsLine';
 import OptionsMask from './OptionsMask';
 import OptionsSymbol from './OptionsSymbol';
 import OptionsTile from './OptionsTile';
@@ -38,24 +39,27 @@ function MapOptions({
         map.removeLayer(el);
       }
     });
-  }, [activeLayer]);
-
-  const updateLayer = (d, id) => {
-    const layersClone = [...layers];
-    console.log(d);
-    layersClone.forEach((dd, ii) => {
-      if (dd.id === id) {
-        layersClone[ii] = d;
+    map.getInteractions().forEach((interaction) => {
+      if (interaction instanceof Modify) {
+        map.removeInteraction(interaction);
       }
     });
-    if (setLayers) setLayers([...layersClone]);
-  };
-
-  const updateMapOptions = (d) => {
-    setMapOptions({ ...d });
-  };
+  }, [activeLayer]);
 
   const render = useMemo(() => {
+    const updateLayer = (d, id) => {
+      const layersClone = [...layers];
+      layersClone.forEach((dd, ii) => {
+        if (dd.id === id) {
+          layersClone[ii] = d;
+        }
+      });
+      if (setLayers) setLayers([...layersClone]);
+    };
+    const updateMapOptions = (d) => {
+      setMapOptions({ ...d });
+    };
+
     const renderLayers = [];
     if (activeLayer === null) {
       renderLayers.push(
@@ -72,6 +76,16 @@ function MapOptions({
             renderLayers.push(
               <OptionsVector
                 key="polygonOptions"
+                layer={dd}
+                updateLayer={updateLayer}
+                activeLayer={activeLayer}
+              />,
+            );
+          }
+          if (dd.type === 'line') {
+            renderLayers.push(
+              <OptionsLine
+                key="lineOptions"
                 layer={dd}
                 updateLayer={updateLayer}
                 activeLayer={activeLayer}
@@ -123,7 +137,7 @@ function MapOptions({
       });
     }
     return renderLayers;
-  }, [map, activeLayer, layers, mapOptions]);
+  }, [map, activeLayer, setLayers, setMapOptions, layers, mapOptions]);
 
   return <div className={styles.mapOptions}>{render}</div>;
 }

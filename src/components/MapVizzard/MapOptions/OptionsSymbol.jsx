@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import * as d3 from 'd3';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
 import TextField from '@mui/material/TextField';
 import {
+  ToggleButton,
+  ToggleButtonGroup,
   InputLabel,
   FormControl,
 } from '@mui/material';
 import FontPicker from './FontPicker';
+import ColorPicker from './ColorPicker';
 import styles from './MapOptions.module.css';
 import point from '../assets/point.svg';
 import capital from '../../Map/assets/map-icons/capital.svg';
@@ -50,6 +55,7 @@ const symbolIcons = {
   marker,
   borderCrossing,
   triangle,
+  circle: 'circle',
 };
 
 function OptionsSymbol({ layer, activeLayer, updateLayer }) {
@@ -57,8 +63,15 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
 
   const columns = useMemo(() => {
     const types = {};
-    Object.entries(layer.data).forEach((feature) => {
-      Object.entries(feature[1]).forEach((property) => {
+    let obj = layer.data;
+    if (!Array.isArray(layer.data)) obj = layer.data.features;
+
+    Object.entries(obj).forEach((feature) => {
+      let f = feature[1];
+      if (!Array.isArray(layer.data)) {
+        f = feature[1].properties;
+      }
+      Object.entries(f).forEach((property) => {
         const [key, value] = property;
         let type = typeof value;
         if (type === 'string') {
@@ -87,11 +100,41 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
     updateLayer(layerClone, activeLayer);
   };
 
+  const updateStyle = (attr, val) => {
+    const layerClone = { ...layer };
+    layerClone.style[attr] = val;
+    updateLayer(layerClone, activeLayer);
+  };
+
   const updateFontStyle = (attr, val) => {
     const layerClone = { ...layer };
     layerClone.style.labelStyle[attr] = val;
     updateLayer(layerClone, activeLayer);
   };
+
+  const setFill = (d) => {
+    updateStyle('fill', d);
+  };
+
+  const setStroke = (d) => {
+    updateStyle('stroke', d);
+  };
+
+  useEffect(() => {
+    let max;
+    let min;
+    if (!Array.isArray(layer.data)) {
+      max = d3.max(layer.data.features, (d) => d.properties[layer.scaleColumn]);
+      min = d3.min(layer.data.features, (d) => d.properties[layer.scaleColumn]);
+    } else {
+      max = d3.max(layer.data, (d) => d[layer.scaleColumn]);
+      min = d3.min(layer.data, (d) => d[layer.scaleColumn]);
+    }
+
+    // automatic min/max data extent. TODO make option to override automatically calucated values
+    updateAttr('scaleDataMin', min);
+    updateAttr('scaleDataMax', max);
+  }, [layer.scaleColumn]);
 
   return (
     <div>
@@ -165,6 +208,56 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
           </div>
 
           <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Fill color</div>
+            <div className={styles.optionValue}>
+              <ColorPicker color={layer.style.fill} setColor={setFill} />
+            </div>
+          </div>
+
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Stroke color</div>
+            <div className={styles.optionValue}>
+              <ColorPicker color={layer.style.stroke} setColor={setStroke} />
+            </div>
+          </div>
+
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Stroke width</div>
+            <Slider
+              aria-label="Stroke width"
+              value={layer.style.strokeWidth}
+              size="small"
+              onChange={(e, val) => updateStyle('strokeWidth', val)}
+              valueLabelDisplay="auto"
+              step={0.1}
+              color="primary"
+              theme={theme}
+              min={0.1}
+              max={5}
+            />
+          </div>
+
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Scale type</div>
+            <div className={styles.optionValue}>
+              <ToggleButtonGroup
+                fullWidth
+                value={layer.scaleType}
+                color="primary"
+                exclusive
+                size="small"
+                onChange={(e, val) => updateAttr('scaleType', val)}
+                aria-label="Scale type"
+              >
+                <ToggleButton value="fixed">Fixed size</ToggleButton>
+                <ToggleButton value="proportional">Proportional</ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+          </div>
+
+          {layer.scaleType === 'fixed' && (
+
+          <div className={styles.optionRow}>
             <div className={styles.optionLabel}>Symbol size</div>
             <Slider
               aria-label="Opacity"
@@ -176,9 +269,87 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
               color="primary"
               theme={theme}
               min={0}
-              max={2}
+              max={5}
             />
           </div>
+
+          )}
+
+          {layer.scaleType === 'proportional' && (
+          <div>
+            <div className={styles.optionRow}>
+              <div className={styles.optionLabel}>Data column</div>
+              <div className={styles.optionValue}>
+                <FormControl fullWidth size="small">
+                  <Select
+                    labelId="text-column-label"
+                    id="text-column"
+                    value={layer.scaleColumn}
+                    onChange={(e, val) => updateAttr('scaleColumn', val.props.value)}
+                    size="small"
+                    style={{ backgroundColor: '#fff', fontSize: 12 }}
+                    variant="standard"
+                  >
+                    {Object.keys(columns)
+                      .sort()
+                      .map((labelColumn) => (
+                        <MenuItem key={`textLabelColumn-${labelColumn}`} value={labelColumn}>
+                          <img
+                            className={styles.columnDataTypeIcon}
+                            src={columnDataTypeIcons[columns[labelColumn]]}
+                            alt={labelColumn}
+                          />
+                          {labelColumn}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <div className={styles.optionRow}>
+              <Box display="flex">
+                <FormControl>
+                  <TextField
+                    label="Minimum"
+                    variant="standard"
+                    value={layer.scaleDataMin || 0}
+                    type="number"
+                    disabled
+                    size="small"
+                  />
+                </FormControl>
+                &nbsp; &nbsp; &nbsp;
+                <FormControl>
+                  <TextField
+                    label="Maximum"
+                    variant="standard"
+                    value={layer.scaleDataMax || 0}
+                    type="number"
+                    disabled
+                    size="small"
+                  />
+                </FormControl>
+              </Box>
+            </div>
+            <div>
+              <div className={styles.optionRow}>
+                <div className={styles.optionLabel}>Symbol size</div>
+                <Slider
+                  aria-label="Opacity"
+                  value={layer.scale}
+                  size="small"
+                  onChange={(e, val) => updateAttr('scale', val)}
+                  valueLabelDisplay="auto"
+                  step={0.01}
+                  color="primary"
+                  theme={theme}
+                  min={0}
+                  max={5}
+                />
+              </div>
+            </div>
+          </div>
+          )}
 
           <hr />
 

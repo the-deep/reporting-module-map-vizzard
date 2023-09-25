@@ -1,7 +1,18 @@
 import React from 'react';
 import MapVizzard from './components/MapVizzard';
-import mapConfig from './stories/mapConfig.json';
 import styles from './App.module.css';
+import sudan from './stories/sudan.json';
+import ukraine from './stories/ukraine.json';
+
+const queryParameters = new URLSearchParams(window.location.search);
+const config = queryParameters.get('config') || 'sudan';
+let mapConfig;
+
+if (config === 'ukraine.json') {
+  mapConfig = ukraine;
+} else {
+  mapConfig = sudan;
+}
 
 function App() {
   return (
