@@ -7,7 +7,7 @@ import ukraine from './stories/ukraine.json';
 
 const queryParameters = new URLSearchParams(window.location.search);
 const config = queryParameters.get('config') || 'sudan';
-const width = parseInt(queryParameters.get('width')) || null;
+const width = parseInt(queryParameters.get('width'), 10) || null;
 
 let mapConfig;
 
