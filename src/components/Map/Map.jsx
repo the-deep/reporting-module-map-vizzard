@@ -4,7 +4,7 @@ import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { osm, vector, mask } from './Source';
 import {
-  TileLayer, VectorLayer, MapboxLayer, MaskLayer, SymbolLayer,
+  TileLayer, VectorLayer, LineLayer, MapboxLayer, MaskLayer, SymbolLayer,
 } from './Layers';
 import OpenLayersMap from './OpenLayersMap';
 import './ol.css';
@@ -112,6 +112,10 @@ function Map({
             scale={d.scale}
             data={d.data}
             showLabels={d.showLabels}
+            scaleType={d.scaleType}
+            scaleColumn={d.scaleColumn}
+            scaleDataMin={d.scaleDataMin}
+            scaleDataMax={d.scaleDataMax}
             labelColumn={d.labelColumn}
           />
         );
@@ -143,6 +147,22 @@ function Map({
             showLabels={d.showLabels}
             labelColumn={d.labelColumn}
             declutter
+          />
+        );
+      }
+      if (d.type === 'line') {
+        renderLayersArr[i] = d.visible > 0 && (
+          <LineLayer
+            map={map}
+            key={`lineLayer${d.id}`}
+            source={vector({
+              features: new GeoJSON().readFeatures(d.data, {
+                featureProjection: get('EPSG:3857'),
+              }),
+            })}
+            zIndex={d.zIndex}
+            opacity={d.opacity}
+            style={d.style}
           />
         );
       }

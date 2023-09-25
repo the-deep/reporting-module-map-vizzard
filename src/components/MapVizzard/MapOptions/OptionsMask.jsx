@@ -197,7 +197,7 @@ function OptionsMask({
     return () => {
 
     };
-  }, [layer]);
+  }, [map, activeLayer, layer]);
 
   return (
     <div>

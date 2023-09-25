@@ -1,5 +1,5 @@
 import Map from '../components/Map';
-import mapConfig from './mapConfig.json';
+import mapConfig from './sudan.json';
 
 // Story Config
 export default {

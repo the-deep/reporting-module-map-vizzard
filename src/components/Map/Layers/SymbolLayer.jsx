@@ -7,6 +7,7 @@ import {
   Fill,
   Text,
 } from 'ol/style';
+import Circle from 'ol/style/Circle';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
@@ -32,6 +33,10 @@ function SymbolLayer({
   showLabels = false,
   labelColumn = '',
   scale = 1,
+  scaleType = 'fixed',
+  scaleColumn = '',
+  scaleDataMin = 0,
+  scaleDataMax = 0,
   style,
 }) {
   const [symbolLayer, setSymbolLayer] = useState(undefined);
@@ -45,6 +50,7 @@ function SymbolLayer({
     marker,
     borderCrossing,
     triangle,
+    circle: 'circle',
   };
 
   useEffect(() => {
@@ -54,22 +60,58 @@ function SymbolLayer({
 
     if (symbol === 'capital') xOffset = 1.9;
 
-    const features = data.map((item) => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([item.lon, item.lat])),
-      });
+    let points = data;
 
-      const iconStyle = [
-        new Style({
-          image: new Icon({
-            anchor: [0.5, 0.5],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'fraction',
-            scale,
-            src: symbolIcons[symbol],
+    if (!Array.isArray(data)) {
+      points = data.features;
+    }
+
+    const features = points.map((row) => {
+      let item = row;
+      if (!Array.isArray(data)) {
+        item = row.properties;
+        [item.lon, item.lat] = row.geometry.coordinates;
+      }
+
+      let feature;
+
+      let size = scale;
+
+      if (scaleType === 'proportional') {
+        const ratio = item[scaleColumn] / scaleDataMax;
+        size = scale * ratio;
+      }
+      let iconStyle;
+      if (symbol === 'circle') {
+        feature = new Feature(new Point(fromLonLat([item.lon, item.lat])));
+        iconStyle = [
+          new Style({
+            image: new Circle({
+              radius: (3.14 * (size) * 2),
+              fill: new Fill({
+                color: rgba(style.fill),
+              }),
+              stroke: new Stroke({
+                color: rgba(style.stroke),
+                width: style.strokeWidth,
+              }),
+            }),
           }),
-        }),
-      ];
+        ];
+      } else {
+        feature = new Feature(new Point(fromLonLat([item.lon, item.lat])));
+        iconStyle = [
+          new Style({
+            image: new Icon({
+              anchor: [0.5, 0.5],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              scale: size,
+              src: symbolIcons[symbol],
+            }),
+          }),
+        ];
+      }
 
       if (showLabels === true) {
         const label = (item[labelColumn]) ?? '';
@@ -116,7 +158,20 @@ function SymbolLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, source, data, symbol, showLabels, labelColumn, scale, JSON.stringify(style)]);
+  }, [
+    map,
+    source,
+    data,
+    symbol,
+    showLabels,
+    labelColumn,
+    scale,
+    JSON.stringify(style),
+    scaleColumn,
+    scaleType,
+    scaleDataMin,
+    scaleDataMax,
+  ]);
 
   useEffect(() => {
     if (!symbolLayer) return;
