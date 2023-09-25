@@ -7,6 +7,8 @@ import ukraine from './stories/ukraine.json';
 
 const queryParameters = new URLSearchParams(window.location.search);
 const config = queryParameters.get('config') || 'sudan';
+const width = parseInt(queryParameters.get('width')) || null;
+
 let mapConfig;
 
 if (config === 'ukraine.json') {
@@ -16,10 +18,11 @@ if (config === 'ukraine.json') {
 } else {
   mapConfig = sudan;
 }
-
+let s = {};
+if (width) s = { maxWidth: width };
 function App() {
   return (
-    <div className={styles.App}>
+    <div className={styles.App} style={s}>
       <MapVizzard mapConfig={mapConfig} />
     </div>
   );
