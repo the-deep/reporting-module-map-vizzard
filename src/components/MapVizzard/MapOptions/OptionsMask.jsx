@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import OLVectorLayer from 'ol/layer/Vector';
 import Slider from '@mui/material/Slider';
 import { createTheme } from '@mui/material/styles';
@@ -26,6 +26,8 @@ function OptionsMask({
   updateLayer,
   map,
 }) {
+  const [maskLayer, setMaskLayer] = useState({ ...layer });
+
   const theme = createTheme({
     palette: {
       primary: grey,
@@ -33,9 +35,10 @@ function OptionsMask({
   });
 
   const updateAttr = (attr, val) => {
-    const layerClone = { ...layer };
+    const layerClone = maskLayer;
     layerClone[attr] = val;
     updateLayer(layerClone, activeLayer);
+    setMaskLayer(layerClone);
   };
 
   useEffect(() => {
@@ -44,6 +47,24 @@ function OptionsMask({
     let draw;
     let snap;
     let modify;
+
+    map.getInteractions().forEach((interaction) => {
+      if (interaction instanceof Draw) {
+        map.removeInteraction(interaction);
+      }
+      if (interaction instanceof Snap) {
+        map.removeInteraction(interaction);
+      }
+      if (interaction instanceof Modify) {
+        map.removeInteraction(interaction);
+      }
+    });
+    map.getLayers().forEach((mapLayer) => {
+      // eslint-disable-next-line no-underscore-dangle
+      if (mapLayer && mapLayer.values_.id === 'drawLayerMask') {
+        map.removeLayer(mapLayer);
+      }
+    });
 
     map.getLayers().forEach(function (el) {
       // eslint-disable-next-line no-underscore-dangle
@@ -54,24 +75,6 @@ function OptionsMask({
             color: 'grey',
           }),
           stroke: new Stroke({ color: 'white', width: 1.5 }),
-        });
-
-        map.getInteractions().forEach((interaction) => {
-          if (interaction instanceof Draw) {
-            map.removeInteraction(interaction);
-          }
-          if (interaction instanceof Snap) {
-            map.removeInteraction(interaction);
-          }
-          if (interaction instanceof Modify) {
-            map.removeInteraction(interaction);
-          }
-        });
-        map.getLayers().forEach((mapLayer) => {
-          // eslint-disable-next-line no-underscore-dangle
-          if (mapLayer && mapLayer.values_.id === 'drawLayerMask') {
-            map.removeLayer(mapLayer);
-          }
         });
 
         const drawLayerStyle = [
@@ -195,9 +198,31 @@ function OptionsMask({
     });
 
     return () => {
-
+      // reset remove all interactions when changing active layer
+      map.getInteractions().forEach((interaction) => {
+        if (interaction instanceof Draw) {
+          map.removeInteraction(interaction);
+        }
+        if (interaction instanceof Snap) {
+          map.removeInteraction(interaction);
+        }
+        if (interaction instanceof Modify) {
+          map.removeInteraction(interaction);
+        }
+      });
+      map.getLayers().forEach((el) => {
+        // eslint-disable-next-line no-underscore-dangle
+        if (el && el.values_.id === 'drawLayerMask') {
+          map.removeLayer(el);
+        }
+      });
+      map.getInteractions().forEach((interaction) => {
+        if (interaction instanceof Modify) {
+          map.removeInteraction(interaction);
+        }
+      });
     };
-  }, [map, activeLayer, layer]);
+  }, []);
 
   return (
     <div>

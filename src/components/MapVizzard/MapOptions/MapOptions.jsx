@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
-import { Draw, Modify, Snap } from 'ol/interaction';
+import React, { useMemo } from 'react';
 import OptionsVector from './OptionsVector';
 import OptionsLine from './OptionsLine';
 import OptionsMask from './OptionsMask';
@@ -18,33 +17,6 @@ function MapOptions({
   mapObj,
 }) {
   const map = mapObj;
-
-  useEffect(() => {
-    if (!map) return;
-    // reset remove all interactions when changing active layer
-    map.getInteractions().forEach((interaction) => {
-      if (interaction instanceof Draw) {
-        map.removeInteraction(interaction);
-      }
-      if (interaction instanceof Snap) {
-        map.removeInteraction(interaction);
-      }
-      if (interaction instanceof Modify) {
-        map.removeInteraction(interaction);
-      }
-    });
-    map.getLayers().forEach((el) => {
-      // eslint-disable-next-line no-underscore-dangle
-      if (el && el.values_.id === 'drawLayerMask') {
-        map.removeLayer(el);
-      }
-    });
-    map.getInteractions().forEach((interaction) => {
-      if (interaction instanceof Modify) {
-        map.removeInteraction(interaction);
-      }
-    });
-  }, [activeLayer]);
 
   const render = useMemo(() => {
     const updateLayer = (d, id) => {
