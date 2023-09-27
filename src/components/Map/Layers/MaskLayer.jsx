@@ -44,17 +44,17 @@ function MaskLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, id, polygon, smoothing]);
+  }, [map, id, polygon, smoothing, opacity]);
 
   useEffect(() => {
     if (!maskLayer) return;
     maskLayer.set('className', `${filters.blur} ${filters[`blur${blur}`]}`);
   }, [maskLayer, blur]);
 
-  useEffect(() => {
-    if (!maskLayer) return;
-    maskLayer.setOpacity(opacity);
-  }, [maskLayer, opacity]);
+  // useEffect(() => {
+  //   if (!maskLayer) return;
+  //   maskLayer.setOpacity(opacity);
+  // }, [maskLayer, opacity]);
 
   useEffect(() => {
     if (!maskLayer) return;
