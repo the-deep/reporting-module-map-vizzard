@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import MapVizzard from './components/MapVizzard';
 import Timeline from './components/Timeline/Timeline';
 import timelineData from './stories/Timeline.json';
@@ -30,11 +30,11 @@ let s = {};
 if (width) s = { maxWidth: width };
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           exact
-          path="/map-vizzard/ukraine/builder"
+          path="/ukraine/builder"
           element={
           (
             <div className={styles.App} style={s}>
@@ -45,7 +45,7 @@ function App() {
         />
         <Route
           exact
-          path="/map-vizzard/ukraine"
+          path="/ukraine"
           element={
           (
             <div className={styles.App} style={s}>
@@ -55,7 +55,7 @@ function App() {
         }
         />
         <Route
-          path="/map-vizzard/ukraine/timeline"
+          path="/ukraine/timeline"
           element={
           (
             <div className={styles.App} style={s}>
@@ -65,7 +65,7 @@ function App() {
         }
         />
         <Route
-          path="/map-vizzard/ukraine/kpis"
+          path="/ukraine/kpis"
           element={
           (
             <div className={styles.App} style={s}>
@@ -75,7 +75,7 @@ function App() {
         }
         />
         <Route
-          path="/map-vizzard/"
+          path="/"
           element={
           (
             <div className={styles.App} style={s}>
@@ -85,7 +85,7 @@ function App() {
         }
         />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
