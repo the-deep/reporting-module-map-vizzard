@@ -13,6 +13,7 @@ import './ol.css';
 import ColorScale from '../MapVizzard/MapOptions/ColorScale';
 import { rgba } from '../MapVizzard/MapOptions/ColorPicker';
 import styles from './Map.module.css';
+import cdcf from './assets/logos/cdcf.jpg';
 import drc from './assets/logos/drc.jpg';
 import dfs from './assets/logos/dfs.svg';
 import immap from './assets/logos/immap.png';
@@ -473,6 +474,7 @@ function Map({
             <div className={styles.logos}>
               { showLogos.map((logo) => (
                 <div key={logo} className={styles.headerLogo}>
+                  { logo === 'CDCF' && <img className={styles.logoCDCF} src={cdcf} alt="" /> }
                   { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
                   { logo === 'DEEP' && <img className={styles.logoDeep} src={deep} alt="" /> }
                   { logo === 'DEEP (small)' && <img className={styles.logoDeepSmall} src={deepSmall} alt="" /> }

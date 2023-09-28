@@ -5,12 +5,12 @@
         "showHeader": true,
         "mainTitle": "Ukraine",
         "subTitle": "Country map",
-        "center": {"lon": 30.8, "lat": 48.9},
-        "zoom": 5.2,
+        "center": {"lon": 30, "lat": 48.5},
+        "zoom": 5.3,
         "maxZoom": 7,
         "minZoom": 4.8,
         "showScale": true,
-        "showLogos": ["DEEP (small)"],
+        "showLogos": ["CDCF"],
         "scaleUnits": "metric",
         "scaleBar": false,
         "scaleBarPosition": "bottomRight",
@@ -21,10 +21,10 @@
         "showLegend": true,
         "legendPosition": "bottomLeft",
         "showFooter": true,
-        "sources": "CDFC, Data Friendly Space (DFS), IOM, Mapbox",
+        "sources": "CDCF, Data Friendly Space (DFS), IOM, Mapbox",
         "fontStyle": {
             "fontWeight": "normal",
-            "fontFamily": "Lato",
+            "fontFamily": "Roboto Slab",
             "color": { "r": 0, "g": 0, "b": 0, "a": 1 }
         }
     },
@@ -85,10 +85,10 @@
                 "fill": "#FFF",
                 "labelStyle": {
                     "fontWeight": "bold",
-                    "fontSize": 11,
+                    "fontSize": 9,
                     "showHalo": true,
                     "color": { "r": 0, "g": 0, "b": 0, "a": 1 },
-                    "fontFamily": "Roboto"
+                    "fontFamily": "Roboto Slab"
                 }
             },
             "data": [
@@ -120,7 +120,7 @@
                     "fontSize": 10,
                     "showHalo": true,
                     "color": { "r": 0, "g": 0, "b": 0, "a": 1 },
-                    "fontFamily": "Roboto"
+                    "fontFamily": "Roboto Slab"
                 }
             },
             "data": [
@@ -151,7 +151,7 @@
                     "fontSize": 15,
                     "showHalo": true,
                     "color": { "r": 0, "g": 0, "b": 0, "a": 1 },
-                    "fontFamily": "Roboto"
+                    "fontFamily": "Roboto Slab"
                 }
             },
             "data": [
@@ -318,7 +318,7 @@
                     "fontSize": 15,
                     "showHalo": true,
                     "color": { "r": 0, "g": 0, "b": 0, "a": 1 },
-                    "fontFamily": "Roboto"
+                    "fontFamily": "Roboto Slab"
                 }
             },
             "data": {
@@ -360,8 +360,8 @@
                     "fontWeight": "normal",
                     "color": { "r": 0, "g": 0, "b": 0, "a": 0.7 },
                     "showHalo": true,
-                    "fontFamily": "Roboto",
-                    "fontSize": 9
+                    "fontFamily": "Source Serif Pro",
+                    "fontSize": 8
                 }
             },
             "data": {
@@ -411,7 +411,7 @@
                     "fontWeight": "normal",
                     "color": { "r": 0, "g": 0, "b": 0, "a": 0.7 },
                     "showHalo": true,
-                    "fontFamily": "Roboto",
+                    "fontFamily": "Roboto Slab",
                     "fontSize": 9
                 }
             },
@@ -516,10 +516,10 @@
             "showLabels": false,
             "labelColumn": "UKR_idps_education_Estimated max. de facto IDP population  present",
             "scale": 4,
-            "scaleType": "flannery",
+            "scaleType": "proportional",
             "scaleDataMin": 0,
             "scaleDataMax": 689000,
-            "scaleScaling": "absolute",
+            "scaleScaling": "flannery",
             "scaleColumn": "UKR_idps_education_Estimated max. de facto IDP population  present",
             "opacity": 0.66,
             "zIndex": 9,
@@ -527,15 +527,15 @@
             "showInLegend": true,
             "legendSeriesTitle": "IDPs (estimated)",
             "style": {
-                "strokeWidth": 1,
-                "stroke": { "r": 17, "g": 23, "b": 180, "a": 0.86 },
-                "fill": { "r": 17, "g": 23, "b": 180, "a": 0.1 },
+                "strokeWidth": 1.2,
+                "stroke": { "r": 67, "g": 57, "b": 107, "a": 0.86 },
+                "fill": { "r": 67, "g": 57, "b": 107, "a": 0.1 },
                 "labelStyle": {
                     "fontWeight": "normal",
                     "fontSize": 10,
                     "showHalo": true,
                     "color": { "r": 0, "g": 0, "b": 0, "a": 1 },
-                    "fontFamily": "Roboto"
+                    "fontFamily": "Roboto Slab"
                 }
             },
             "data": {
