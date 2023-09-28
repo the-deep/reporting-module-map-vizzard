@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MapVizzard from './components/MapVizzard';
 import Timeline from './components/Timeline/Timeline';
-import timeline_data from './stories/Timeline.json';
+import timelineData from './stories/Timeline.json';
 import KPIs from './components/KPIs/KPIs';
-import kpi_data from './stories/KPIs.json';
+import kpiData from './stories/KPIs.json';
 import styles from './App.module.css';
 import sudan from './stories/sudan.json';
 import sudanBasemap from './stories/sudan-basemap.json';
@@ -49,7 +49,7 @@ function App() {
           element={
           (
             <div className={styles.App} style={s}>
-              <MapVizzard mapConfig={ukraine} iframe={true} />
+              <MapVizzard mapConfig={ukraine} iframe />
             </div>
           )
         }
@@ -59,7 +59,7 @@ function App() {
           element={
           (
             <div className={styles.App} style={s}>
-              <Timeline data={timeline_data} />
+              <Timeline data={timelineData} />
             </div>
           )
         }
@@ -69,7 +69,7 @@ function App() {
           element={
           (
             <div className={styles.App} style={s}>
-              <KPIs data={kpi_data} />
+              <KPIs data={kpiData} />
             </div>
           )
         }
