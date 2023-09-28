@@ -14,7 +14,7 @@ function MapVizzard({ mapConfig, iframe = false }) {
   const queryParameters = new URLSearchParams(window.location.search);
   let embed = queryParameters.get('embed') || false;
   if (iframe === true) embed = true;
-  
+
   return (
     <div className={`${(embed ? styles.embed : '')}`}>
       <div className={`${styles.container}`}>
