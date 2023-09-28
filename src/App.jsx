@@ -1,5 +1,10 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MapVizzard from './components/MapVizzard';
+import Timeline from './components/Timeline/Timeline';
+import timeline_data from './stories/Timeline.json';
+import KPIs from './components/KPIs/KPIs';
+import kpi_data from './stories/KPIs.json';
 import styles from './App.module.css';
 import sudan from './stories/sudan.json';
 import sudanBasemap from './stories/sudan-basemap.json';
@@ -25,9 +30,62 @@ let s = {};
 if (width) s = { maxWidth: width };
 function App() {
   return (
-    <div className={styles.App} style={s}>
-      <MapVizzard mapConfig={mapConfig} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          exact
+          path="/map-vizzard/ukraine/builder"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <MapVizzard mapConfig={ukraine} iframe={false} />
+            </div>
+          )
+        }
+        />
+        <Route
+          exact
+          path="/map-vizzard/ukraine"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <MapVizzard mapConfig={ukraine} iframe={true} />
+            </div>
+          )
+        }
+        />
+        <Route
+          path="/map-vizzard/ukraine/timeline"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <Timeline data={timeline_data} />
+            </div>
+          )
+        }
+        />
+        <Route
+          path="/map-vizzard/ukraine/kpis"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <KPIs data={kpi_data} />
+            </div>
+          )
+        }
+        />
+        <Route
+          path="/map-vizzard/"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <MapVizzard mapConfig={mapConfig} iframe={false} />
+            </div>
+          )
+        }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

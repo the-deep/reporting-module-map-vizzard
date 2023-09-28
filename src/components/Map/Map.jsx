@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import WebFont from 'webfontloader'; // eslint-disable-line import/no-extraneous-dependencies
 import { fromLonLat, get } from 'ol/proj';
+import * as d3 from 'd3';
 import GeoJSON from 'ol/format/GeoJSON';
+import { breaks } from 'statsbreaks';
 import { osm, vector, mask } from './Source';
 import {
   TileLayer, VectorLayer, LineLayer, MapboxLayer, MaskLayer, SymbolLayer,
@@ -24,6 +26,17 @@ import airport from './assets/map-icons/airport.svg';
 import borderCrossing from './assets/map-icons/borderCrossing.svg';
 import triangle from './assets/map-icons/triangle.svg';
 import idpRefugeeCamp from './assets/map-icons/idp-refugee-camp.svg';
+
+function bucketsFn(rangeLow, rangeHigh, wanted) {
+  const increment = Math.floor((rangeHigh - rangeLow) / (wanted - 1));
+  const r = [rangeLow];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 1; i < wanted - 1; ++i) {
+    r.push(i * increment + rangeLow);
+  }
+  r.push(rangeHigh);
+  return r;
+}
 
 function Map({
   mapObj,
@@ -113,6 +126,7 @@ function Map({
             data={d.data}
             showLabels={d.showLabels}
             scaleType={d.scaleType}
+            scaleScaling={d.scaleScaling}
             scaleColumn={d.scaleColumn}
             scaleDataMin={d.scaleDataMin}
             scaleDataMax={d.scaleDataMax}
@@ -202,17 +216,130 @@ function Map({
 
     layers.forEach((d) => {
       if (d.type === 'symbol') {
-        const row = d.visible > 0 && d.showInLegend > 0 && (
-          <div key={`legendSymbol${d.id}`}>
-            <div className={styles.legendSymbol}>
-              <img src={symbolIcons[d.symbol]} alt={d.symbol} style={{ transform: `scale(${d.scale})` }} />
+        if (d.symbol === 'circle') {
+          if (d.scaleType === 'fixed') {
+            let r = 6 * d.scale;
+            if (d.scale > 1) r = 6;
+            const row = d.visible > 0 && d.showInLegend > 0 && (
+              <div key={`legendSymbol${d.id}`}>
+                <div className={styles.legendSymbol}>
+                  <div>
+                    <svg width="40" height="20">
+                      <circle
+                        cx="7.5"
+                        cy="7"
+                        r={r}
+                        style={{
+                          fill: rgba(d.style.fill),
+                          strokeWidth: d.style.strokeWidth,
+                          stroke: rgba(d.style.stroke),
+                          opacity: d.opacity,
+                        }}
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className={styles.legendSeriesTitle} style={{ verticalAlign: 'top' }}>
+                  {d.legendSeriesTitle}
+                </div>
+              </div>
+            );
+            legendArr.push(row);
+          } else { // proportional symbol legend
+            const bv = bucketsFn(0, d.scaleDataMax, 20);
+            const numBuckets = 6;
+            const buckets = breaks(bv, {
+              method: 'pretty', nb: numBuckets, minmax: false, precision: 0,
+            });
+            let exp = 0.5;
+            if (d.scaleScaling === 'flannery') {
+              exp = 0.5716;
+            }
+            const maxRadius = ((d3.max(buckets) / d.scaleDataMax) / 3.14) ** exp * (10 * d.scale);
+            if ((d.scale < 3)) {
+              buckets.splice(1, 1);
+              if (buckets.length > 2) {
+                buckets.splice(1, 1);
+              }
+            }
+
+            if (buckets.length > 3) {
+              buckets.splice(2, 1);
+            }
+
+            const legendRowHeight = (maxRadius * 2) + 5;
+
+            const circles = buckets.map((b) => {
+              const radius = ((b / d.scaleDataMax) / 3.14) ** exp * (10 * d.scale);
+
+              return (
+                <g key={`legendSymbolCircle${b}`}>
+                  <circle
+                    cx={(maxRadius) + 2}
+                    cy={radius + 3}
+                    r={radius}
+                    clipPath="url(#cut-off)"
+                    style={{
+                      fill: rgba(d.style.fill),
+                      strokeWidth: d.style.strokeWidth,
+                      stroke: rgba(d.style.stroke),
+                      opacity: d.opacity,
+                    }}
+                  />
+                  <text
+                    x={(maxRadius) + 11}
+                    y={radius + (radius) + 5}
+                    style={{ textAnchor: 'left', fontSize: 7, fill: 'rgb(49 49 49)' }}
+                  >
+                    {b}
+                  </text>
+                  <line
+                    x1={(maxRadius)}
+                    x2={(maxRadius) + 10}
+                    y1={radius * 2 + 3}
+                    y2={radius * 2 + 3}
+                    stroke="grey"
+                    strokeWidth={0.4}
+                    strokeDasharray="1,1"
+                  />
+                </g>
+              );
+            });
+
+            const row = d.visible > 0 && d.showInLegend > 0 && (
+              <div key={`legendSymbol${d.id}`}>
+                <div className={styles.legendSeriesTitle}>
+                  <b style={{ fontSize: 10 }}>{d.legendSeriesTitle}</b>
+                </div>
+                <div className={styles.legendSymbolProportional}>
+                  <div>
+                    <svg width="120" height={legendRowHeight + 3}>
+                      <clipPath id="cut-off">
+                        <rect x="0" y="0" width={legendRowHeight / 2} height={legendRowHeight} />
+                      </clipPath>
+                      {circles}
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            );
+            legendArr.push(row);
+          }
+        } else {
+          let scaleTransform = d.scale;
+          if (d.scale > 0.85) scaleTransform = 0.85;
+          const row = d.visible > 0 && d.showInLegend > 0 && (
+            <div key={`legendSymbol${d.id}`}>
+              <div className={styles.legendSymbol}>
+                <img src={symbolIcons[d.symbol]} alt={d.symbol} style={{ transform: `scale(${scaleTransform})`, opacity: d.opacity }} />
+              </div>
+              <div className={styles.legendSeriesTitle}>
+                {d.legendSeriesTitle}
+              </div>
             </div>
-            <div className={styles.legendSeriesTitle}>
-              {d.legendSeriesTitle}
-            </div>
-          </div>
-        );
-        legendArr.push(row);
+          );
+          legendArr.push(row);
+        }
       }
       if (d.type === 'polygon') {
         let legendPolygonRow;
