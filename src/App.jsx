@@ -26,6 +26,7 @@ if (config === 'ukraine.json') {
 } else {
   mapConfig = sudan;
 }
+console.log(width);
 let s = {};
 if (width) s = { maxWidth: width };
 function App() {

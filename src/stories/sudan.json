@@ -257,7 +257,7 @@
                 "fillDataMax": 467670,
                 "fillPow": 1,
                 "strokeWidth": 0.2,
-                "fill": { "r": 255, "g": 215, "b": 215, "a": 0.29 },
+                "fill": { "r": 255, "g": 215, "b": 215, "a": 0.12 },
                 "stroke": { "r": 0, "g": 0, "b": 0, "a": 0.7 },
                 "labelStyle": {
                     "fontWeight": "normal",

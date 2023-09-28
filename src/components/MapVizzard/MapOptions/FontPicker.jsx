@@ -83,6 +83,9 @@ function FontPicker({ style, updateFontStyle, variant }) {
               <MenuItem key="Roboto" value="Roboto" size="small">
                 Roboto
               </MenuItem>
+              <MenuItem key="RobotoSlab" value="Roboto Slab" size="small">
+                Roboto Slab
+              </MenuItem>
               <MenuItem key="Source Sans Pro" value="Source Sans Pro" size="small">
                 Source Sans Pro
               </MenuItem>

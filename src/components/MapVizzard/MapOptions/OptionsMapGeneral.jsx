@@ -13,6 +13,7 @@ import settings from '../assets/settings.svg';
 
 function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const logos = [
+    { name: 'CDCF', image: 'cdcf' },
     { name: 'Data Friendly Space', image: 'dfs' },
     { name: 'DEEP (small)', image: 'deepSmall' },
     { name: 'DEEP', image: 'deep' },
