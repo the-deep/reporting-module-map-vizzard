@@ -34,6 +34,7 @@ function SymbolLayer({
   labelColumn = '',
   scale = 1,
   scaleType = 'fixed',
+  scaleScaling = 'flannery',
   scaleColumn = '',
   scaleDataMin = 0,
   scaleDataMax = 0,
@@ -77,17 +78,25 @@ function SymbolLayer({
 
       let size = scale;
 
+      // absolute scaling
+      let exp = 0.5;
+      if (scaleScaling === 'flannery') {
+        exp = 0.5716;
+      }
+      const r = ((item[scaleColumn] / scaleDataMax) / 3.14) ** exp * (10 * scale);
+
       if (scaleType === 'proportional') {
         const ratio = item[scaleColumn] / scaleDataMax;
         size = scale * ratio;
       }
+
       let iconStyle;
       if (symbol === 'circle') {
         feature = new Feature(new Point(fromLonLat([item.lon, item.lat])));
         iconStyle = [
           new Style({
             image: new Circle({
-              radius: (3.14 * (size) * 2),
+              radius: r,
               fill: new Fill({
                 color: rgba(style.fill),
               }),
@@ -114,7 +123,8 @@ function SymbolLayer({
       }
 
       if (showLabels === true) {
-        const label = (item[labelColumn]) ?? '';
+        let label = (item[labelColumn]) ?? '';
+        if (style.labelStyle.transform === 'uppercase') label = label.toUpperCase();
 
         let stroke = new Stroke({
           color: 'rgba(255,255,255,0.5)',
@@ -122,12 +132,14 @@ function SymbolLayer({
         });
         if (style.labelStyle.showHalo === false) stroke = null;
 
+        let textAlign = 'left';
+        if (style.labelStyle.textAlign) textAlign = style.labelStyle.textAlign;
         iconStyle.push(
           new Style({
             text: new Text({
               text: String(label),
               font: `${style.labelStyle.fontWeight} ${style.labelStyle.fontSize}px/1.07 ${style.labelStyle.fontFamily},sans-serif`,
-              textAlign: 'left',
+              textAlign,
               offsetY: 1,
               offsetX: 7 + xOffset,
               fill: new Fill({
@@ -169,6 +181,7 @@ function SymbolLayer({
     JSON.stringify(style),
     scaleColumn,
     scaleType,
+    scaleScaling,
     scaleDataMin,
     scaleDataMax,
   ]);

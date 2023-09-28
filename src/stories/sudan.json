@@ -3,14 +3,14 @@
         "height": 490,
         "width": 630,
         "showHeader": true,
-        "mainTitle": "SUDAN",
-        "subTitle": "Country basemap",
-        "center": {"lon": 29.6, "lat": 16.1},
-        "zoom": 5.05,
+        "mainTitle": "SUDAN, Reference Map",
+        "subTitle": "As of 25 September 2023",
+        "center": {"lon": 29.4, "lat": 16.1},
+        "zoom": 5,
         "maxZoom": 7,
         "minZoom": 4.8,
         "showScale": true,
-        "showLogos": ["iMMAP"],
+        "showLogos": ["iMMAP", "Data Friendly Space"],
         "scaleUnits": "metric",
         "scaleBar": false,
         "scaleBarPosition": "bottomRight",
@@ -21,7 +21,7 @@
         "showLegend": true,
         "legendPosition": "bottomLeft",
         "showFooter": true,
-        "sources": "Data Friendly Space (DFS), iMMAP, Mapbox, UNOCHA",
+        "sources": "Mapbox, UNOCHA",
         "fontStyle": {
             "fontWeight": "normal",
             "fontFamily": "Lato",
@@ -261,10 +261,11 @@
                 "stroke": { "r": 0, "g": 0, "b": 0, "a": 0.7 },
                 "labelStyle": {
                     "fontWeight": "normal",
+                    "transform": "uppercase",
                     "color": { "r": 0, "g": 0, "b": 0, "a": 0.7 },
                     "showHalo": true,
                     "fontFamily": "Roboto",
-                    "fontSize": 9
+                    "fontSize": 8.6
                 }
             },
             "data": {
@@ -618,15 +619,15 @@
             "type": "line",
             "showLabels": false,
             "labelColumn": "",
-            "opacity": 0.2,
+            "opacity": 1,
             "zIndex": 6,
             "visible": 1,
             "showInLegend": true,
             "legendSeriesTitle": "Disputed boundaries",
             "style": {
-                "strokeType": "dash",
+                "strokeType": "solid",
                 "dashSpacing": 2.2, 
-                "stroke": { "r": 0, "g": 0, "b": 0, "a": 1 },
+                "stroke": { "r": 147, "g": 147, "b": 147, "a": 1 },
                 "strokeWidth": 1.2
             },
             "data": {
@@ -649,16 +650,17 @@
             "scale": 4,
             "scaleType": "proportional",
             "scaleColumn": "SDN_2024_Baseline_20230917_ADM1_2023 HNO Population",
+            "scaleScaling": "flannery",
             "scaleDataMin": 0,
             "scaleDataMax": 9146191,
             "opacity": 1,
             "zIndex": 9,
             "visible": 1,
-            "showInLegend": false,
-            "legendSeriesTitle": "sdn_baseline_20230917",
+            "showInLegend": true,
+            "legendSeriesTitle": "Population (HNO)",
             "style": {
-                "strokeWidth": 1.2,
-                "stroke": { "r": 255, "g": 255, "b": 255, "a": 1 },
+                "strokeWidth": 1,
+                "stroke": { "r": 201, "g": 116, "b": 116, "a": 1 },
                 "fill": { "r": 220, "g": 62, "b": 46, "a": 0.5 },
                 "labelStyle": {
                     "fontWeight": "normal",
@@ -694,6 +696,45 @@
                 { "type": "Feature", "properties": { "Shape_Leng": 10.49212368, "Shape_Area": 3.1705788737399998, "ADM1_EN": "White Nile", "ADM1_AR": "النيل الأبيض", "ADM1_PCODE": "SD09", "ADM1_REF": null, "ADM1ALT1EN": null, "ADM1ALT2EN": null, "ADM1ALT1AR": null, "ADM1ALT2AR": null, "ADM0_EN": "Sudan (the)", "ADM0_AR": "السودان‎", "ADM0_PCODE": "SD", "date": "2020-03-11", "validOn": "2020-08-31", "validTo": null, "SDN_2024_Baseline_20230917_ADM1_State": "White Nile", "SDN_2024_Baseline_20230917_ADM1_UNFPA 2024 population projection": 2938807, "SDN_2024_Baseline_20230917_ADM1_Adjusted IPC-2024 Baseline": 3355341, "SDN_2024_Baseline_20230917_ADM1_2023 HNO Population": 3046811, "SDN_2024_Baseline_20230917_ADM1_2023 HNO Population-with Refugees": 3328773, "SDN_2024_Baseline_20230917_ADM1_Adjusted_IPC_Distribution_Percentage": 100.0, "SDN_2024_Baseline_20230917_ADM1_Abduction/forced disappearance": 0, "SDN_2024_Baseline_20230917_ADM1_Armed clash": 4, "SDN_2024_Baseline_20230917_ADM1_Attack": 1, "SDN_2024_Baseline_20230917_ADM1_Government regains territory": 0, "SDN_2024_Baseline_20230917_ADM1_Non-state actor overtakes territory": 0, "SDN_2024_Baseline_20230917_ADM1_Sexual violence": 0, "SDN_2024_Baseline_20230917_ADM1_fatalities": 29, "SDN_2024_Baseline_20230917_ADM1_Total Violent Events": 5, "SDN_2024_Baseline_20230917_ADM1_Conflict Severity Score": 0.099271497, "SDN_2024_Baseline_20230917_ADM1_Floods 2020": 38305, "SDN_2024_Baseline_20230917_ADM1_Floods 2021": 97630, "SDN_2024_Baseline_20230917_ADM1_Floods 2022": 34357, "SDN_2024_Baseline_20230917_ADM1_IPC-July-Sep 3+": 799030, "SDN_2024_Baseline_20230917_ADM1_Refugee population inside Sudan as of 30 June 2023": 415535, "SDN_2024_Baseline_20230917_ADM1_Total IDPs Baseline": 330654.0, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age less than one year-Male": 14875, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age less than one year-Female": 19784, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 1 - 5-Male": 25079, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 1 - 5-Female": 27435, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 6 - 17-Male": 35645, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 6 - 17-Female": 40047, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 18 - 59-Male": 73439, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age 18 - 59-Female": 75614, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age >= 60-Male": 7711, "SDN_2024_Baseline_20230917_ADM1_IDPs-Age >= 60-Female": 11025, "SDN_2024_Baseline_20230917_ADM1_Sudanese_Refugee_Outside-Country_Population_State(UNHCR official)": 10674, "SDN_2024_Baseline_20230917_ADM1_Refugee_Outside_Country_Figures_By_Locality (Estimated)": 1185, "SDN_2024_Baseline_20230917_ADM1_Total IPC Pop minus Sudanese Refugees outside country": 3354156, "SDN_2024_Baseline_20230917_ADM1_Total-Population-IPC Pop-minus-Ref-out-add-Ref-inside": 3771019, "SDN_2024_Baseline_20230917_ADM1_Affected_by_Food_Insecurity": 799030, "SDN_2024_Baseline_20230917_ADM1_Affected_by_Violent_Events": 175786.0, "SDN_2024_Baseline_20230917_ADM1_Affected_by_Floods": 127022, "SDN_2024_Baseline_20230917_ADM1_Max_Affected_by_Food_Insecurity_Floods_Violent_Events": 815585.0, "SDN_2024_Baseline_20230917_ADM1_Affected-Population-Non-Displaced": 815585.0, "SDN_2024_Baseline_20230917_ADM1_Affected_IDPs": 330654.0, "SDN_2024_Baseline_20230917_ADM1_Affected_Refugees_inside_country": 416863, "SDN_2024_Baseline_20230917_ADM1_Affected_Population-withRefugees-IDPs-Non-Displaced": 1563102.0, "SDN_2024_Baseline_20230917_ADM1_Percentage Affected Pop vs Total Population": 4.360028155, "SDN_2024_Baseline_20230917_ADM1_Percentage Affected Pop distribution": 0.055097923 }, "geometry": { "type": "Point", "coordinates": [ 32.316944130168281, 13.359390512548615 ] } }
                 ]
                 }                
+        },
+        {
+            "id": 23,
+            "name": "Country labels",
+            "type": "symbol",
+            "symbol": "capital",
+            "showLabels": true,
+            "labelColumn": "name_en",
+            "opacity": 0.8,
+            "zIndex": 10,
+            "scale": 0,
+            "scaleType": "fixed",
+            "scaleColumn": "",
+            "visible": 1,
+            "showInLegend": false,
+            "legendSeriesTitle": "Neighbouring countries",
+            "style": {
+                "strokeWidth": 1.4,
+                "stroke": "#000",
+                "fill": "#FFF",
+                "labelStyle": {
+                    "fontWeight": "normal",
+                    "fontSize": 9.8,
+                    "showHalo": true,
+                    "transform": "uppercase",
+                    "textAlign": "center",
+                    "color": { "r": 206, "g": 206, "b": 206, "a": 1 },
+                    "fontFamily": "Raleway"
+                }
+            },
+            "data": [
+                {"lat": 8.1, "lon": 21.8, "name_en": "Central\nAfrican\nRepublic", "population": 1410858},
+                {"lat": 15.8, "lon": 20.5, "name_en": "Chad", "population": 1410858},
+                {"lat": 23.3, "lon": 30.1, "name_en": "Egypt", "population": 1410858},
+                {"lat": 10.5, "lon": 37.5, "name_en": "Ethiopia", "population": 1410858},
+                {"lat": 21.9, "lon": 22.8, "name_en": "Libya", "population": 1410858},
+                {"lat": 8, "lon": 28.9, "name_en": "South Sudan", "population": 1410858},
+                {"lat": 15.95, "lon": 37.8, "name_en": "Eritrea", "population": 1410858}
+            ]
         }
     ]
 }

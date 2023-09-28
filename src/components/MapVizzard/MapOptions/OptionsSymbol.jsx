@@ -348,6 +348,23 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                 />
               </div>
             </div>
+            <div className={styles.optionRow}>
+              <div className={styles.optionLabel}>Scaling method</div>
+              <div className={styles.optionValue}>
+                <ToggleButtonGroup
+                  fullWidth
+                  value={layer.scaleScaling}
+                  color="primary"
+                  exclusive
+                  size="small"
+                  onChange={(e, val) => updateAttr('scaleScaling', val)}
+                  aria-label="Scale method"
+                >
+                  <ToggleButton value="absolute">Absolute</ToggleButton>
+                  <ToggleButton value="flannery">Flannery</ToggleButton>
+                </ToggleButtonGroup>
+              </div>
+            </div>
           </div>
           )}
 

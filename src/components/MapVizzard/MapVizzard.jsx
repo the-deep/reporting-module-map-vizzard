@@ -6,14 +6,15 @@ import Map from '../Map';
 import MapLayers from './MapLayers';
 import MapOptions from './MapOptions';
 
-function MapVizzard({ mapConfig }) {
+function MapVizzard({ mapConfig, iframe = false }) {
   const [layers, setLayers] = useState(mapConfig.layers);
   const [mapOptions, setMapOptions] = useState(mapConfig.mapOptions);
   const [activeLayer, setActiveLayer] = useState(null);
   const [mapObj, setMapObj] = useState(null);
   const queryParameters = new URLSearchParams(window.location.search);
-  const embed = queryParameters.get('embed') || false;
-
+  let embed = queryParameters.get('embed') || false;
+  if (iframe === true) embed = true;
+  
   return (
     <div className={`${(embed ? styles.embed : '')}`}>
       <div className={`${styles.container}`}>

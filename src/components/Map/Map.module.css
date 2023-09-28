@@ -106,15 +106,21 @@
   position: absolute;
   z-index: 3;
   padding: 3px 8px;
-  margin-top: 1px;
-  line-height: 1.21;
+  margin-top: 2px;
+  line-height: 1.26;
   display: inline-block;
   margin-left: 3px;
 }
 
 .mainTitle {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: bold;
+}
+
+.subTitle {
+  font-size: 14px;
+  font-weight: normal;
+  color: #666;
 }
 
 .scalePosbottomRight {

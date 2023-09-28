@@ -192,7 +192,8 @@ function VectorLayer({
         if (showLabels && labelColumn) {
           let columnName = labelColumn;
           if (!feature.get(columnName)) columnName = labelColumn;
-          const label = String(feature.get(columnName)).split(' ').join('\n');
+          let label = String(feature.get(columnName)).split(' ').join('\n');
+          if (style.labelStyle.transform === 'uppercase') label = label.toUpperCase();
           labelStyle.getText().setText(label);
         }
         return labelStyles;
