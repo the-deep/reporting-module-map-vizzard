@@ -3,7 +3,7 @@
     display: grid;
     /* column-gap: 50px; */
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    font-family: Roboto;
+    font-family: var(--drm-font-family-sans-serif);
 }
 
 .item {

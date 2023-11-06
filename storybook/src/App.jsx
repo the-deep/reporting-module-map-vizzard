@@ -1,9 +1,11 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import { KPIs } from '@the-deep/reporting-module-components';
+import '@the-deep/reporting-module-components/build/esm/index.css';
+
 import MapVizzard from './components/MapVizzard';
 import Timeline from './components/Timeline/Timeline';
 import timelineData from './stories/Timeline.json';
-import KPIs from './components/KPIs/KPIs';
 import kpiData from './stories/KPIs.json';
 import styles from './App.module.css';
 import sudan from './stories/sudan.json';

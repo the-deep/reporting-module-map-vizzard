@@ -4,18 +4,13 @@
     "react-app/jest"
   ],
   "rules": {
+    "import/no-relative-packages": 0,
+    "import/extensions": ["off", "never"],
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-static-element-interactions": "warn",
     "no-param-reassign": "warn",
     "consistent-return": "warn",
     "no-underscore-dangle": "warn",
-    "import/extensions": ["warn", {
-      "js": "never",
-      "ts": "never",
-      "jsx": "never",
-      "tsx": "never",
-      "json": "always"
-    }],
     "react/jsx-filename-extension": ["error", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"]
     }]

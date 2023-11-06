@@ -9,6 +9,7 @@
   "rules": {
     "no-param-reassign": "error",
 
+    "import/no-relative-packages": 0,
     "react/require-default-props": ["warn", { "ignoreFunctionalComponents": true }],
     "react/prop-types": "warn",
     "react/react-in-jsx-scope": "off"
