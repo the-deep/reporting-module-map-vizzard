@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { KPIs } from '@the-deep/reporting-module-components';
 
 import data from './KPIs.json';

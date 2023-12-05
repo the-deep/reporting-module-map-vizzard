@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import externalLink from './external-link.svg';
 
 export interface Props {
     data: {
@@ -11,6 +12,7 @@ export interface Props {
             source: string;
             backgroundColor: string;
             color: string;
+            url: string;
         }[],
     },
 }
@@ -20,6 +22,7 @@ function KPIs({ data }: Props) {
         <div
             // FIXME: Add key
             className={styles.item}
+            key={`${d.title}${d.value}`}
             style={{ backgroundColor: d.backgroundColor, color: d.color }}
         >
             <div className={styles.title}>
@@ -36,7 +39,10 @@ function KPIs({ data }: Props) {
                     {d.date}
                 </div>
                 <div className={styles.source}>
-                    {d.source}
+                    <a href={d.url} target="_blank" rel="noreferrer">
+                        <img className="kpi_external_link" src={externalLink} alt="Link to data souce" />
+                        {d.source}
+                    </a>
                 </div>
             </div>
         </div>
