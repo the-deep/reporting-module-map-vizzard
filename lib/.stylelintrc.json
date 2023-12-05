@@ -1,0 +1,15 @@
+{
+    "plugins": [],
+    "extends": [
+        "stylelint-config-recommended"
+    ],
+    "rules": {
+        "indentation": 4,
+        "selector-pseudo-class-no-unknown": [
+            true,
+            {
+                "ignorePseudoClasses": ["global"]
+            }
+        ]
+    }
+}

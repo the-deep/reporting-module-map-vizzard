@@ -14,13 +14,17 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/react-webpack5",
-    options: {},
+    options: {
+        fastRefresh: false,
+    },
   },
   webpackFinal: async (config) => {
     const eslintConfigPath = path.join(process.cwd(), '.eslintrc-lenient.json');
+    const parentNodeModules = path.join(process.cwd(), '../node_modules');
+    const reportingModuleDeps = path.join(parentNodeModules, '@the-deep/reporting-module');
     // NOTE: get old eslint
     const oldEslint = config?.plugins?.find(
-        (p) => typeof p !== 'function' && p.key === 'ESLintWebpackPlugin'
+        (p) => typeof p !== 'function' && p && p.key === 'ESLintWebpackPlugin'
     );
     // NOTE: removing custom eslint plugin
     config.plugins = config?.plugins?.filter((p) => p !== oldEslint);
@@ -35,6 +39,20 @@ const config: StorybookConfig = {
       })
       config.plugins.push(newEslint);
     }
+
+    /*
+    const oneOfRules = config.module?.rules?.find((rules) => rules && (typeof rules === 'object') && 'oneOf' in rules);
+    if (oneOfRules && typeof oneOfRules === 'object') {
+        const jsRule = oneOfRules.oneOf?.find((rule) => rule && typeof rule === 'object' && rule.test && rule.test.toString() === /\.(js|mjs)$/.toString());
+        jsRule?.include?.push(reportingModuleDeps);
+        const tsRule= oneOfRules.oneOf?.find((rule) => rule && typeof rule === 'object' && rule.test && rule.test.toString() === /.(js|mjs|jsx|ts|tsx)$/.toString());
+        tsRule?.include?.push(reportingModuleDeps);
+        const cssRule= oneOfRules.oneOf?.find((rule) => rule && typeof rule === 'object' && rule.test && rule.test.toString() === /\.css$/.toString());
+        cssRule?.include?.push(reportingModuleDeps);
+        const moduleCssRule= oneOfRules.oneOf?.find((rule) => rule && typeof rule === 'object' && rule.test && rule.test.toString() === /\.module\.css$/.toString());
+        moduleCssRule?.include?.push(reportingModuleDeps);
+    }
+    */
 
     // TODO: we also can add eslint-plugin-storybook
     return config;
