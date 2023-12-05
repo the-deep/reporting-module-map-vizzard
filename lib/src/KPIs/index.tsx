@@ -12,6 +12,7 @@ export interface Props {
             source: string;
             backgroundColor: string;
             color: string;
+            primaryColor: string;
             url: string;
         }[],
     },
@@ -31,7 +32,7 @@ function KPIs({ data }: Props) {
             <div className={styles.subtitle}>
                 {d.subtitle}
             </div>
-            <div className={styles.value}>
+            <div className={styles.value} style={{ color: d.primaryColor }}>
                 {d.value}
             </div>
             <div className={styles.footerRow}>
