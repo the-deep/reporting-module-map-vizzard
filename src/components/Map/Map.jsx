@@ -1,12 +1,22 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import WebFont from 'webfontloader'; // eslint-disable-line import/no-extraneous-dependencies
+import React, {
+  useId,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
+import WebFont from 'webfontloader'; // eslint-disable-line
 import { fromLonLat, get } from 'ol/proj';
+import Button from '@mui/material/Button';
+import { createTheme } from '@mui/material/styles';
+import grey from '@mui/material/colors/grey';
 import * as d3 from 'd3';
 import GeoJSON from 'ol/format/GeoJSON';
+import * as htmlToImage from 'html-to-image';
+import { saveAs } from 'file-saver';
 import { breaks } from 'statsbreaks';
 import { osm, vector, mask } from './Source';
 import {
-  TileLayer, VectorLayer, LineLayer, MapboxLayer, MaskLayer, SymbolLayer,
+  TileLayer, VectorLayer, LineLayer, MapboxLayer, MaskLayer, SymbolLayer, HeatmapLayer, HexbinLayer,
 } from './Layers';
 import OpenLayersMap from './OpenLayersMap';
 import './ol.css';
@@ -17,6 +27,7 @@ import cdcf from './assets/logos/cdcf.jpg';
 import drc from './assets/logos/drc.jpg';
 import dfs from './assets/logos/dfs.svg';
 import immap from './assets/logos/immap.png';
+import unocha from './assets/logos/unocha.png';
 import deep from './assets/logos/deep.svg';
 import deepSmall from './assets/logos/deep_small.png';
 import capital from './assets/map-icons/capital.svg';
@@ -25,8 +36,11 @@ import settlement from './assets/map-icons/settlement.svg';
 import marker from './assets/map-icons/marker.svg';
 import airport from './assets/map-icons/airport.svg';
 import borderCrossing from './assets/map-icons/borderCrossing.svg';
+import borderCrossingActive from './assets/map-icons/borderCrossingActive.svg';
+import borderCrossingPotential from './assets/map-icons/borderCrossingPotential.svg';
 import triangle from './assets/map-icons/triangle.svg';
 import idpRefugeeCamp from './assets/map-icons/idp-refugee-camp.svg';
+import { numberFormatter } from './Helpers';
 
 function bucketsFn(rangeLow, rangeHigh, wanted) {
   const increment = Math.floor((rangeHigh - rangeLow) / (wanted - 1));
@@ -51,13 +65,24 @@ function Map({
   maxZoom,
   center = { lon: 30.21, lat: 15.86 },
   showHeader,
+  showOverview = false,
+  overviewMapPosition = 'bottomRight',
+  headerStyle = 'default',
   mainTitle = 'Main title',
   subTitle = 'Sub-title',
+  dateText = 'dateText',
+  primaryColor = {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 1,
+  },
   showScale,
   scaleUnits,
   scaleBar,
   scaleBarPosition,
   enableMouseWheelZoom,
+  enableDragPan,
   enableDoubleClickZoom,
   enableZoomControls,
   zoomControlsPosition,
@@ -66,10 +91,28 @@ function Map({
   showFooter,
   sources,
   showLogos,
+  dashboard = false,
+  print = false,
   embed = false,
+  legendTopPadding = 0,
+  paddingBottom = 0,
 }) {
   const [map, setMap] = useState(null);
   const [fonts, setFonts] = useState(null);
+  // const printSVGId = useId();
+  const printPNGId = useId();
+  const mapId = useId();
+
+  let sourcesPadding = {};
+
+  if (paddingBottom > 0) {
+    sourcesPadding = { position: 'relative', bottom: (paddingBottom + 22) };
+  }
+  const theme = createTheme({
+    palette: {
+      primary: grey,
+    },
+  });
 
   const symbolIcons = {
     capital,
@@ -79,6 +122,8 @@ function Map({
     airport,
     marker,
     borderCrossing,
+    borderCrossingActive,
+    borderCrossingPotential,
     triangle,
   };
 
@@ -90,7 +135,54 @@ function Map({
         },
       });
     }
-  }, [fonts]);
+  }, [fonts, mapId]);
+
+  useEffect(() => {
+    if (!map) return undefined;
+    const element = document.getElementById(mapId);
+    const scale = 2;
+
+    // function printSVG() {
+    //   htmlToImage.toSvg(element, {
+    //     quality: 0.95,
+    //     cacheBust: false,
+    //     height: ((element.clientHeight * scale) + 1),
+    //     width: (element.clientWidth * scale),
+    //     style: { transform: `scale(${scale})`, transformOrigin: 'top left' },
+    //   })
+    //     .then((dataUrl) => {
+    //       const link = document.createElement('a');
+    //       link.download = 'export-map.svg';
+    //       link.href = dataUrl;
+    //       link.click();
+    //     });
+    // }
+
+    function printPNG() {
+      htmlToImage.toPng(element, {
+        quality: 1,
+        // preferredFontFormat: 'embedded-opentype',
+        cacheBust: false,
+        height: ((element.clientHeight * scale) + 1),
+        width: (element.clientWidth * scale),
+        style: { transform: `scale(${scale})`, transformOrigin: 'top left' },
+      })
+        .then((dataUrl) => {
+          saveAs(dataUrl, 'export-map.png');
+        });
+    }
+    if (!embed) {
+      // document.getElementById(printSVGId).addEventListener('click', printSVG);
+      document.getElementById(printPNGId).addEventListener('click', printPNG);
+    }
+
+    return () => {
+      if (map) {
+        // document.getElementById(printSVG).removeEventListener('click', printSVG);
+        // document.getElementById(printPNG).removeEventListener('click', printPNG);
+      }
+    };
+  }, [map]);
 
   useEffect(() => {
     const usedFonts = [];
@@ -110,33 +202,80 @@ function Map({
   }, [layers, fontStyle.fontFamily]);
 
   const renderLayers = useMemo(() => {
-    const renderLayersArr = [];
-
-    layers.forEach((d, i) => {
-      if (d.type === 'symbol') {
-        renderLayersArr[i] = d.visible > 0 && (
+    const renderLayersArr = layers.map((d) => {
+      if ((d.type === 'symbol') && (d.visible > 0)) {
+        return (
           <SymbolLayer
             map={map}
             key={`symbolLayer${d.id}`}
+            layerId={`symbolLayer${d.id}`}
             source={d.data}
             zIndex={d.zIndex}
             opacity={d.opacity}
             style={d.style}
+            primaryColor={rgba(primaryColor)}
             symbol={d.symbol}
             scale={d.scale}
             data={d.data}
             showLabels={d.showLabels}
+            labelStyle={d.labelStyle}
             scaleType={d.scaleType}
             scaleScaling={d.scaleScaling}
             scaleColumn={d.scaleColumn}
             scaleDataMin={d.scaleDataMin}
             scaleDataMax={d.scaleDataMax}
             labelColumn={d.labelColumn}
+            enableTooltips={d.enableTooltips}
+            tooltipsTitleColumn={d.tooltipsTitleColumn}
+            tooltipsValueColumn={d.tooltipsValueColumn}
+            tooltipsValueLabel={d.tooltipsValueLabel}
           />
         );
       }
-      if (d.type === 'osm') {
-        renderLayersArr[i] = d.visible > 0 && (
+      if ((d.type === 'heatmap') && (d.visible > 0)) {
+        return (
+          <HeatmapLayer
+            map={map}
+            key={`symbolLayer${d.id}`}
+            source={d.data}
+            zIndex={d.zIndex}
+            opacity={d.opacity}
+            style={d.style}
+            scale={d.scale}
+            data={d.data}
+            scaleColumn={d.scaleColumn}
+            scaleDataMin={d.scaleDataMin}
+            scaleDataMax={d.scaleDataMax}
+            blur={d.blur}
+            radius={d.radius}
+            fillPalette={d.fillPalette}
+            weighted={d.weighted}
+          />
+        );
+      }
+      if ((d.type === 'hexbin') && (d.visible > 0)) {
+        return (
+          <HexbinLayer
+            map={map}
+            key={`symbolLayer${d.id}`}
+            source={d.data}
+            zIndex={d.zIndex}
+            opacity={d.opacity}
+            style={d.style}
+            scale={d.scale}
+            data={d.data}
+            scaleColumn={d.scaleColumn}
+            scaleDataMin={d.scaleDataMin}
+            scaleDataMax={d.scaleDataMax}
+            blur={d.blur}
+            radius={d.radius}
+            fillPalette={d.fillPalette}
+            weighted={d.weighted}
+          />
+        );
+      }
+      if ((d.type === 'osm') && (d.visible > 0)) {
+        return (
           <TileLayer
             map={map}
             key={`tileLayer${d.id}`}
@@ -146,8 +285,8 @@ function Map({
           />
         );
       }
-      if (d.type === 'polygon') {
-        renderLayersArr[i] = d.visible > 0 && (
+      if ((d.type === 'polygon') && (d.visible > 0)) {
+        return (
           <VectorLayer
             map={map}
             key={`vectorLayer${d.id}`}
@@ -165,8 +304,8 @@ function Map({
           />
         );
       }
-      if (d.type === 'line') {
-        renderLayersArr[i] = d.visible > 0 && (
+      if ((d.type === 'line') && (d.visible > 0)) {
+        return (
           <LineLayer
             map={map}
             key={`lineLayer${d.id}`}
@@ -181,8 +320,8 @@ function Map({
           />
         );
       }
-      if (d.type === 'mapbox') {
-        renderLayersArr[i] = d.visible > 0 && (
+      if ((d.type === 'mapbox') && (d.visible > 0)) {
+        return (
           <MapboxLayer
             map={map}
             key={`mapboxLayer${d.id}`}
@@ -193,8 +332,8 @@ function Map({
           />
         );
       }
-      if (d.type === 'mask') {
-        renderLayersArr[i] = d.visible > 0 && (
+      if ((d.type === 'mask') && (d.visible > 0)) {
+        return (
           <MaskLayer
             map={map}
             key={`maskLayer${d.id}`}
@@ -208,9 +347,10 @@ function Map({
           />
         );
       }
+      return undefined;
     });
     return renderLayersArr;
-  }, [map, layers]);
+  }, [map, JSON.stringify(layers)]);
 
   const legendRows = useMemo(() => {
     const legendArr = [];
@@ -224,7 +364,7 @@ function Map({
             const row = d.visible > 0 && d.showInLegend > 0 && (
               <div key={`legendSymbol${d.id}`}>
                 <div className={styles.legendSymbol}>
-                  <div>
+                  <div className="legendCircles">
                     <svg width="40" height="20">
                       <circle
                         cx="7.5"
@@ -292,7 +432,7 @@ function Map({
                     y={radius + (radius) + 5}
                     style={{ textAnchor: 'left', fontSize: 7, fill: 'rgb(49 49 49)' }}
                   >
-                    {b}
+                    {numberFormatter(b)}
                   </text>
                   <line
                     x1={(maxRadius)}
@@ -306,14 +446,15 @@ function Map({
                 </g>
               );
             });
-
+            let filterStyle = {};
+            if (d.legendSeriesTitle === 'Sudanese refugees and IDPs') filterStyle = { filter: 'saturate(0%)' };
             const row = d.visible > 0 && d.showInLegend > 0 && (
               <div key={`legendSymbol${d.id}`}>
                 <div className={styles.legendSeriesTitle}>
-                  <b style={{ fontSize: 10 }}>{d.legendSeriesTitle}</b>
+                  <span style={{ fontSize: 10, fontWeight: 700 }}>{d.legendSeriesTitle}</span>
                 </div>
-                <div className={styles.legendSymbolProportional}>
-                  <div>
+                <div className={styles.legendSymbolProportional} style={filterStyle}>
+                  <div id="legendCircles" className={styles.legendCircles}>
                     <svg width="120" height={legendRowHeight + 3}>
                       <clipPath id="cut-off">
                         <rect x="0" y="0" width={legendRowHeight / 2} height={legendRowHeight} />
@@ -399,7 +540,7 @@ function Map({
                   {d.style.fillDataMin}
                 </div>
                 <div className={styles.legendPolygonScaleUnit2}>
-                  {d.style.fillDataMax}
+                  {numberFormatter(d.style.fillDataMax)}
                 </div>
               </div>
             </div>
@@ -416,23 +557,80 @@ function Map({
           legendArr.push(row);
         }
       }
+      if (d.type === 'heatmap') {
+        const legendHeatmapRow = (
+          <div>
+            <div
+              className={styles.legendPolygonGraduated}
+              style={{ opacity: d.opacity, height: 10 }}
+            >
+              <ColorScale
+                colorScale={d.fillPalette}
+                steps={5}
+                colorScaleType={d.style.fillScaleType}
+                pow={d.style.fillPow}
+                containerClass="colorScaleDiv"
+                inverted={d.style.fillScaleInvert}
+              />
+            </div>
+          </div>
+        );
+        const row = d.visible > 0 && d.showInLegend > 0 && (
+          <div key={`legendPolygon${d.id}`}>
+            <div className={styles.legendSeriesTitle}>
+              <b style={{ fontSize: 10 }}>{d.legendSeriesTitle}</b>
+            </div>
+            {legendHeatmapRow}
+          </div>
+        );
+        legendArr.push(row);
+      }
+      if (d.type === 'hexbin') {
+        const legendHexbinRow = (
+          <div>
+            <div
+              className={styles.legendPolygonGraduated}
+              style={{ opacity: d.opacity, height: 10 }}
+            >
+              <ColorScale
+                colorScale={d.fillPalette}
+                steps={5}
+                colorScaleType={d.style.fillScaleType}
+                pow={d.style.fillPow}
+                containerClass="colorScaleDiv"
+                inverted={d.style.fillScaleInvert}
+              />
+            </div>
+          </div>
+        );
+        const row = d.visible > 0 && d.showInLegend > 0 && (
+          <div key={`legendPolygon${d.id}`}>
+            <div className={styles.legendSeriesTitle}>
+              <b style={{ fontSize: 10 }}>{d.legendSeriesTitle}</b>
+            </div>
+            {legendHexbinRow}
+          </div>
+        );
+        legendArr.push(row);
+      }
     });
-    return legendArr;
-  }, [layers]);
+    const legendArrFiltered = legendArr.filter(Boolean);
+    return legendArrFiltered;
+  }, [JSON.stringify(layers)]);
 
   const bottomPos = useMemo(() => {
     let bottom = 10;
     if (legendPosition === 'bottomLeft') {
-      if (showFooter === true) {
-        bottom = 30;
-        return { bottom: 30, left: 10 };
-      }
+      // if (showFooter === true) {
+      bottom = 30;
+      return { bottom: 30, left: 4 };
+      // }
     }
     if (legendPosition === 'topLeft') {
       if (showHeader === true) {
-        return { top: 60, left: 10 };
+        return { top: 60, left: 4 };
       }
-      return { top: 10, left: 10 };
+      return { top: 10, left: 4 };
     }
     if (legendPosition === 'topRight') {
       if ((enableZoomControls === true) && (zoomControlsPosition === 'topRight')) {
@@ -457,80 +655,179 @@ function Map({
     showLegend,
     legendPosition,
     showScale,
+    showOverview,
   ]);
 
   let w = `${width}px`;
   if (embed) w = '100%';
-
+  let dashboardStyle = {};
+  let sourcesStyle = {};
+  let h = height;
+  const yOffset = 97 + paddingBottom;
+  if ((height === '') || (height === 0)) h = `calc(100vh - ${yOffset}px)`;
+  let paddingTop = 0;
+  if (dashboard) paddingTop = 100;
+  if (dashboard) dashboardStyle = { position: 'absolute', top: 0, width: '100%' };
+  if (dashboard) {
+    sourcesStyle = {
+      textAlign: 'right',
+      right: 10,
+      bottom: 72,
+      zIndex: 99999,
+    };
+  }
+  if ((dashboard) && (print)) {
+    sourcesStyle = {
+      textAlign: 'left',
+      right: 10,
+      bottom: 72,
+      zIndex: 99999,
+    };
+  }
   const mapContext = (
-    <div
-      className={`${styles.mapContainer} ${(embed ? styles.embedMap : '')}`}
-      style={{ height: `${height}px`, width: w }}
-    >
-      {showHeader && (
-        <div>
-          <div className={styles.mapTitle}>
-            {showLogos && (
-            <div className={styles.logos}>
-              { showLogos.map((logo) => (
-                <div key={logo} className={styles.headerLogo}>
-                  { logo === 'CDCF' && <img className={styles.logoCDCF} src={cdcf} alt="" /> }
-                  { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
-                  { logo === 'DEEP' && <img className={styles.logoDeep} src={deep} alt="" /> }
-                  { logo === 'DEEP (small)' && <img className={styles.logoDeepSmall} src={deepSmall} alt="" /> }
-                  { logo === 'DRC' && <img className={styles.logoDrc} src={drc} alt="" /> }
-                  { logo === 'iMMAP' && <img className={styles.logoImmap} src={immap} alt="" /> }
+    <div>
+      <div>
+        <div
+          id={mapId}
+          className={`${styles.mapContainer} ${(embed ? styles.embedMap : '')} ${(headerStyle === 'iMMAP' ? styles.headeriMMAP : '')}`}
+          style={{
+            ...dashboardStyle,
+            minHeight: height,
+            width: w,
+            fontFamily: fontStyle.fontFamily,
+          }}
+        >
+          {showHeader && (
+            <div className={styles.header}>
+              <div className={styles.mapTitle} style={(headerStyle === 'iMMAP' ? { backgroundColor: '#FFF' } : {})}>
+                {showLogos && (
+                <div className={styles.logos} style={(enableZoomControls && zoomControlsPosition === 'topRight' && headerStyle !== 'iMMAP') ? { marginRight: 0, marginTop: 6 } : {}}>
+                  { showLogos.map((logo) => (
+                    <div key={logo} className={styles.headerLogo}>
+                      { logo === 'CDCF' && <img className={styles.logoCDCF} src={cdcf} alt="" /> }
+                      { logo === 'Data Friendly Space' && <img className={styles.logoDfs} src={dfs} alt="" /> }
+                      { logo === 'DEEP' && <img className={styles.logoDeep} src={deep} alt="" /> }
+                      { logo === 'DEEP (small)' && <img className={styles.logoDeepSmall} src={deepSmall} alt="" /> }
+                      { logo === 'DRC' && <img className={styles.logoDrc} src={drc} alt="" /> }
+                      { logo === 'iMMAP' && (
+                        <div>
+                          <img className={styles.logoImmap} src={immap} alt="" />
+                          { showLogos.length > 1 && (
+                            <div className={styles.logoImmapBorder}>&nbsp;</div>
+                          )}
+                        </div>
+                      )}
+                      { logo === 'UNOCHA' && <img className={styles.logoUnocha} src={unocha} alt="" /> }
+                    </div>
+                  ))}
                 </div>
-              ))}
+                )}
+                <div className={styles.titleContainer}>
+                  <div
+                    className={styles.mainTitle}
+                    style={{ color: rgba(primaryColor) }}
+                  >
+                    {mainTitle}
+                  </div>
+                  <div className={styles.subTitle}>{subTitle}</div>
+                </div>
+                <div className={styles.dateText} style={(enableZoomControls && zoomControlsPosition === 'topRight') ? { marginRight: 34 } : {}}>{dateText}</div>
+              </div>
+              {headerStyle === 'iMMAP' && (
+                <div className={styles.immapHeaderBar}>
+                  <div className={styles.immapHeaderBar1} />
+                  <div className={styles.immapHeaderBar2} />
+                </div>
+              )}
+            </div>
+          )}
+          <div
+            className={dashboard ? styles.dashboard : ''}
+            style={{
+              height: h,
+              position: 'relative',
+              paddingTop,
+              marginBottom: paddingBottom,
+            }}
+          >
+            <OpenLayersMap
+              map={map}
+              mapObj={mapObj}
+              setMapObj={setMapObj}
+              center={fromLonLat([center.lon, center.lat])}
+              zoom={zoom}
+              minZoom={minZoom}
+              maxZoom={maxZoom}
+              setMap={setMap}
+              showScale={showScale}
+              scaleUnits={scaleUnits}
+              scaleBar={scaleBar}
+              scaleBarPosition={scaleBarPosition}
+              enableDragPan={enableDragPan}
+              enableMouseWheelZoom={enableMouseWheelZoom}
+              enableDoubleClickZoom={enableDoubleClickZoom}
+              enableZoomControls={enableZoomControls}
+              zoomControlsPosition={zoomControlsPosition}
+              showOverview={showOverview}
+              overviewMapPosition={overviewMapPosition}
+              paddingBottom={paddingBottom}
+            >
+              {renderLayers}
+            </OpenLayersMap>
+
+            {showLegend && (
+            <div className={styles.mapLegend} style={{ ...bottomPos, top: legendTopPadding }}>
+              <div className={styles.mapLegendTitle}>Legend</div>
+              <div className={styles.legendRow}>
+                {legendRows}
+              </div>
             </div>
             )}
-            <div className={styles.titleContainer}>
-              <div className={styles.mainTitle}>{mainTitle}</div>
-              <div className={styles.subTitle}>{subTitle}</div>
+          </div>
+
+          {/* {showFooter && ( */}
+          <div style={{ ...sourcesPadding, ...sourcesStyle }} className={styles.mapFooter}>
+            <b>Sources</b>
+            <div className={styles.sources}>
+              &nbsp;
+              {sources}
             </div>
           </div>
+          {/* )} */}
+
+          {(headerStyle === 'iMMAP' && showFooter) && (
+            <div className={styles.immapFooterBar}>
+              <div className={styles.immapFooterColorBar}>
+                <div className={styles.immapFooterBar1} />
+                <div className={styles.immapFooterBar2} />
+              </div>
+              <div className={styles.immapStrapline}>
+                Better Data | Better Decisions |&nbsp;
+                <div className={styles.immapStrapLine2}>Better Outcomes</div>
+              </div>
+              <div className={styles.disclaimer}>
+                The boundaries, names, and designations used in this map
+                do not imply official endorsement or acceptance by iMMAP
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      {!embed && (
+        <div className={styles.exportButtons} style={{}}>
+          {/*
+          <Button
+            id={printSVGId}
+            size="small"
+            theme={theme}
+            variant="outlined">
+            Export to SVG
+          </Button>
+          &nbsp;
+          */}
+          <Button id={printPNGId} size="small" theme={theme} variant="outlined">Export to PNG</Button>
         </div>
       )}
-      <OpenLayersMap
-        map={map}
-        mapObj={mapObj}
-        setMapObj={setMapObj}
-        center={fromLonLat([center.lon, center.lat])}
-        zoom={zoom}
-        minZoom={minZoom}
-        maxZoom={maxZoom}
-        setMap={setMap}
-        showScale={showScale}
-        scaleUnits={scaleUnits}
-        scaleBar={scaleBar}
-        scaleBarPosition={scaleBarPosition}
-        enableMouseWheelZoom={enableMouseWheelZoom}
-        enableDoubleClickZoom={enableDoubleClickZoom}
-        enableZoomControls={enableZoomControls}
-        zoomControlsPosition={zoomControlsPosition}
-      >
-        {renderLayers}
-      </OpenLayersMap>
-
-      {showFooter && (
-        <div className={styles.mapFooter}>
-          <b>Sources</b>
-          <div className={styles.sources}>
-            &nbsp;
-            {sources}
-          </div>
-        </div>
-      )}
-
-      {showLegend && (
-        <div className={styles.mapLegend} style={bottomPos}>
-          <div className={styles.mapLegendTitle}>Legend</div>
-          <div className={styles.legendRow}>
-            {legendRows}
-          </div>
-        </div>
-      )}
-
     </div>
   );
   // });

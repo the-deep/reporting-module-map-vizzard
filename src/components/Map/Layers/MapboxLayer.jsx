@@ -16,7 +16,9 @@ function MapboxLayer({
     const layer = new TileLayer({
       source: new olSource.XYZ({
         url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
-        tileSize: 256,
+        tileSize: 512,
+        preload: 10,
+        crossOrigin: 'anonymous',
       }),
     });
 

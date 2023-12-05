@@ -65,8 +65,11 @@ function FontPicker({ style, updateFontStyle, variant }) {
               <MenuItem key="Alegreya" value="Alegreya" size="small">
                 Alegreya
               </MenuItem>
-              <MenuItem key="Futura" value="Futura" size="small">
-                Futura
+              <MenuItem key="Barlow" value="Barlow" size="small">
+                Barlow
+              </MenuItem>
+              <MenuItem key="Barlow Condensed" value="Barlow Condensed" size="small">
+                Barlow Condensed
               </MenuItem>
               <MenuItem key="Lato" value="Lato" size="small">
                 Lato
@@ -86,12 +89,12 @@ function FontPicker({ style, updateFontStyle, variant }) {
               <MenuItem key="RobotoSlab" value="Roboto Slab" size="small">
                 Roboto Slab
               </MenuItem>
-              <MenuItem key="Source Sans Pro" value="Source Sans Pro" size="small">
+              {/* <MenuItem key="Source Sans Pro" value="Source Sans Pro" size="small">
                 Source Sans Pro
               </MenuItem>
               <MenuItem key="Source Serif Pro" value="Source Serif Pro" size="small">
                 Source Serif Pro
-              </MenuItem>
+              </MenuItem> */}
             </Select>
           </FormControl>
         </div>

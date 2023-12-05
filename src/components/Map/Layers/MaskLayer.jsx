@@ -44,7 +44,7 @@ function MaskLayer({
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map, id, polygon, smoothing, opacity]);
+  }, [map, id, polygon, smoothing, opacity, zIndex, blur]);
 
   useEffect(() => {
     if (!maskLayer) return;

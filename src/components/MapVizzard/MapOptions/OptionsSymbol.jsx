@@ -24,6 +24,8 @@ import settlement from '../../Map/assets/map-icons/settlement.svg';
 import marker from '../../Map/assets/map-icons/marker.svg';
 import airport from '../../Map/assets/map-icons/airport.svg';
 import borderCrossing from '../../Map/assets/map-icons/borderCrossing.svg';
+import borderCrossingActive from '../../Map/assets/map-icons/borderCrossingActive.svg';
+import borderCrossingPotential from '../../Map/assets/map-icons/borderCrossingPotential.svg';
 import triangle from '../../Map/assets/map-icons/triangle.svg';
 import idpRefugeeCamp from '../../Map/assets/map-icons/idp-refugee-camp.svg';
 import nullType from '../assets/nullType.svg';
@@ -54,6 +56,8 @@ const symbolIcons = {
   airport,
   marker,
   borderCrossing,
+  borderCrossingActive,
+  borderCrossingPotential,
   triangle,
   circle: 'circle',
 };
@@ -448,6 +452,89 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
                   onChange={(e) => updateAttr('legendSeriesTitle', e.target.value)}
                 />
               </FormControl>
+            </div>
+          )}
+
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
+              Show tooltips
+            </div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={layer.enableTooltips}
+                color="default"
+                onChange={(e, val) => updateAttr('enableTooltips', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          {layer.enableTooltips && (
+            <div>
+              <div className={styles.optionRow}>
+                <div className={styles.optionLabel}>Tooltip title column</div>
+                <div className={styles.optionValue}>
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="text-column-label"
+                      id="text-column"
+                      value={layer.tooltipsTitleColumn ?? ''}
+                      onChange={(e, val) => updateAttr('tooltipsTitleColumn', val.props.value)}
+                      size="small"
+                      style={{ backgroundColor: '#fff', fontSize: 12 }}
+                      variant="standard"
+                    >
+                      <MenuItem key="texttooltipTitleColumn-empty" value="">&nbsp;</MenuItem>
+                      {Object.keys(columns)
+                        .sort()
+                        .map((tt) => (
+                          <MenuItem key={`texttooltipTitleColumn-${tt}`} value={tt}>
+                            <img
+                              className={styles.columnDataTypeIcon}
+                              src={columnDataTypeIcons[columns[tt]]}
+                              alt={tt}
+                            />
+                            {tt}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+
+              <div className={styles.optionRow}>
+                <div className={styles.optionLabel}>Tooltip value column</div>
+                <div className={styles.optionValue}>
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="text-column-label"
+                      id="text-column"
+                      value={layer.tooltipsValueColumn}
+                      onChange={(e, val) => updateAttr('tooltipsValueColumn', val.props.value)}
+                      size="small"
+                      style={{ backgroundColor: '#fff', fontSize: 12 }}
+                      variant="standard"
+                    >
+                      <MenuItem key="texttooltipValueColumn-empty" value="">&nbsp;</MenuItem>
+                      {Object.keys(columns)
+                        .sort()
+                        .map((tooltipValueColumn) => (
+                          <MenuItem key={`texttooltipValueColumn-${tooltipValueColumn}`} value={tooltipValueColumn}>
+                            <img
+                              className={styles.columnDataTypeIcon}
+                              src={columnDataTypeIcons[columns[tooltipValueColumn]]}
+                              alt={tooltipValueColumn}
+                            />
+                            {tooltipValueColumn}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+
+              <hr />
+
             </div>
           )}
 

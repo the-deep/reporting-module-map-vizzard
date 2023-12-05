@@ -25,10 +25,7 @@
 .ol-scale-line {
   background: var(--ol-partial-background-color);
   border-radius: 4px;
-  bottom: 8px;
-  left: 8px;
-  padding: 2px;
-  position: absolute;
+  padding: 2px 0px;
 }
 
 .ol-scale-line-inner {
@@ -40,12 +37,6 @@
   margin: 1px;
   will-change: contents, width;
   transition: all 0.25s;
-}
-
-.ol-scale-bar {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
 }
 
 .ol-scale-bar-inner {
@@ -272,7 +263,7 @@
 .ol-attribution.ol-uncollapsible {
   bottom: 0;
   right: 0;
-  border-radius: 4px 0 0;
+  border-radius: 0px 0 0;
 }
 
 .ol-attribution.ol-uncollapsible img {
@@ -322,9 +313,9 @@
 }
 
 .ol-overviewmap:not(.ol-collapsed) button {
-  bottom: 0;
-  left: 0;
-  position: absolute;
+  bottom: unset;
+  left: unset;
+  position: relative;
 }
 
 .ol-overviewmap.ol-collapsed .ol-overviewmap-map,
@@ -342,4 +333,24 @@
 
 .ol-overviewmap .ol-overviewmap-box:hover {
   cursor: move;
+}
+
+.ol-overviewmap-box {
+  pointer-events: none !important;
+  border: 1.5px solid #be2126;
+}
+
+.ol-overviewmap .ol-overviewmap-map {
+  border: 1px solid rgb(220 220 221);
+  width: 90px;
+  height: 80px;
+}
+
+.ol-overviewmap {
+  top: unset !important;
+  bottom: unset !important;
+  right: unset !important;
+  left: unset !important;
+  position: relative !important;
+  display: inline-block;
 }

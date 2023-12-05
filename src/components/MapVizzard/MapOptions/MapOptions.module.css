@@ -1,7 +1,8 @@
 .container {
   display: grid;
   grid-template-areas:
-  'layers options map'
+  'layers options map';
+  grid-template-columns: 320px 228px;
   /* grid-template-columns: repeat(12, 1fr); */
   /* grid-gap: 20px; */
 }
@@ -15,6 +16,7 @@
   position: relative;
   height: 100%;
   min-width: 230px;
+  max-width: 230px;
 }
 
 .mapOptions {
@@ -61,6 +63,13 @@
 
 .MapLayers_row div {
     display: inline-block;
+}
+
+.mapToolbar {
+  position: absolute;
+  left: 149px;
+  transform: scale(0.8);
+  top: 1px;
 }
 
 .mapOptionsPanelBody {
@@ -123,12 +132,12 @@ hr {
 }
 
 .optionValueFloat {
-  font-weight: bold;
+  font-weight: 600;
   float: right;
 }
 
 .optionValue {
-    font-weight: bold;
+    font-weight: 600;
     /* float: right; */
 }
 
@@ -168,12 +177,13 @@ hr {
   background-color: #f6f6f6;
   padding-top: 15px;
   padding-left: 15px;
+  grid-area: map;
 }
 
 .mapLayersContainer {
   padding-right: 0px;
   grid-area: layers;
-  min-width: 270px;
+  min-width: 320px;
 }
 
 .mapObjectContainer {
@@ -221,3 +231,4 @@ hr {
 .embed .mapPanel {
   background-color: transparent;
 }
+

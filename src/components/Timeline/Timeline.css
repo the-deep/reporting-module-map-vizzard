@@ -17,6 +17,14 @@
 	opacity: 0.4 !important;
 }
 
+.tl-timeline div:not(.tl-slidenav-icon), 
+.tl-timeline span:not(.tl-slidenav-icon),
+.tl-timeline h1,
+.tl-timeline h2,
+.tl-timeline h3, 
+.tl-timeline h4 {
+	font-family: 'Roboto Slab' !important;
+}
 #timeline h1 {
 	font-size: 19px;
 	margin-top: 6px;

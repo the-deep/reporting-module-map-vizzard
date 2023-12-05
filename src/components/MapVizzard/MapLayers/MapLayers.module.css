@@ -74,6 +74,8 @@
     padding-left: 6px;
     padding-top: 10px;
     vertical-align: top;
+    width: 185px;
+    overflow: hidden;
 }
 
 .MapLayers_buttons {

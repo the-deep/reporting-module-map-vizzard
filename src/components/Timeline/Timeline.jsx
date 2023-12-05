@@ -14,7 +14,7 @@ function Timeline({
     width: '100%',
     lang: 'en',
     start_at_end: true,
-    font: 'Roboto-Roboto',
+    font: 'Roboto Slab',
   };
 
   // parse data

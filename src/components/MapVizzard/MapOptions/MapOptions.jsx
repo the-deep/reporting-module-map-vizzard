@@ -3,6 +3,8 @@ import OptionsVector from './OptionsVector';
 import OptionsLine from './OptionsLine';
 import OptionsMask from './OptionsMask';
 import OptionsSymbol from './OptionsSymbol';
+import OptionsHeatmap from './OptionsHeatmap';
+import OptionsHexbin from './OptionsHexbin';
 import OptionsTile from './OptionsTile';
 import OptionsMapbox from './OptionsMapbox';
 import OptionsMapGeneral from './OptionsMapGeneral';
@@ -67,7 +69,27 @@ function MapOptions({
           if (dd.type === 'symbol') {
             renderLayers.push(
               <OptionsSymbol
-                key="polygonOptions"
+                key="symbolOptions"
+                layer={dd}
+                updateLayer={updateLayer}
+                activeLayer={activeLayer}
+              />,
+            );
+          }
+          if (dd.type === 'heatmap') {
+            renderLayers.push(
+              <OptionsHeatmap
+                key="heatmapOptions"
+                layer={dd}
+                updateLayer={updateLayer}
+                activeLayer={activeLayer}
+              />,
+            );
+          }
+          if (dd.type === 'hexbin') {
+            renderLayers.push(
+              <OptionsHexbin
+                key="hexbinOptions"
                 layer={dd}
                 updateLayer={updateLayer}
                 activeLayer={activeLayer}

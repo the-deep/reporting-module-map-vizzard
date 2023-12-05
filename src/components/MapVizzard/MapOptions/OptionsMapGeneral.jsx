@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import {
   FormControl,
 } from '@mui/material';
+import ColorPicker from './ColorPicker';
 import FontPicker from './FontPicker';
 import styles from './MapOptions.module.css';
 import settings from '../assets/settings.svg';
@@ -19,6 +20,7 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
     { name: 'DEEP', image: 'deep' },
     { name: 'DRC', image: 'drc' },
     { name: 'iMMAP', image: 'immap' },
+    { name: 'UNOCHA', image: 'unocha' },
   ];
 
   const updateAttr = (attr, val) => {
@@ -36,6 +38,12 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
   const updateCenter = (attr, val) => {
     const mapOptionsClone = { ...mapOptions };
     mapOptionsClone.center[attr] = val;
+    updateMapOptions(mapOptionsClone);
+  };
+
+  const updatePrimaryColor = (val) => {
+    const mapOptionsClone = { ...mapOptions };
+    mapOptionsClone.primaryColor = val;
     updateMapOptions(mapOptionsClone);
   };
 
@@ -90,6 +98,45 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
 
           <hr />
 
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabel}>Primary color</div>
+            <div className={styles.optionValue}>
+              <ColorPicker
+                color={mapOptions.primaryColor || {
+                  r: 0,
+                  g: 0,
+                  b: 0,
+                  a: 1,
+                }}
+                setColor={updatePrimaryColor}
+              />
+            </div>
+          </div>
+
+          <hr />
+
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Layout style</div>
+            <div className={styles.optionValue}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.headerStyle}
+                  onChange={(e, val) => updateAttr('headerStyle', val.props.value)}
+                  size="small"
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
+                  variant="standard"
+                >
+                  <MenuItem key="headerStyleDefault" value="default">Default</MenuItem>
+                  <MenuItem key="headerStyleiMMAP" value="iMMAP">iMMAP Publication</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+
+          <hr />
+
           <div className={styles.optionRow} style={{ marginTop: 8 }}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>
               Show header
@@ -125,6 +172,18 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
                     variant="standard"
                     value={mapOptions.subTitle}
                     onChange={(e) => updateAttr('subTitle', e.target.value)}
+                  />
+                </FormControl>
+              </div>
+
+              <div className={styles.optionRow}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Date text"
+                    size="small"
+                    variant="standard"
+                    value={mapOptions.dateText}
+                    onChange={(e) => updateAttr('dateText', e.target.value)}
                   />
                 </FormControl>
               </div>
@@ -272,6 +331,18 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
           )}
 
           <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Enable drag/pan</div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.enableDragPan}
+                color="default"
+                onChange={(e, val) => updateAttr('enableDragPan', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          <div className={styles.optionRow}>
             <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Mousewheel zoom</div>
             <div className={styles.optionValueFloat}>
               <Switch
@@ -294,6 +365,44 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
               />
             </div>
           </div>
+
+          <hr />
+
+          <div className={styles.optionRow}>
+            <div className={`${styles.optionLabel} ${styles.optionPaddingTop}`}>Show overview</div>
+            <div className={styles.optionValueFloat}>
+              <Switch
+                checked={mapOptions.showOverview}
+                color="default"
+                onChange={(e, val) => updateAttr('showOverview', val)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            </div>
+          </div>
+
+          {mapOptions.showOverview && (
+          <div className={styles.optionRow}>
+            <div className={styles.optionLabelSm}>Overview map position</div>
+            <div className={styles.optionValue}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="text-column-label"
+                  id="text-column"
+                  value={mapOptions.overviewMapPosition}
+                  onChange={(e, val) => updateAttr('overviewMapPosition', val.props.value)}
+                  size="small"
+                  style={{ backgroundColor: '#fff', fontSize: 12 }}
+                  variant="standard"
+                >
+                  <MenuItem key="overviewMapPositionBottomLeft" value="bottomLeft">Bottom left</MenuItem>
+                  <MenuItem key="overviewMapPositionBottomRight" value="bottomRight">Bottom right</MenuItem>
+                  <MenuItem key="overviewMapPositionTopRight" value="topRight">Top right</MenuItem>
+                  <MenuItem key="overviewMapPositionTopRight" value="topLeft">Top left</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          )}
 
           <hr />
 
@@ -428,20 +537,20 @@ function OptionsMapGeneral({ mapOptions, updateMapOptions }) {
             </div>
           </div>
 
-          {mapOptions.showFooter && (
-            <div>
-              <div className={styles.optionRow}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="Sources"
-                    variant="standard"
-                    value={mapOptions.sources}
-                    onChange={(e) => updateAttr('sources', e.target.value)}
-                  />
-                </FormControl>
-              </div>
+          {/* {mapOptions.showFooter && ( */}
+          <div>
+            <div className={styles.optionRow}>
+              <FormControl fullWidth>
+                <TextField
+                  label="Sources"
+                  variant="standard"
+                  value={mapOptions.sources}
+                  onChange={(e) => updateAttr('sources', e.target.value)}
+                />
+              </FormControl>
             </div>
-          )}
+          </div>
+          {/* )} */}
 
           <hr />
 

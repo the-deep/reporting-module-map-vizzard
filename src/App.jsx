@@ -7,26 +7,18 @@ import KPIs from './components/KPIs/KPIs';
 import kpiData from './stories/KPIs.json';
 import styles from './App.module.css';
 import sudan from './stories/sudan.json';
-import sudanBasemap from './stories/sudan-basemap.json';
-import sudanHno from './stories/sudan-hno.json';
 import ukraine from './stories/ukraine.json';
 
 const queryParameters = new URLSearchParams(window.location.search);
 const config = queryParameters.get('config') || 'sudan';
 const width = parseInt(queryParameters.get('width'), 10) || null;
 
-let mapConfig;
+let mapConfig = sudan;
 
 if (config === 'ukraine.json') {
   mapConfig = ukraine;
-} else if (config === 'sudan-basemap.json') {
-  mapConfig = sudanBasemap;
-} else if (config === 'sudan-hno.json') {
-  mapConfig = sudanHno;
-} else {
-  mapConfig = sudan;
 }
-console.log(width);
+
 let s = {};
 if (width) s = { maxWidth: width };
 function App() {
@@ -71,6 +63,18 @@ function App() {
           (
             <div className={styles.App} style={s}>
               <KPIs data={kpiData} />
+            </div>
+          )
+        }
+        />
+        <Route
+          path="/ukraine/dashboard"
+          element={
+          (
+            <div className={styles.App} style={s}>
+              <KPIs data={kpiData} />
+              <MapVizzard mapConfig={ukraine} iframe />
+              <Timeline data={timelineData} />
             </div>
           )
         }
