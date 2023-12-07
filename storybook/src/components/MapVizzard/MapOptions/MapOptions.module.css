@@ -1,0 +1,234 @@
+.container {
+  display: grid;
+  grid-template-areas:
+  'layers options map';
+  grid-template-columns: 320px 228px;
+  /* grid-template-columns: repeat(12, 1fr); */
+  /* grid-gap: 20px; */
+}
+
+.mapOptionsContainer {
+  grid-area: options;
+  background-color: #f9f9f9b0;
+  min-height: 97vh;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: relative;
+  height: 100%;
+  min-width: 230px;
+  max-width: 230px;
+}
+
+.mapOptions {
+    font-family: Roboto;
+    min-width: 200px;
+}
+
+.mapOptionsPanel {
+    background-color:rgb(241, 241, 241);
+    padding: 0px;
+    height: 33px;
+    border-right: 1px solid #fbfbfb;
+}
+
+.mapOptions_icon {
+  background-color: #fff;
+  display: inline-block;
+  width: 27px;
+  height: 27px;
+  font-size: 8px;
+  border-radius: 30px;
+  position: relative;
+  left: 4px;
+  top: 3px;
+  margin-right: 10px;
+}
+
+.mapOptions_icon img {
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  margin-left: 4px;
+  opacity: 0.2;
+  padding-right: 6px;
+}
+
+.mapOptionsPanel h1 {
+    padding: 0px;
+    padding-left: 0px;
+    margin: 0px;
+    font-size: 18px;
+    color: rgb(59, 59, 59);
+}
+
+.MapLayers_row div {
+    display: inline-block;
+}
+
+.mapToolbar {
+  position: absolute;
+  left: 149px;
+  transform: scale(0.8);
+  top: 1px;
+}
+
+.mapOptionsPanelBody {
+  font-size: 12px;
+  padding: 3px;
+  padding-right: 16px;
+  padding-left: 12px;
+  position: absolute;
+  top: 33px;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  width: 205px;
+}
+
+.mapOptionsPanelBody input {
+  font-size: 0.8rem !important;
+}
+
+.mapOptionsPanelBody label {
+  font-size: 0.9rem !important;
+}
+
+.optionRow {
+    margin-top: 19px;
+    margin-bottom: 25px;
+}
+
+.MuiSlider-root {
+  padding-bottom: 0px !important;
+  margin-bottom: -8px !important;
+  padding-top: 17px !important;
+}
+
+.MuiMenu-list li {
+  font-size: 12px;
+}
+
+.optionLabel {
+    display: inline-block;
+    padding-bottom: 3px;
+    font-size: 1em !important;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: normal;
+}
+
+.optionLabelSm {
+  display: inline-block;
+  padding-bottom: 3px;
+  font-size: 0.9em !important;
+  color: rgba(0, 0, 0, 0.6);
+  padding-bottom: 6px;
+}
+
+hr {
+  opacity: 0.05;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.optionValueFloat {
+  font-weight: 600;
+  float: right;
+}
+
+.optionValue {
+    font-weight: 600;
+    /* float: right; */
+}
+
+.MuiSlider-thumb:not(.MuiSlider-active) {
+  transition: none;
+}
+
+.MuiSlider-track {
+  transition: none;
+}
+
+.mapSymbolSelectIcon {
+  width: 14px;
+  padding-right: 3px;
+}
+
+.optionPaddingTop {
+  padding-top: 10px;
+}
+
+.draw {
+  opacity: 0.2;
+}
+
+.optionRow Button {
+  font-size: 9px;
+  padding: 4px 7px;
+}
+
+.columnDataTypeIcon {
+  height: 18px;
+  opacity: 0.3;
+  padding-right: 3px;
+}
+
+.mapPanel {
+  background-color: #f6f6f6;
+  padding-top: 15px;
+  padding-left: 15px;
+  grid-area: map;
+}
+
+.mapLayersContainer {
+  padding-right: 0px;
+  grid-area: layers;
+  min-width: 320px;
+}
+
+.mapObjectContainer {
+  grid-area: map;
+  height: 40vh;
+  overflow: scroll;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  background-color: #fbfbfb;
+  padding-right: 5px;
+  padding-left: 0px;
+}
+
+.mapObjectBody {
+  height: 40vh;
+  overflow: scroll;
+  font-size: 10px;
+  padding: 6px 9px;
+}
+
+.mapObjectTitle {
+  background-color:rgb(241, 241, 241);
+  padding: 6px 8px;
+  border-right: 1px solid #fbfbfb;
+  padding-left: 5px;
+}
+
+.mapObjectTitle h1 {
+  padding: 0px;
+  margin: 0px;
+  font-size: 18px;
+  color: rgb(59, 59, 59);
+  padding-left: 4px;
+}
+
+.embed .mapPanel {
+  padding: 0px;
+}
+
+.embed .container {
+  display: block !important;
+}
+
+.embed .mapPanel {
+  background-color: transparent;
+}
+

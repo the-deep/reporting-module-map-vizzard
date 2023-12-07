@@ -1,0 +1,23 @@
+.colorScaleContainer {
+    display: grid;
+}
+
+.colorScaleDiv .colorScale {
+    display: grid;
+    gap: 0.5px;
+    border: 1px solid rgb(255, 255, 255);
+    height: 17px;
+}
+
+.colorScaleSelect .colorScale {
+    display: grid;
+    gap: 0px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+.steps {
+    display: grid;
+    grid-auto-flow: column;
+    grid-row: 1;
+}

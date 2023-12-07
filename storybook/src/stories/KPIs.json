@@ -1,0 +1,40 @@
+{
+  "kpis": [
+    {
+      "title": "Total IDPs",
+      "subtitle": "Estimated",
+      "source": "IOM",
+      "date": "2023-05-25",
+      "backgroundColor": "#43386b",
+      "color": "#FFF",
+      "value": "5.1m"
+    },
+    {
+      "title": "Total Returnees",
+      "subtitle": "Estimated",
+      "source": "IOM",
+      "date": "2023-05-25",
+      "backgroundColor": "#0273b5",
+      "color": "#FFF",
+      "value": "4.8m"
+    },
+    {
+      "title": "Education Institutions",
+      "subtitle": "Destroyed",
+      "source": "saveschools.in.ua",
+      "date": "2023-08-01",
+      "backgroundColor": "#3697DB",
+      "color": "#FFF",
+      "value": "343"
+    },
+    {
+      "title": "Education Institutions",
+      "subtitle": "Damaged",
+      "source": "saveschools.in.ua",
+      "date": "2023-08-01",
+      "backgroundColor": "#cce2f3",
+      "color": "rgb(49 49 49)",
+      "value": "3,226"
+    }
+  ]
+}
