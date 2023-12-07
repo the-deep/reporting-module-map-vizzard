@@ -37,7 +37,8 @@
     "homepage": "https://github.com/the-deep/reporting-module-map-vizzard#readme",
     "dependencies": {
         "@babel/runtime-corejs3": "^7.22.3",
-        "@rollup/plugin-image": "^3.0.3"
+        "@rollup/plugin-image": "^3.0.3",
+        "@knight-lab/timelinejs": "^3.9.3"
     },
     "peerDependencies": {
         "react": "^18.2.0",
