@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Timeline as TL } from '@knight-lab/timelinejs';
-import '@knight-lab/timelinejs/dist/css/timeline.css';
 import './Timeline.css';
 
 export interface Props {
