@@ -1,4 +1,5 @@
-import Timeline from '../components/Timeline/Timeline';
+import { Timeline } from '@the-deep/reporting-module-components';
+
 import data from './Timeline.json';
 
 // Story Config

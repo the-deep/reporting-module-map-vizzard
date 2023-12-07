@@ -30,5 +30,5 @@
         "sourceMap": true,
         "baseUrl": "."
     },
-    "include": ["./src/index.ts", "./src/declarations"]
+    "include": ["./src/index.ts", "./src/declarations", "src/Timeline/timelinejs.d.ts"]
 }
