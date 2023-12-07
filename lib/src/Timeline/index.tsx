@@ -40,8 +40,7 @@ function Timeline({ data }: Props) {
     const events = { events: evt };
 
     useEffect(() => {
-    // eslint-disable-next-line
-    const timeline = new TL(
+        new TL( // eslint-disable-line no-new
             'timeline-embed',
             events,
             timelineoptions,
