@@ -1,3 +1,4 @@
+@import '@knight-lab/timelinejs/dist/css/timeline.css';
 
 .tl-icon-swipe-left {
 	transform: scaleX(-1);
