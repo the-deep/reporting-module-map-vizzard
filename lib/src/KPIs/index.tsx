@@ -16,9 +16,16 @@ export interface Props {
             url: string;
         }[],
     },
+    isMobile: boolean,
+    leftBorder: boolean
 }
 
-function KPIs({ data }: Props) {
+function KPIs({ data, isMobile, leftBorder }: Props) {
+    let borderWidth = 0;
+    if (leftBorder === true) borderWidth = 3;
+    let cols = data.kpis.length;
+    if (isMobile) cols /= 2;
+
     const render = data.kpis.map((d) => (
         <div
             // FIXME: Add key
@@ -26,6 +33,16 @@ function KPIs({ data }: Props) {
             key={`${d.title}${d.value}`}
             style={{ backgroundColor: d.backgroundColor, color: d.color }}
         >
+            <div style={{
+                borderLeft: `${borderWidth}px solid ${d.primaryColor}`,
+                display: 'inline-block',
+                width: 4,
+                height: '95%',
+                left: 0,
+                top: 2,
+                position: 'absolute',
+            }}
+            />
             <div className={styles.title}>
                 {d.title}
             </div>
@@ -50,7 +67,7 @@ function KPIs({ data }: Props) {
     ));
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
             {render}
         </div>
     );
