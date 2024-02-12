@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import ReactEcharts from 'echarts-for-react';
-import './LineChart.css';
 
 export interface Props {
     data: {
