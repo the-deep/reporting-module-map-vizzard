@@ -1,3 +1,41 @@
 :root {
     --drm-font-family-sans-serif: 'Roboto', sans-serif;
+
+    --base-font-size: 0.875rem;
+    --drm-font-size-2xs: calc(var(--base-font-size) * 0.625);
+    --drm-font-size-xs: calc(var(--base-font-size) * 0.75);
+    --drm-font-size-sm: calc(var(--base-font-size) * 0.875);
+    --drm-font-size-md: var(--base-font-size);
+    --drm-font-size-lg: calc(var(--base-font-size) * 1.125);
+    --drm-font-size-xl: calc(var(--base-font-size) * 1.25);
+    --drm-font-size-2xl: calc(var(--base-font-size) * 1.5);
+    --drm-font-size-3xl: calc(var(--base-font-size) * 1.875);
+    --drm-font-size-4xl: calc(var(--base-font-size) * 2.375);
+
+    --base-spacing: 1rem;
+
+    --drm-spacing-4xs: calc(var(--base-spacing) * 0.0625);
+    --drm-spacing-3xs: calc(var(--base-spacing) * 0.125);
+    --drm-spacing-2xs: calc(var(--base-spacing) * 0.25);
+    --drm-spacing-xs: calc(var(--base-spacing) * 0.4);
+    --drm-spacing-sm: calc(var(--base-spacing) * 0.625);
+    --drm-spacing-md: calc(var(--base-spacing) * 1);
+    --drm-spacing-lg: calc(var(--base-spacing) * 1.5);
+    --drm-spacing-xl: calc(var(--base-spacing) * 2.25);
+    --drm-spacing-2xl: calc(var(--base-spacing) * 3.375);
+    --drm-spacing-3xl: calc(var(--base-spacing) * 5.0625);
+    --drm-spacing-4xl: calc(var(--base-spacing) * 7.5937);
+    --drm-spacing-5xl: calc(var(--base-spacing) * 11.39);
+
+    --drm-duration-transition-fast: 0.1s;
+    --drm-duration-transition-medium: 0.3s;
+    --drm-duration-transition-slow: 0.5s;
+
+    --drm-color-gray: #8D8D8D;
+
+}
+
+/* FIXME: this should be moved somewhere else */
+* {
+    box-sizing: border-box;
 }

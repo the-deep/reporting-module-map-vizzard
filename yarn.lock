@@ -1150,7 +1150,7 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime-corejs3@^7.22.3":
+"@babel/runtime-corejs3@^7.22.6":
   version "7.23.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.23.9.tgz#1b43062a13ecb60158aecdd81bc3fab4108b7cbc"
   integrity sha512-oeOFTrYWdWXCvXGB5orvMTJ6gCZ9I6FBjR+M38iKNXCsPxr4xT0RTdg5uz1H7QP8pp74IzPtwritEr+JscqHXQ==
@@ -3845,6 +3845,13 @@
   integrity sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==
   dependencies:
     "@babel/runtime" "^7.12.5"
+
+"@togglecorp/fujs@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@togglecorp/fujs/-/fujs-2.1.1.tgz#af3a202e42d9bd9f74e3aa5e48e3f3a65f83f6bf"
+  integrity sha512-2ofMs9xZxlctFqNAHERMqW436nqjSZdiDNJjsTquSVOXu9kFJzbIakhVXcZ5+UWJgrCbn8k7wcj1N5eO0OWFQA==
+  dependencies:
+    "@babel/runtime-corejs3" "^7.22.6"
 
 "@tootallnate/once@1":
   version "1.1.2"
