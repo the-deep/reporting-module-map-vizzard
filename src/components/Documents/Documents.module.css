@@ -1,0 +1,99 @@
+.container {
+    width: 100%;
+    position: absolute;
+    bottom: 27px;
+    z-index: 9999;
+}
+.documents {
+    box-shadow: none !important;
+    font-family: 'Barlow Condensed';
+    background-color: unset;
+}
+
+.documents div {
+    box-shadow: none !important;
+    min-height: 0px;
+}
+
+.documents th {
+    color: grey;
+    font-size: 9px !important;
+}
+
+.documents td,
+.documents th,
+.documents tbody {
+    font-family: 'Barlow Condensed';
+    padding: 2px;
+    font-size: 11px;
+    line-height: 1.15;
+    padding-left: 7px;
+    padding-right: 7px;
+    /* vertical-align: top; */
+}
+
+.divTitle {
+    margin: 0px;
+    font-size: 13px;
+    font-weight: bold;
+    padding-left: 7px;
+    padding-bottom: 2px;
+    position: absolute;
+    top: -3px;
+}
+
+.pagination,
+.pagination p,
+.pagination span,
+.pagination div {
+    font-family: 'Barlow Condensed' !important;
+    font-size: 11px;
+}
+
+.thumnbail {
+    max-height: 29px;
+    max-width: 29px;
+}
+
+.documents h1 {
+    top: -3px !important;
+    padding-bottom: 0px;
+    position: absolute;
+}
+
+@media only screen and (max-width: 600px) {
+    .hideMobile {
+        display: none !important;
+    }
+
+    .documents div {
+        height: 62px !important;
+        overflow: hidden !important;
+    }
+
+    .container {
+        bottom: 19px;
+
+    }
+
+    .documents td,
+    .documents th,
+    .documents tbody {
+        padding: 1px;
+        line-height: 0.4;
+        padding-left: 7px;
+        padding-right: 7px;
+        /* vertical-align: top; */
+    }
+
+    .documents th {
+        display: none;
+    }
+    .divTitle {
+        top: -20px !important;
+        padding-bottom: 0px;
+    }
+
+
+
+}

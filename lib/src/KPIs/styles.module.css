@@ -1,0 +1,93 @@
+.container {
+    background-color: aliceblue;
+    display: grid;
+    /* column-gap: 50px; */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    font-family: Roboto;
+}
+
+.item {
+    padding: 5px 10px;
+    line-height: 1.3;
+    border-right: 1px dotted #efefef;
+    position: relative;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.subtitle {
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.value {
+    font-weight: bold;
+    font-size: 31px;
+    line-height: 1;
+    padding-top: 0px;
+}
+
+.footerRow {
+    font-size: 10px;
+    opacity: 0.8;
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+}
+
+.source {
+    display: block;
+    text-align: right;
+    color: #666;
+}
+
+.source a {
+    text-decoration: none;
+    color: #666;
+}
+
+.source img {
+    width: 8px;
+    margin-right: 3px;
+    opacity: 0.3;
+}
+
+.source:hover a {
+    color: rgb(0, 0, 0);
+}
+
+.source:hover img {
+    opacity: 1;
+}
+
+.date {
+    display: block;
+    text-align: right;
+    color: #000;
+    font-weight: normal;
+}
+
+@media only screen and (max-width: 600px) {
+    .subtitle {
+      font-size: 11px !important;
+      white-space: nowrap;
+    }
+    .container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .value {
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 1;
+        padding-top: 0px;
+    }
+    .item {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        border-bottom: 0.5px solid #dddddd;
+        border-left: 0.5px solid #f5f5f5;
+    }
+  }

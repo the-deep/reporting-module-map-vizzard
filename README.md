@@ -1,36 +1,58 @@
+# DEEP Reporting Module Components
 
-# Reporting Module Map Vizzard
-
-Map vizzard component of the DEEP Reporting module allowing users to create and design interactive maps and present geographic data on a map for reporting purposes using proportional symbols and choropleth polygons. 
+Map vizzard component of the DEEP Reporting module allowing users to create and design interactive maps and present geographic data on a map for reporting purposes using proportional symbols and choropleth polygons.
 
 Built using JavaScript, React, OpenLayers and D3.js.
 
+## Getting Started
 
-## Installation
+Clone the repository
 
-Clone the GitHub repository
 ```bash
 git clone git@github.com:the-deep/reporting-module-map-vizzard.git
 ```
 
 Change into folder
+
 ```bash
 cd reporting-module-map-vizzard
 ```
 
-Install map vizzard dependencies with npm
+Install dependencies
+
 ```bash
-npm install
+yarn install
+```
+
+### Run linters
+
+For library:
+
+```bash
+cd lib
+yarn lint
+yarn css-lint
+yarn typecheck
+```
+
+For storybook:
+
+```bash
+yarn lint
+# or
+yarn lint:lenient
+```
+
+### Build and watch library
+
+```bash
+cd lib
+yarn watch
 ```
 
 ### Run storybook
-```bash
-npm run storybook
-```
 
-## Run linter
 ```bash
-npm run lint
-# Or
-npm run lint:lenient
+cd storybook
+yarn storybook
 ```
