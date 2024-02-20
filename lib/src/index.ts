@@ -9,8 +9,3 @@ export {
     default as Timeline,
     type Props as TimelineProps,
 } from './Timeline';
-
-export {
-    default as LineChart,
-    type Props as LineChartProps,
-} from './LineChart';
