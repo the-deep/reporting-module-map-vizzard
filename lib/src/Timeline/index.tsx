@@ -1,54 +1,70 @@
-import React, { useEffect } from 'react';
+import React, {
+    useRef,
+    useMemo,
+    useEffect,
+} from 'react';
 import { Timeline as TL } from '@knight-lab/timelinejs';
-import './Timeline.css';
 
-export interface Props {
-    data: {
-        Date: string;
-        Category: string;
-        Details: string;
-        Source: string;
-        Link: string;
-    }[],
+import styles from './styles.module.css';
+
+interface TimelineData {
+    date: string;
+    category: string;
+    title: string;
+    details: string;
+    source: string;
+    link: string;
 }
 
-function Timeline({ data }: Props) {
-    const timelineoptions = {
-    // initial_zoom: 2,
-        scale_factor: 1.4,
-        timenav_position: 'top',
-        height: '500',
-        width: '100%',
-        lang: 'en',
-        start_at_end: true,
-        font: 'Roboto Slab',
-    };
+const timelineOptions = {
+    scale_factor: 1.4,
+    timenav_position: 'top',
+    height: '500',
+    width: '100%',
+    lang: 'en',
+    start_at_end: true,
+    font: 'Roboto Slab',
+};
 
-    // eslint-disable-next-line
-    const evt = data.map((d:any) => (
-        {
-            start_date: new Date(d.Date),
-            display_date: (new Date(d.Date)).toDateString(),
-            group: d.Category,
-            text: {
-                headline: d['Main events'],
-                text: d.Details,
-            },
-        }
-    ));
+export interface Props {
+    data: TimelineData[],
+}
 
-    const events = { events: evt };
+function Timeline(props: Props) {
+    const { data } = props;
+
+    const dummyRef = useRef<HTMLDivElement>(null);
+
+    const finalEvents = useMemo(
+        () => data.map((datum) => (
+            {
+                start_date: new Date(datum.date),
+                display_date: (new Date(datum.date)).toDateString(),
+                group: datum.category,
+                text: {
+                    headline: datum.title,
+                    text: datum.details,
+                },
+            }
+        )),
+        [data],
+    );
 
     useEffect(() => {
-        new TL( // eslint-disable-line no-new
-            'timeline-embed',
-            events,
-            timelineoptions,
+        // eslint-disable-next-line no-new
+        new TL(
+            dummyRef.current,
+            { events: finalEvents },
+            timelineOptions,
         );
-    });
+    }, [finalEvents]);
 
     return (
-        <div id="timeline-embed" className="container" style={{ height: 500 }} />
+        <div
+            className={styles.myContainer}
+        >
+            <div ref={dummyRef} />
+        </div>
     );
 }
 

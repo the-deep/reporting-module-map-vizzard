@@ -3,9 +3,9 @@
 
 ## Changes
 
-* Detailed list or prose of changes
-* Breaking changes
-* Changes to configurations
+- Detailed list or prose of changes
+- Breaking changes
+- Changes to configurations
 
 ## This PR doesn't introduce any:
 

@@ -37,14 +37,7 @@
     "homepage": "https://github.com/the-deep/reporting-module-map-vizzard#readme",
     "dependencies": {
         "@babel/runtime-corejs3": "^7.22.3",
-        "@knight-lab/timelinejs": "^3.9.3",
-        "@rollup/plugin-image": "^3.0.3",
-        "d3-scale": "^4.0.2",
-        "d3-time": "^3.1.0",
-        "echarts": "^5.4.3",
-        "echarts-for-react": "^3.0.2",
-        "moment": "^2.30.1",
-        "recharts": "^2.10.3"
+        "@knight-lab/timelinejs": "^3.9.3"
     },
     "peerDependencies": {
         "react": "^18.2.0",
@@ -59,6 +52,7 @@
         "@rollup/plugin-babel": "^6.0.3",
         "@rollup/plugin-commonjs": "^25.0.2",
         "@rollup/plugin-eslint": "^9.0.4",
+        "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-node-resolve": "^15.1.0",
         "@types/jest": "^29.5.2",
         "@types/node": "^20.4.1",
