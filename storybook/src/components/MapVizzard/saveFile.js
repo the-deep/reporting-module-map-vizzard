@@ -1,5 +1,4 @@
 const saveFile = async (blob, suggestedName) => {
-  console.log('save');
   const supportsFileSystemAccess = 'showSaveFilePicker' in window && (() => {
     try {
       return window.self === window.top;

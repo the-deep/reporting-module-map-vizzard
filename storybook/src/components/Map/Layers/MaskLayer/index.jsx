@@ -4,7 +4,8 @@ import OLVectorLayer from 'ol/layer/Vector';
 import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
 import Cspline from 'ol-ext/render/Cspline'; // eslint-disable-line
-import filters from '../filters.module.css';
+
+import styles from './styles.module.css';
 
 function MaskLayer({
   map, id, polygon, source, blur, zIndex = 1, opacity = 1, smoothing,
@@ -23,7 +24,7 @@ function MaskLayer({
     const vectorLayer = new OLVectorLayer({
       source,
       style,
-      className: `${filters.blur} ${filters[`blur${blur}`]}`,
+      className: `${styles.blur} ${styles[`blur${blur}`]}`,
       id,
     });
 
@@ -48,7 +49,7 @@ function MaskLayer({
 
   useEffect(() => {
     if (!maskLayer) return;
-    maskLayer.set('className', `${filters.blur} ${filters[`blur${blur}`]}`);
+    maskLayer.set('className', `${styles.blur} ${styles[`blur${blur}`]}`);
   }, [maskLayer, blur]);
 
   // useEffect(() => {

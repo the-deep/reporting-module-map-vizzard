@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import {
   FormControl,
 } from '@mui/material';
-import ColorScale from './ColorScale';
+import ColorScale from '../../ColorScale';
 import styles from './MapOptions.module.css';
 
 const colorPalettes = [

@@ -9,9 +9,9 @@ import {
   DoubleClickZoom,
   defaults,
 } from 'ol/interaction';
-import styles from './Map.module.css';
+import styles from './styles.module.css';
 
-function OpenLayersMap({
+function OlMap({
   setMapObj,
   map,
   children,
@@ -350,4 +350,4 @@ function OpenLayersMap({
   );
 }
 
-export default OpenLayersMap;
+export default OlMap;

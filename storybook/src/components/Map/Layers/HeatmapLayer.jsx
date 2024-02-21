@@ -5,8 +5,7 @@ import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 import * as d3ColorScale from 'd3-scale-chromatic';
 import { scaleLog } from 'd3-scale';
-// import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
-import { vector } from '../Source';
+import { vector } from '../helpers';
 
 function HeatmapLayer({
   map,

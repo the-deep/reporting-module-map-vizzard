@@ -1,9 +1,13 @@
 import Map from '../components/Map';
-import mapConfig from './sudan.json';
+
+import defaultConfig from './default.json';
+import sudanMapConfig from './sudan.json';
+import ukraineMapConfig from './ukraine.json';
+import darfurMapConfig from './darfur.json';
 
 // Story Config
 export default {
-  title: 'Map Library/Map',
+  title: 'Map/Map',
   component: Map,
   tags: ['autodocs'],
   argTypes: {
@@ -20,20 +24,28 @@ export default {
 
 export const Default = {
   args: {
-    center: mapConfig.mapOptions.center,
-    zoom: mapConfig.mapOptions.zoom,
-    layers: mapConfig.layers,
-    fontStyle: mapConfig.mapOptions.fontStyle,
-    height: mapConfig.mapOptions.height,
-    width: mapConfig.mapOptions.width,
-    mainTitle: 'Main title',
-    subTitle: 'Sub-title',
-    showScale: mapConfig.mapOptions.showScale,
-    scaleUnits: mapConfig.mapOptions.scaleUnits,
-    scaleBar: mapConfig.mapOptions.scaleBar,
-    scaleBarPosition: mapConfig.mapOptions.scaleBarPosition,
-    enableMouseWheelZoom: mapConfig.mapOptions.enableMouseWheelZoom,
-    enableZoomControls: mapConfig.mapOptions.enableZoomControls,
-    zoomControlsPosition: mapConfig.mapOptions.zoomControlsPosition,
+    ...defaultConfig.mapOptions,
+    layers: defaultConfig.layers,
+  },
+};
+
+export const Sudan = {
+  args: {
+    ...sudanMapConfig.mapOptions,
+    layers: sudanMapConfig.layers,
+  },
+};
+
+export const Ukraine = {
+  args: {
+    ...ukraineMapConfig.mapOptions,
+    layers: ukraineMapConfig.layers,
+  },
+};
+
+export const Darfur = {
+  args: {
+    ...darfurMapConfig.mapOptions,
+    layers: darfurMapConfig.layers,
   },
 };

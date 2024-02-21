@@ -4,7 +4,7 @@ import {
   Style,
   Stroke,
 } from 'ol/style';
-import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
+import { rgba } from '../helpers';
 
 function LineLayer({
   map,

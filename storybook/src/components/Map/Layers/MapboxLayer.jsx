@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import TileLayer from 'ol/layer/Tile';
-import * as olSource from 'ol/source';
+import { XYZ } from 'ol/source';
 
 function MapboxLayer({
   map, zIndex = 1, opacity = 1, styleUrl, accessToken,
@@ -14,7 +14,7 @@ function MapboxLayer({
     styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
 
     const layer = new TileLayer({
-      source: new olSource.XYZ({
+      source: new XYZ({
         url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
         tileSize: 512,
         preload: 10,

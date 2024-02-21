@@ -157,10 +157,3 @@ function FontPicker({ style, updateFontStyle, variant }) {
 }
 
 export default FontPicker;
-
-export function rgba(rgb) {
-  if (rgb && typeof rgb !== 'undefined' && rgb.a >= 0) {
-    return `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`;
-  }
-  return null;
-}

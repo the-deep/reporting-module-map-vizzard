@@ -5,7 +5,7 @@ import grey from '@mui/material/colors/grey';
 import saveFile from './saveFile';
 import '../Map/ol.css';
 import styles from './MapOptions/MapOptions.module.css';
-import { rgba } from './MapOptions/ColorPicker';
+import { rgba } from '../Map/helpers';
 import Map from '../Map';
 import MapLayers from './MapLayers';
 import MapOptions from './MapOptions';
@@ -103,7 +103,6 @@ function MapVizzard({
             />
           </div>
         )}
-
         <div id="map_panel" className={`${styles.mapPanel}`} style={{ fontFamily: mapOptions.fontStyle.fontFamily, color: rgba(mapOptions.fontStyle.color) }}>
           <Map
             layers={layers}

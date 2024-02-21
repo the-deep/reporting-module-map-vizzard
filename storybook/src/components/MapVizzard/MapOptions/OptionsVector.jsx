@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import { ToggleButton, ToggleButtonGroup, FormControl } from '@mui/material';
 import FontPicker from './FontPicker';
 import ColorPicker from './ColorPicker';
-import ColorScale from './ColorScale';
+import ColorScale from '../../ColorScale';
 import styles from './MapOptions.module.css';
 import polygon from '../assets/polygon.svg';
 import nullType from '../assets/nullType.svg';

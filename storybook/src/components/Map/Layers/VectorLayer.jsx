@@ -9,7 +9,7 @@ import {
 import FillPattern from 'ol-ext/style/FillPattern';
 import * as d3 from 'd3';
 import * as d3ColorScale from 'd3-scale-chromatic';
-import { rgba } from '../../MapVizzard/MapOptions/ColorPicker';
+import { rgba } from '../helpers';
 
 function VectorLayer({
   map,

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import * as d3ColorScale from 'd3-scale-chromatic';
-import styles from './ColorScale.module.css';
+
+import styles from './styles.module.css';
 
 function ColorScale({
   steps = 12,

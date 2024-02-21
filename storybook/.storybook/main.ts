@@ -19,7 +19,7 @@ const config: StorybookConfig = {
     },
   },
   webpackFinal: async (config) => {
-    const eslintConfigPath = path.join(process.cwd(), '.eslintrc-lenient.json');
+    const eslintConfigPath = path.join(process.cwd(), '.eslintrc.json');
     const parentNodeModules = path.join(process.cwd(), '../node_modules');
     const reportingModuleDeps = path.join(parentNodeModules, '@the-deep/reporting-module');
     // NOTE: get old eslint
