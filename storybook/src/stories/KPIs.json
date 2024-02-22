@@ -1,16 +1,49 @@
 [
     {
         "title": "Total IDPs",
+        "titleStyle": {
+            "fontSize": 60,
+            "fontFamily": "Segoe UI",
+            "fontWeight": 600,
+            "textAlign": "START",
+            "color": "#6e6693"
+        },
         "subtitle": "Estimated",
+        "subtitleStyle": {
+            "fontSize": 20,
+            "fontFamily": "Nunito Sans",
+            "fontWeight": 300,
+            "textAlign": "left",
+            "color": "#000000"
+        },
         "source": "IOM",
+        "url": "https://www.iom.int/",
         "date": "2023-05-25",
-        "backgroundColor": "#43386b",
-        "color": "#FFF",
-        "value": "5.1m"
+        "value": "5.1m",
+        "valueStyle": {
+            "textAlign": "left",
+            "color": "#59546f",
+            "fontSize": 50,
+            "fontWeight": 600
+        }
     },
     {
         "title": "Total Returnees",
+        "titleStyle": {
+            "fontSize": 60,
+            "fontFamily": "Segoe UI",
+            "fontWeight": 500,
+            "textAlign": "START",
+            "color": "#6e6693"
+        },
         "subtitle": "Estimated",
+        "subtitleStyle": {
+            "fontSize": 15,
+            "fontFamily": "Nunito Sans",
+            "fontWeight": 300,
+            "textAlign": "START",
+            "color": "#000000"
+        },
         "source": "IOM",
         "date": "2023-05-25",
         "backgroundColor": "#0273b5",

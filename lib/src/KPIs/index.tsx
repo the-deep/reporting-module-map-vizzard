@@ -1,24 +1,23 @@
 import React from 'react';
 
+import { IoOpenOutline } from 'react-icons/io5';
 import styles from './styles.module.css';
-import externalLink from './external-link.svg';
 
 interface KpiData {
     title: string;
+    titleStyle: React.CSSProperties;
     subtitle: string;
-    value: React.ReactNode;
+    subtitleStyle: React.CSSProperties;
+    value: number;
+    valueStyle: React.CSSProperties;
     date: string;
     source: string;
-    backgroundColor: string;
-    color: string;
-    primaryColor: string;
     url: string;
+    sourceStyle: React.CSSProperties;
 }
 
 export interface Props {
     data: KpiData[],
-    isMobile: boolean,
-    leftBorder: boolean
 }
 
 // FIXME: Is this the correct way to get Kpi key?
@@ -29,79 +28,53 @@ function getKey(item: KpiData) {
 function KPIs(props: Props) {
     const {
         data,
-        isMobile,
-        leftBorder,
     } = props;
 
-    const borderWidth = leftBorder === true
-        ? 3
-        : 0;
-    const cols = isMobile
-        ? data.length / 2
-        : data.length;
-
     return (
-        <div
-            className={styles.container}
-            style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-        >
+        <div className={styles.container}>
             {data.map((kpi) => (
                 <div
                     className={styles.item}
                     key={getKey(kpi)}
-                    style={{
-                        backgroundColor: kpi.backgroundColor,
-                        color: kpi.color,
-                    }}
                 >
-                    <div
-                        style={{
-                            borderLeft: `${borderWidth}px solid ${kpi.primaryColor}`,
-                            display: 'inline-block',
-                            width: 4,
-                            height: '95%',
-                            left: 0,
-                            top: 2,
-                            position: 'absolute',
-                        }}
-                    />
-                    <div className={styles.title}>
-                        {kpi.title}
-                    </div>
-                    <div className={styles.subtitle}>
-                        {kpi.subtitle}
-                    </div>
-                    <div
-                        className={styles.value}
-                        style={{ color: kpi.primaryColor }}
-                    >
-                        {kpi.value}
-                    </div>
-                    <div className={styles.footerRow}>
+                    <div className={styles.heading}>
                         <div
-                            className={styles.date}
-                            style={{
-                                color: kpi.color,
-                            }}
+                            style={kpi.titleStyle}
                         >
-                            {kpi.date}
+                            {kpi.title}
                         </div>
-                        <div className={styles.source}>
-                            <a
-                                href={kpi.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                style={{
-                                    color: kpi.color,
-                                }}
+                        <div
+                            style={kpi.subtitleStyle}
+                        >
+                            {kpi.subtitle}
+                        </div>
+                    </div>
+
+                    <div className={styles.value}>
+                        {kpi.value !== 0 && (
+                            <div
+                                style={kpi.valueStyle}
                             >
-                                <img
-                                    className="kpi_external_link"
-                                    src={externalLink}
-                                    alt="Link to data souce"
-                                />
-                                {kpi.source}
-                            </a>
+                                {kpi.value}
+                            </div>
+                        )}
+                        <div className={styles.right}>
+                            <div className={styles.date}>
+                                {kpi.date}
+                            </div>
+
+                            {kpi.url !== undefined && (
+                                <a
+                                    style={kpi.sourceStyle}
+                                    className={styles.link}
+                                    href={kpi.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <IoOpenOutline />
+                                    {kpi.source}
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
