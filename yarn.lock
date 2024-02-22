@@ -3846,14 +3846,6 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@the-deep/reporting-module-components@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@the-deep/reporting-module-components/-/reporting-module-components-1.0.0.tgz#b40f7e09e1189f9666bd29376686a5ace2b030eb"
-  integrity sha512-YsghoJ2XxjNzlbuEpChg2yvA7r20RjclsDxrTFXQTtFHkL873oZhr8F/Z3SBEk/6pcKed3U8x91MRdHxCKo4yA==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.22.3"
-    "@knight-lab/timelinejs" "^3.9.3"
-
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
