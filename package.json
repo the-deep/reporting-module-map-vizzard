@@ -3,5 +3,8 @@
     "workspaces": [
         "lib",
         "storybook"
+    ],
+    "nohoist": [
+        "**"
     ]
 }
