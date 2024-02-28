@@ -4,15 +4,15 @@ import { IoOpenOutline } from 'react-icons/io5';
 import styles from './styles.module.css';
 
 interface KpiData {
-    title: string;
+    title?: string;
     titleStyle: React.CSSProperties;
-    subtitle: string;
+    subtitle?: string;
     subtitleStyle: React.CSSProperties;
-    value: number;
+    value?: number;
     valueStyle: React.CSSProperties;
-    date: string;
-    source: string;
-    url: string;
+    date?: string;
+    source?: string;
+    url?: string;
     sourceStyle: React.CSSProperties;
 }
 
