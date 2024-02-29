@@ -3,12 +3,12 @@ import './styles.css';
 export {
     default as KPIs,
     type Props as KPIsProps,
-} from './KPIs';
+} from './components/KPIs';
 
 export {
     default as Timeline,
     type Props as TimelineProps,
-} from './Timeline';
+} from './components/Timeline';
 
 export {
     default as NumericBarChart,
