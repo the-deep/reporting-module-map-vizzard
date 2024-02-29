@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import * as ol from 'ol';
+import { useRef, useEffect, useState } from 'react';
+import { View, Map } from 'ol';
 import TileLayer from 'ol/layer/Tile';
-import * as olSource from 'ol/source';
+import { XYZ } from 'ol/source';
 import { OverviewMap, ScaleLine, Zoom } from 'ol/control';
 import {
   MouseWheelZoom,
@@ -53,7 +53,7 @@ function OlMap({
   // on component mount
   useEffect(() => {
     const options = {
-      view: new ol.View({
+      view: new View({
         zoom,
         center,
         minZoom,
@@ -67,7 +67,7 @@ function OlMap({
       }),
     };
 
-    const mapObject = new ol.Map(options);
+    const mapObject = new Map(options);
 
     mapObject.getControls().forEach((control) => {
       if (control instanceof ScaleLine) {
@@ -148,7 +148,7 @@ function OlMap({
       styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
 
       const layer = new TileLayer({
-        source: new olSource.XYZ({
+        source: new XYZ({
           url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
           tileSize: 512,
           preload: 10,
@@ -227,7 +227,7 @@ function OlMap({
       styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
 
       const layer = new TileLayer({
-        source: new olSource.XYZ({
+        source: new XYZ({
           url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
           tileSize: 512,
           preload: 10,

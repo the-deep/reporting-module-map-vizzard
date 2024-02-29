@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import * as d3 from 'd3';
+import { useEffect, useMemo } from 'react';
+import { max as d3max, min as d3min } from 'd3';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
@@ -128,11 +128,11 @@ function OptionsSymbol({ layer, activeLayer, updateLayer }) {
     let max;
     let min;
     if (!Array.isArray(layer.data)) {
-      max = d3.max(layer.data.features, (d) => d.properties[layer.scaleColumn]);
-      min = d3.min(layer.data.features, (d) => d.properties[layer.scaleColumn]);
+      max = d3max(layer.data.features, (d) => d.properties[layer.scaleColumn]);
+      min = d3min(layer.data.features, (d) => d.properties[layer.scaleColumn]);
     } else {
-      max = d3.max(layer.data, (d) => d[layer.scaleColumn]);
-      min = d3.min(layer.data, (d) => d[layer.scaleColumn]);
+      max = d3max(layer.data, (d) => d[layer.scaleColumn]);
+      min = d3min(layer.data, (d) => d[layer.scaleColumn]);
     }
 
     // automatic min/max data extent. TODO make option to override automatically calucated values

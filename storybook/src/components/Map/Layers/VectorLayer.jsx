@@ -7,7 +7,7 @@ import {
   Text,
 } from 'ol/style';
 import FillPattern from 'ol-ext/style/FillPattern';
-import * as d3 from 'd3';
+import { scalePow, scaleLinear } from 'd3';
 import * as d3ColorScale from 'd3-scale-chromatic';
 import { rgba } from '../helpers';
 
@@ -104,12 +104,11 @@ function VectorLayer({
       );
     }
 
-    const colorsArrayPow = d3.scalePow()
+    const colorsArrayPow = scalePow()
       .exponent(fillPow)
       .domain([0, numSteps]);
 
-    const colorScale = d3
-      .scaleLinear()
+    const colorScale = scaleLinear()
       .range([0, numSteps])
       .domain([style.fillDataMin, style.fillDataMax]);
 

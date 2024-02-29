@@ -3,7 +3,9 @@ import { Style, Fill } from 'ol/style';
 import OLVectorLayer from 'ol/layer/Vector';
 import WKT from 'ol/format/WKT';
 import Feature from 'ol/Feature';
-import Cspline from 'ol-ext/render/Cspline'; // eslint-disable-line
+// NOTE: We need to include this so that certain features are available
+// eslint-disable-next-line no-unused-vars
+import Cspline from 'ol-ext/render/Cspline';
 
 import styles from './styles.module.css';
 

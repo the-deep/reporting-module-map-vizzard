@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import * as d3 from 'd3';
+import { d3max, d3min } from 'd3';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import Select from '@mui/material/Select';
@@ -92,8 +92,8 @@ function OptionsVector({ layer, activeLayer, updateLayer }) {
   };
 
   useEffect(() => {
-    const max = d3.max(layer.data.features, (d) => d.properties[layer.style.fillColumn]);
-    const min = d3.min(layer.data.features, (d) => d.properties[layer.style.fillColumn]);
+    const max = d3max(layer.data.features, (d) => d.properties[layer.style.fillColumn]);
+    const min = d3min(layer.data.features, (d) => d.properties[layer.style.fillColumn]);
     // automatic min/max data extent. TODO make option to override automatically calucated values
     updateStyle('fillDataMin', min);
     updateStyle('fillDataMax', max);

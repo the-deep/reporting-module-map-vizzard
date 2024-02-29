@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { scalePow } from 'd3';
 import * as d3ColorScale from 'd3-scale-chromatic';
 
 import styles from './styles.module.css';
@@ -28,7 +28,7 @@ function ColorScale({
 
   if (inverted) colorsArray = [...colorsArray].reverse();
 
-  const colorsArrayPow = d3.scalePow()
+  const colorsArrayPow = scalePow()
     .exponent(fillPow)
     .domain([0, numSteps]);
 

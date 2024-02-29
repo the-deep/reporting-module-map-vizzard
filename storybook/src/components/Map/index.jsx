@@ -1,4 +1,4 @@
-import React, {
+import {
   useId,
   useState,
   useEffect,
@@ -9,9 +9,9 @@ import { fromLonLat, get } from 'ol/proj';
 import Button from '@mui/material/Button';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
-import * as d3 from 'd3';
+import { d3max } from 'd3';
 import GeoJSON from 'ol/format/GeoJSON';
-import * as htmlToImage from 'html-to-image';
+import { toPng } from 'html-to-image';
 import { saveAs } from 'file-saver';
 import { breaks } from 'statsbreaks';
 
@@ -170,7 +170,7 @@ function Map({
     // }
 
     function printPNG() {
-      htmlToImage.toPng(element, {
+      toPng(element, {
         quality: 1,
         // preferredFontFormat: 'embedded-opentype',
         cacheBust: false,
@@ -407,7 +407,7 @@ function Map({
             if (d.scaleScaling === 'flannery') {
               exp = 0.5716;
             }
-            const maxRadius = ((d3.max(buckets) / d.scaleDataMax) / 3.14) ** exp * (10 * d.scale);
+            const maxRadius = ((d3max(buckets) / d.scaleDataMax) / 3.14) ** exp * (10 * d.scale);
             if ((d.scale < 3)) {
               buckets.splice(1, 1);
               if (buckets.length > 2) {
