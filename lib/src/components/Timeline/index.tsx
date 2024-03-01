@@ -9,11 +9,11 @@ import styles from './styles.module.css';
 
 interface TimelineData {
     date: string;
-    category: string;
     title: string;
-    details: string;
-    source: string;
-    link: string;
+    category?: string | undefined;
+    details?: string | undefined;
+    source?: string | undefined;
+    link?: string | undefined;
 }
 
 const timelineOptions = {
