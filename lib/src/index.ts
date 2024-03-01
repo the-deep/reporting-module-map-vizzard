@@ -1,6 +1,11 @@
 import './styles.css';
 
 export {
+    default as ColorScale,
+    type Props as ColorScaleProps,
+} from './components/ColorScale';
+
+export {
     default as KPIs,
     type Props as KPIsProps,
 } from './components/KPIs';
