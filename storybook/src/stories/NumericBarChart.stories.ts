@@ -44,16 +44,49 @@ type Story = StoryObj<BarChartPropsForStory>;
 
 export const Simple: Story = {
   args: {
+    title: {
+      children: 'Numeric Bar Chart',
+      style: { textAlign: 'right' },
+    },
+    subTitle: {
+      children: 'A numeric bar chart or bar graph is a chart or graph that presents numeric data with rectangular bars with heights or lengths proportional to the values that they represent. The bars can be plotted vertically or horizontally. A vertical bar chart is sometimes called a column chart.',
+      style: {
+        textAlign: 'right',
+        color: 'tomato',
+      },
+    },
     data: chartData,
-    keySelector: ({ id }) => id,
-    xValueSelector: ({ x }) => x,
-    yValueSelector: ({ y, z }) => [
-      { key: 'y1', value: y },
-      { key: 'y2', value: z },
-      { key: 'y3', value: y + z },
-    ],
+    chartOptions: {
+      keySelector: ({ id }) => id,
+      xValueSelector: ({ x }) => x,
+      yValueSelector: ({ y, z }) => [
+        { key: 'y1', value: y },
+        { key: 'y2', value: z },
+        { key: 'y3', value: y + z },
+      ],
+      yValueStartsFromZero: true,
+      xAxisHeight: 56,
+    },
     yValueKeys: ['y1', 'y2', 'y3'],
     colorSelector: (key) => colorMap[key],
-    yValueStartsFromZero: true,
+    chartAxesOptions: {
+      yAxisLabel: {
+        children: 'Hello this is y-axis label',
+        style: {
+          fontFamily: 'sans-serif',
+          fontSize: 18,
+        },
+      },
+      xAxisLabel: {
+        children: 'And this is x-axis label',
+      },
+      xAxisLineStyle: {
+        stroke: 'teal',
+        strokeWidth: '2pt',
+      },
+      xAxisGridLineStyle: {
+        stroke: 'lightgray',
+      },
+    },
   },
 };

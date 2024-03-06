@@ -50,9 +50,12 @@
 
     .x-axis-grid-line,
     .y-axis-grid-line {
+        stroke-width: 1pt;
+        /*
         stroke: var(--drm-color-gray);
         stroke-dasharray: 4 4;
         stroke-opacity: 0.5;
+        */
 
         &.hovered {
             stroke-opacity: 1;

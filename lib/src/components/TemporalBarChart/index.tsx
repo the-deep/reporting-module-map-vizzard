@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { _cs, listToMap } from '@togglecorp/fujs';
+import { listToMap } from '@togglecorp/fujs';
 
 import useTemporalChartData, { type Options } from '../../hooks/useTemporalChartData';
 import { extractProps, type CombinedProps } from '../../utils/chart';
@@ -7,7 +7,7 @@ import { extractProps, type CombinedProps } from '../../utils/chart';
 import BarList from '../BarList';
 import ChartAxes from '../ChartAxes';
 
-import styles from './styles.module.css';
+import BarChartContainer from '../BarChartContainer';
 
 export type Props<DATUM, KEY extends string | number> = CombinedProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
 
@@ -15,8 +15,8 @@ function TemporalBarChart<DATUM, KEY extends string | number>(
     props: Props<DATUM, KEY>,
 ) {
     const {
+        containerProps,
         commonProps: {
-            className,
             data,
             yValueKeys,
             colorSelector,
@@ -51,25 +51,24 @@ function TemporalBarChart<DATUM, KEY extends string | number>(
         / chartData.chartTemporalDiff[chartData.temporalResolution];
 
     return (
-        <div
-            className={_cs(styles.barChart, className)}
-            ref={chartContainerRef}
+        <BarChartContainer
+            containerRef={chartContainerRef}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...containerProps}
         >
-            <svg className={styles.svg}>
-                <ChartAxes
-                    chartData={chartData}
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...chartAxesProps}
-                />
-                <BarList
-                    chartData={chartData}
-                    xTickWidth={xTickWidth}
-                    colorMap={colorMap}
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...barGroupProps}
-                />
-            </svg>
-        </div>
+            <ChartAxes
+                chartData={chartData}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...chartAxesProps}
+            />
+            <BarList
+                chartData={chartData}
+                xTickWidth={xTickWidth}
+                colorMap={colorMap}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...barGroupProps}
+            />
+        </BarChartContainer>
     );
 }
 

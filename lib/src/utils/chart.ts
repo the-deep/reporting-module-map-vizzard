@@ -14,6 +14,10 @@ import {
     type UnsafeNumberList,
 } from './common';
 
+import type { Props as BarChartContainerProps } from '../components/BarChartContainer';
+import type { Props as BarListProps } from '../components/BarList';
+import type { Props as ChartAxesProps } from '../components/ChartAxes';
+
 export type ChartScale = 'linear' | 'exponential' | 'log10' | 'sqrt' | 'cbrt';
 
 export type ChartGroupingMode = 'sum' | 'none';
@@ -575,8 +579,7 @@ export function getTemporalDiff(min: DateLike, max: DateLike) {
     };
 }
 
-type CommonChartProps<DATUM, KEY> = {
-    className?: string;
+type CommonChartProps<DATUM, KEY> = BarChartContainerProps & {
     data: DATUM[] | undefined | null;
     yValueKeys: KEY[];
     colorSelector: (yKey: KEY) => string;
@@ -588,16 +591,9 @@ export type CombinedProps<
     KEY extends string | number,
     ChartOptions,
 > = ChartOptions & CommonChartProps<DATUM, KEY> & {
-    data: DATUM[];
-    className?: string;
-
-    xAxisLabel?: React.ReactNode;
-    yAxisLabel?: React.ReactNode;
-
-    barGroupMargin?: number;
-    barGroupGap?: number;
-
-    yValueKeys: KEY[];
+    chartAxesOptions: Omit<ChartAxesProps, 'chartData' | 'tooltipSelector' | 'onHover' | 'onClick'>
+    barListOptions: Omit<BarListProps<KEY>, 'chartData' | 'yValueKeys' | 'colorMap' | 'groupingMode' | 'xTickWidth'>
+    chartOptions: ChartOptions;
 }
 
 const groupingModeMapping: Record<BarGroupingMode, ChartGroupingMode> = {
@@ -614,37 +610,37 @@ export function extractProps<DATUM, KEY extends string | number, ChartOptions>(
         yValueKeys,
         colorSelector,
 
-        xAxisLabel,
-        yAxisLabel,
+        chartAxesOptions,
+        barListOptions,
+        chartOptions,
 
-        barGroupGap,
-        barGroupMargin,
         groupingMode = 'side-by-side',
 
-        ...chartDataProps
+        ...chartContainerProps
     } = combinedProps;
 
     return {
         commonProps: {
             data,
-            className,
             yValueKeys,
             colorSelector,
         },
+        containerProps: {
+            ...chartContainerProps,
+            className,
+        },
         chartAxesProps: {
-            xAxisLabel,
-            yAxisLabel,
+            ...chartAxesOptions,
         },
         barListProps: {
-            barGroupMargin,
-            barGroupGap,
+            ...barListOptions,
             yValueKeys,
             groupingMode,
         },
         chartDataProps: {
             yValueKeys,
             groupingMode: groupingModeMapping[groupingMode],
-            ...chartDataProps,
+            ...chartOptions,
         },
     };
 }

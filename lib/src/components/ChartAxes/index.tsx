@@ -1,9 +1,12 @@
+/* eslint-disable react/require-default-props */
 import React, {
     Fragment,
     useCallback,
     useRef,
 } from 'react';
-import { isDefined } from '@togglecorp/fujs';
+import { _cs, isDefined } from '@togglecorp/fujs';
+
+import TextNode, { Props as DefaultTextNodeProps } from '../TextNode';
 
 import {
     type Rect,
@@ -11,6 +14,8 @@ import {
 } from '../../utils/chart';
 
 import styles from './styles.module.css';
+
+type AxisLabelProps = Omit<DefaultTextNodeProps, 'as'>;
 
 type Key = string | number;
 
@@ -36,16 +41,17 @@ export interface Props {
         xAxisHeight: number;
         yAxisWidth: number;
     }
-    // eslint-disable-next-line react/require-default-props
     tooltipSelector?: (key: Key, i: number) => React.ReactNode;
-    // eslint-disable-next-line react/require-default-props
     onHover?: (key: Key | undefined, i: number | undefined) => void;
-    // eslint-disable-next-line react/require-default-props
     onClick?: (key: Key, i: number) => void;
-    // eslint-disable-next-line react/require-default-props
-    yAxisLabel?: React.ReactNode;
-    // eslint-disable-next-line react/require-default-props
-    xAxisLabel?: React.ReactNode;
+    yAxisLabel?: AxisLabelProps & { width?: number };
+    xAxisLabel?: AxisLabelProps & { height?: number };
+
+    xAxisGridLineStyle?: React.CSSProperties;
+    yAxisGridLineStyle?: React.CSSProperties;
+
+    xAxisLineStyle?: React.CSSProperties;
+    yAxisLineStyle?: React.CSSProperties;
 }
 
 function ChartAxes(props: Props) {
@@ -65,6 +71,10 @@ function ChartAxes(props: Props) {
         onClick,
         yAxisLabel,
         xAxisLabel,
+        xAxisGridLineStyle,
+        yAxisGridLineStyle,
+        xAxisLineStyle,
+        yAxisLineStyle,
     } = props;
 
     const hoverOutTimeoutRef = useRef<number | undefined>();
@@ -120,9 +130,8 @@ function ChartAxes(props: Props) {
 
     const xAxisDiff = dataAreaSize.width / xAxisTicks.length;
 
-    // TODO: make it dynamic maybe?
-    const yAxisLabelWidth = 20;
-    const xAxisLabelHeight = 20;
+    const yAxisLabelWidth = yAxisLabel?.width ?? 20;
+    const xAxisLabelHeight = xAxisLabel?.height ?? 20;
 
     const yAxisAreaX1 = chartMargin.left;
     const yAxisAreaX2 = chartMargin.left + yAxisWidth;
@@ -146,21 +155,36 @@ function ChartAxes(props: Props) {
                     className={styles.yAxisLabelContainer}
                     style={{ transformOrigin: `0 ${chartSize.height - yAxisLabelWidth}px` }}
                 >
-                    <div className={styles.yAxisLabel}>
-                        {yAxisLabel}
-                    </div>
+                    <TextNode
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                        {...yAxisLabel}
+                        className={_cs(styles.yAxisLabel, yAxisLabel.className)}
+                    />
                 </foreignObject>
             )}
             <g>
-                {yAxisTicks.map((pointData) => (
+                {yAxisTicks.map((pointData, i) => (
                     <Fragment key={pointData.y}>
-                        <line
-                            className={styles.xAxisGridLine}
-                            x1={yAxisAreaX2}
-                            y1={pointData.y}
-                            x2={chartAreaX2}
-                            y2={pointData.y}
-                        />
+                        {i === 0 && xAxisLineStyle && (
+                            <line
+                                className={styles.xAxisGridLine}
+                                style={xAxisLineStyle}
+                                x1={yAxisAreaX2}
+                                y1={pointData.y}
+                                x2={chartAreaX2}
+                                y2={pointData.y}
+                            />
+                        )}
+                        {i !== 0 && xAxisGridLineStyle && (
+                            <line
+                                className={styles.xAxisGridLine}
+                                style={xAxisGridLineStyle}
+                                x1={yAxisAreaX2}
+                                y1={pointData.y}
+                                x2={chartAreaX2}
+                                y2={pointData.y}
+                            />
+                        )}
                         <foreignObject
                             x={yAxisAreaX1}
                             y={pointData.y - yAxisTickHeight / 2}
@@ -195,13 +219,26 @@ function ChartAxes(props: Props) {
 
                     return (
                         <Fragment key={tick.x}>
-                            <line
-                                className={styles.yAxisGridLine}
-                                x1={x}
-                                y1={chartAreaY1}
-                                x2={x}
-                                y2={xAxisAreaY1}
-                            />
+                            {i === 0 && yAxisLineStyle && (
+                                <line
+                                    className={styles.yAxisGridLine}
+                                    style={yAxisLineStyle}
+                                    x1={x}
+                                    y1={chartAreaY1}
+                                    x2={x}
+                                    y2={xAxisAreaY1}
+                                />
+                            )}
+                            {i !== 0 && yAxisGridLineStyle && (
+                                <line
+                                    className={styles.yAxisGridLine}
+                                    style={yAxisGridLineStyle}
+                                    x1={x}
+                                    y1={chartAreaY1}
+                                    x2={x}
+                                    y2={xAxisAreaY1}
+                                />
+                            )}
                             <foreignObject
                                 className={styles.xAxisTick}
                                 x={xTickLabelX1}
@@ -244,14 +281,16 @@ function ChartAxes(props: Props) {
             {isDefined(xAxisLabel) && (
                 <foreignObject
                     x={dataAreaOffset.left}
-                    y={chartSize.height - yAxisLabelWidth}
+                    y={chartSize.height - xAxisLabelHeight - dataAreaOffset.top}
                     width={dataAreaSize.width}
                     height={xAxisLabelHeight}
                     className={styles.xAxisLabelContainer}
                 >
-                    <div className={styles.xAxisLabel}>
-                        {xAxisLabel}
-                    </div>
+                    <TextNode
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                        {...xAxisLabel}
+                        className={_cs(styles.xAxisLabel, xAxisLabel.className)}
+                    />
                 </foreignObject>
             )}
         </g>

@@ -45,15 +45,17 @@ type Story = StoryObj<BarChartPropsForStory>;
 export const Simple: Story = {
   args: {
     data: chartData,
-    keySelector: ({ id }) => id,
-    xValueSelector: ({ x }) => x,
-    yValueSelector: ({ y, z }) => [
-      { key: 'y1', value: y },
-      { key: 'y2', value: z },
-      { key: 'y3', value: y + z },
-    ],
+    chartOptions: {
+      keySelector: ({ id }) => id,
+      xValueSelector: ({ x }) => x,
+      yValueSelector: ({ y, z }) => [
+        { key: 'y1', value: y },
+        { key: 'y2', value: z },
+        { key: 'y3', value: y + z },
+      ],
+      yValueStartsFromZero: true,
+    },
     yValueKeys: ['y1', 'y2', 'y3'],
     colorSelector: (key) => colorMap[key],
-    yValueStartsFromZero: true,
   },
 };

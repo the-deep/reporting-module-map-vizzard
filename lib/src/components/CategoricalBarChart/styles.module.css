@@ -1,9 +1,0 @@
-.bar-chart {
-    height: 20rem;
-    position: relative;
-
-    .svg {
-        width: 100%;
-        height: 100%;
-    }
-}
