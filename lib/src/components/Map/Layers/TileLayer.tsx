@@ -1,35 +1,62 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { isNotDefined } from '@togglecorp/fujs';
+import { Map as MapFromLib } from 'ol';
 import OLTileLayer from 'ol/layer/Tile';
+import TileSource from 'ol/source/Tile';
 
-function TileLayer({
-    map, source, zIndex = 0, opacity = 1,
-}) {
-    const [tileLayer, setTileLayer] = useState(undefined);
+import { OsmBackgroundLayer } from '../index';
+
+interface Props extends Pick<OsmBackgroundLayer, 'zIndex' | 'opacity'> {
+    map: MapFromLib | undefined;
+    source: TileSource;
+}
+function TileLayer(props: Props) {
+    const {
+        map,
+        source,
+        zIndex = 1,
+        opacity = 1,
+    } = props;
+
+    const configRef = useRef({
+        zIndex,
+        opacity,
+    });
+
+    const tileLayer = useMemo(
+        () => (
+            new OLTileLayer({
+                source,
+                zIndex: configRef.current.zIndex,
+                opacity: configRef.current.opacity,
+            })
+        ),
+        [source],
+    );
 
     useEffect(() => {
-        if (!map) return undefined;
+        const currentMap = map;
+        const addedLayer = tileLayer;
 
-        const tileRasterLayer = new OLTileLayer({
-            source,
-            zIndex,
-        });
-        map.addLayer(tileRasterLayer);
-        tileRasterLayer.setZIndex(zIndex);
-        tileRasterLayer.setOpacity(opacity);
+        if (isNotDefined(currentMap) || isNotDefined(addedLayer)) {
+            return undefined;
+        }
 
-        setTileLayer(tileRasterLayer);
+        currentMap.addLayer(addedLayer);
 
         return () => {
-            if (map) {
-                map.removeLayer(tileRasterLayer);
-            }
+            currentMap.removeLayer(addedLayer);
         };
-    }, [map, JSON.stringify(source.urls)]);
+    }, [map, tileLayer]);
 
     useEffect(() => {
-        if (!tileLayer) return;
+        if (isNotDefined(tileLayer)) {
+            return;
+        }
+
         tileLayer.setOpacity(opacity);
-    }, [opacity]);
+        tileLayer.setZIndex(zIndex);
+    }, [tileLayer, opacity, zIndex]);
 
     return null;
 }

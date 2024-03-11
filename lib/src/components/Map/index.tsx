@@ -22,7 +22,6 @@ import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
 
 import './ol.css';
-import styles from './styles.module.css';
 import {
     osm,
     vector,
@@ -40,6 +39,7 @@ import HeatmapLayer from './Layers/HeatmapLayer';
 import HexbinLayer from './Layers/HexbinLayer';
 import OlMap from './OlMap';
 import ColorScale from '../ColorScale';
+import styles from './styles.module.css';
 
 // FIXME: may need to update rollup configuration to include files
 import cdcf from './assets/logos/cdcf.jpg';
@@ -140,7 +140,8 @@ interface ShadedMaskLayer {
         strokeWidth: number;
     };
 }
-interface OsmBackgroundLayer {
+
+export interface OsmBackgroundLayer {
     id: number;
     name: string;
     opacity: number;
@@ -148,7 +149,8 @@ interface OsmBackgroundLayer {
     visible: number;
     zIndex: number;
 }
-interface MapboxLayer {
+
+export interface MapboxLayer {
     accessToken: string; // FIXME: Not sure if we need to pass this
     id: number;
     name: string;

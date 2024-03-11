@@ -1,49 +1,70 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
+import { isNotDefined } from '@togglecorp/fujs';
+import { Map as MapFromLib } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { XYZ } from 'ol/source';
 
-function MapboxLayer({
-    map, zIndex = 1, opacity = 1, styleUrl, accessToken,
-}) {
-    const [mapboxLayer, setMapboxLayer] = useState(undefined);
+import { MapboxLayer } from '../index';
+
+interface Props extends Pick<MapboxLayer, 'zIndex' | 'opacity' | 'accessToken'> {
+    map: MapFromLib | undefined;
+    styleUrl: string;
+}
+
+function MapboxLayer(props: Props) {
+    const {
+        map,
+        zIndex = 1,
+        opacity = 1,
+        styleUrl,
+        accessToken,
+    } = props;
+
+    const configRef = useRef({
+        zIndex,
+        opacity,
+    });
+
+    const mapboxLayer = useMemo(
+        () => {
+            let styleUrlParsed = styleUrl.replace('mapbox://', '');
+            styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
+
+            return new TileLayer({
+                source: new XYZ({
+                    url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
+                    tileSize: 512,
+                    // preload: 10,
+                    crossOrigin: 'anonymous',
+                }),
+                zIndex: configRef.current.zIndex,
+                opacity: configRef.current.opacity,
+            });
+        },
+        [styleUrl, accessToken],
+    );
 
     useEffect(() => {
-        if (!map) return undefined;
+        const currentMap = map;
+        const addedLayer = mapboxLayer;
 
-        let styleUrlParsed = styleUrl.replace('mapbox://', '');
-        styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
+        if (isNotDefined(currentMap) || isNotDefined(addedLayer)) {
+            return undefined;
+        }
 
-        const layer = new TileLayer({
-            source: new XYZ({
-                url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
-                tileSize: 512,
-                preload: 10,
-                crossOrigin: 'anonymous',
-            }),
-        });
-
-        map.addLayer(layer);
-        layer.setZIndex(zIndex);
-        layer.setOpacity(opacity);
-
-        setMapboxLayer(layer);
+        currentMap.addLayer(addedLayer);
 
         return () => {
-            if (map) {
-                map.removeLayer(layer);
-            }
+            currentMap.removeLayer(addedLayer);
         };
-    }, [map, styleUrl, accessToken]);
+    }, [map, styleUrl, accessToken, mapboxLayer]);
 
     useEffect(() => {
         if (!mapboxLayer) return;
+
         mapboxLayer.setOpacity(opacity);
-    }, [mapboxLayer, opacity]);
-
-    useEffect(() => {
-        if (!mapboxLayer) return;
         mapboxLayer.setZIndex(zIndex);
-    }, [mapboxLayer, zIndex]);
+    }, [mapboxLayer, opacity, zIndex]);
 
     return null;
 }
