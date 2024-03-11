@@ -7,6 +7,7 @@ import {
 import { isNotDefined } from '@togglecorp/fujs';
 import TileLayer from 'ol/layer/Tile';
 import { XYZ } from 'ol/source';
+
 import MapContext from '../MapContext';
 
 export interface Props {

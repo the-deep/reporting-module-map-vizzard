@@ -1,6 +1,7 @@
 import type { Props as HeatmapLayerProps } from './Layers/HeatmapLayer';
 import type { Props as MapboxLayerProps } from './Layers/MapboxLayer';
 import type { Props as TileLayerProps } from './Layers/TileLayer';
+import type { Props as LineLayerProps } from './Layers/LineLayer';
 import type { Props as SymbolLayerProps } from './Layers/SymbolLayer';
 
 export interface Rgba {
@@ -235,4 +236,7 @@ export type Layer = CommonLayerOptions & ({
 } | {
     type: 'symbol';
     options: SymbolLayerProps;
+} | {
+  type: 'line';
+  options: LineLayerProps;
 })

@@ -12,6 +12,7 @@ import TileLayer from './Layers/TileLayer';
 import MapboxLayer from './Layers/MapboxLayer';
 import HeatmapLayer from './Layers/HeatmapLayer';
 import SymbolLayer from './Layers/SymbolLayer';
+import LineLayer from './Layers/LineLayer';
 
 import OlMap from './OlMap';
 import styles from './styles.module.css';
@@ -124,6 +125,15 @@ function Map(props: Props) {
                 if (layer.type === 'symbol' && layer.visible) {
                     return (
                         <SymbolLayer
+                            key={getLayerId(layer.type, layer.id)}
+                            // eslint-disable-next-line react/jsx-props-no-spreading
+                            {...layer.options}
+                        />
+                    );
+                }
+                if (layer.type === 'line' && layer.visible) {
+                    return (
+                        <LineLayer
                             key={getLayerId(layer.type, layer.id)}
                             // eslint-disable-next-line react/jsx-props-no-spreading
                             {...layer.options}
