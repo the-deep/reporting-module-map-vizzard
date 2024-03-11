@@ -14,6 +14,7 @@ interface KpiData {
     source?: string;
     url?: string;
     sourceStyle: React.CSSProperties;
+    backgroundColor: string;
 }
 
 export interface Props {
@@ -36,6 +37,9 @@ function KPIs(props: Props) {
                 <div
                     className={styles.item}
                     key={getKey(kpi)}
+                    style={{
+                        backgroundColor: kpi.backgroundColor,
+                    }}
                 >
                     <div className={styles.heading}>
                         <div

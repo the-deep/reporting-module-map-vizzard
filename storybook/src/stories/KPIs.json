@@ -34,7 +34,7 @@
             "fontFamily": "Segoe UI",
             "fontWeight": 500,
             "textAlign": "START",
-            "color": "#6e6693"
+            "color": "#FFF"
         },
         "subtitle": "Estimated",
         "subtitleStyle": {
@@ -47,7 +47,6 @@
         "source": "IOM",
         "date": "2023-05-25",
         "backgroundColor": "#0273b5",
-        "color": "#FFF",
         "value": "4.8m"
     },
     {
@@ -56,7 +55,6 @@
         "source": "saveschools.in.ua",
         "date": "2023-08-01",
         "backgroundColor": "#3697DB",
-        "color": "#FFF",
         "value": "343"
     },
     {
@@ -65,7 +63,6 @@
         "source": "saveschools.in.ua",
         "date": "2023-08-01",
         "backgroundColor": "#cce2f3",
-        "color": "rgb(49 49 49)",
         "value": "3,226"
     }
 ]
