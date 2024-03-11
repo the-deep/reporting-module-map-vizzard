@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Map as MapFromLib } from 'ol';
 import { Heatmap } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -13,6 +13,7 @@ import { vector } from '../helpers';
 interface Props extends Pick<HeatMapLayer, 'data' | 'zIndex' | 'opacity' | 'blur' | 'radius' | 'fillPalette' | 'weighted' | 'scaleDataMax'>
 {
     map: MapFromLib | undefined;
+    weightProperty?: string;
 }
 
 function HeatmapLayer(props: Props) {
@@ -25,31 +26,36 @@ function HeatmapLayer(props: Props) {
         radius,
         fillPalette,
         weighted = false,
+        // FIXME: there should not be any default weightProperty
+        weightProperty = 'fatalities',
         scaleDataMax = 350,
     } = props;
 
-    const [heatmapLayer, setHeatmapLayer] = useState<Heatmap | undefined>(undefined);
+    const scaleWeight = useMemo(
+        () => scaleLog()
+            .domain([1, scaleDataMax])
+            .range([0.4, 1]),
+        [scaleDataMax],
+    );
 
-    const scaleWeight = scaleLog()
-        .domain([1, scaleDataMax])
-        .range([0.4, 1]);
+    const configRef = useRef({
+        weighted,
+        weightProperty,
+        blur,
+        radius,
+        scaleWeight,
+        zIndex,
+    });
 
-    useEffect(
+    const layerData = useMemo(
         () => {
-            if (!map) {
-                return undefined;
-            }
-
-            let properties: HeatMapLayerProperty[];
-            if (Array.isArray(data)) {
-                properties = data;
-            } else {
-                properties = data.features.map((datum) => ({
+            const properties: HeatMapLayerProperty[] = Array.isArray(data)
+                ? data
+                : data.features.map((datum) => ({
                     ...datum.properties,
                     lon: datum.geometry.coordinates[0],
                     lat: datum.geometry.coordinates[1],
                 }));
-            }
 
             const features = properties.map((item) => {
                 const feature = new Feature(
@@ -59,46 +65,55 @@ function HeatmapLayer(props: Props) {
                 return feature;
             });
 
-            if (map && heatmapLayer) {
-                map.removeLayer(heatmapLayer);
-            }
-
-            const interpolator = d3ColorScale[`interpolate${fillPalette}`];
+            const colorInterpolationFn = d3ColorScale[`interpolate${fillPalette}`];
             const numSteps = 5;
-            // eslint-disable-next-line
-            const colors = Array.from({ length: numSteps }, (_, i) => interpolator(i * (1 / numSteps)));
+            const colors = Array.from(
+                { length: numSteps },
+                (_, i) => colorInterpolationFn(i * (1 / numSteps)),
+            );
 
-            const vectorLayer = new Heatmap({
+            return new Heatmap({
                 source: vector<Point>({ features }),
-                blur,
-                radius,
+                blur: configRef.current.blur,
+                radius: configRef.current.radius,
                 gradient: colors,
+                zIndex: configRef.current.zIndex,
                 weight: (feature) => {
-                    if (weighted) {
-                        const w = scaleWeight(parseFloat(feature.get('fatalities'))) || 0;
+                    if (configRef.current.weighted) {
+                        const w = scaleWeight(
+                            parseFloat(feature.get(configRef.current.weightProperty)),
+                        ) || 0;
                         return w;
                     }
+
                     return 0.7;
                 },
             });
-            map.addLayer(vectorLayer);
-            setHeatmapLayer(vectorLayer);
-
-            return () => {
-                if (map) {
-                    map.removeLayer(vectorLayer);
-                }
-            };
         },
-        // FIXME: for the missing dependencies, we can store them in intial
-        // values using useState or useRef
-        // For reference, check other libraries like toggle-form or re-map
-        [map, fillPalette, weighted],
+        [data, fillPalette, scaleWeight],
     );
 
     useEffect(
         () => {
-            if (!heatmapLayer) {
+            const addedLayer = layerData;
+            const targetMap = map;
+
+            if (!targetMap || !addedLayer) {
+                return undefined;
+            }
+
+            targetMap.addLayer(addedLayer);
+
+            return () => {
+                targetMap.removeLayer(addedLayer);
+            };
+        },
+        [map, layerData],
+    );
+
+    useEffect(
+        () => {
+            if (!layerData) {
                 return;
             }
 
@@ -123,47 +138,25 @@ function HeatmapLayer(props: Props) {
             });
 
             // FIXME: should we return instead
-            const source = heatmapLayer.getSource();
+            const source = layerData.getSource();
             source?.clear();
             source?.addFeatures(features);
         },
-        // FIXME: We might not need to use JSON.stringify
-        [heatmapLayer, JSON.stringify(data)],
+        [layerData, data],
     );
 
     useEffect(
         () => {
-            if (!heatmapLayer) {
+            if (!layerData) {
                 return;
             }
-            heatmapLayer.setOpacity(opacity);
-        },
-        [heatmapLayer, opacity],
-    );
 
-    useEffect(
-        () => {
-            if (!heatmapLayer) {
-                return;
-            }
-            heatmapLayer.setZIndex(zIndex);
+            layerData.setOpacity(opacity);
+            layerData.setZIndex(zIndex);
+            layerData.setBlur(blur);
+            layerData.setRadius(radius);
         },
-        [heatmapLayer, zIndex],
-    );
-
-    useEffect(() => {
-        if (!heatmapLayer) return;
-        heatmapLayer.setBlur(blur);
-    }, [heatmapLayer, blur]);
-
-    useEffect(
-        () => {
-            if (!heatmapLayer) {
-                return;
-            }
-            heatmapLayer.setRadius(radius);
-        },
-        [heatmapLayer, radius],
+        [layerData, opacity, zIndex, radius, blur],
     );
 
     return null;

@@ -158,7 +158,8 @@ interface MapboxLayer {
     visible: number;
     zIndex: number;
 }
-interface LineLayer {
+
+export interface LineLayer {
     id: number;
     labelColumn: string; // FIXME: this has not been used on examples
     legendSeriesTitle: string;
@@ -177,6 +178,7 @@ interface LineLayer {
     };
     data: unknown;
 }
+
 export interface HeatMapLayer {
     // used in map
     data: HeatMapLayerProperty[] | GeoJSON.FeatureCollection<GeoJSON.Point>;

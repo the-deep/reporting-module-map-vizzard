@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
+import { Map as MapFromLib } from 'ol';
 import OLVectorLayer from 'ol/layer/Vector';
+import { Vector as VectorSource } from 'ol/source';
 import {
     Style,
     Stroke,
 } from 'ol/style';
+
+import { LineLayer } from '../index';
 import { rgba } from '../helpers';
 
-function LineLayer({
-    map,
-    source,
-    style,
-    zIndex = 1,
-    opacity = 1,
-}) {
+interface Props extends Pick<LineLayer, 'zIndex' | 'opacity' | 'style'> {
+    map: MapFromLib | undefined;
+    source: VectorSource;
+}
+
+function LineLayer(props: Props) {
+    const {
+        map,
+        source,
+        style,
+        zIndex = 1,
+        opacity = 1,
+    } = props;
+
     const [lineLayer, setLineLayer] = useState(undefined);
 
     // line vectors
@@ -20,11 +31,9 @@ function LineLayer({
         if (!map) return undefined;
         const styles = [];
 
-        let lineDash = null;
-
-        if (style.strokeType === 'dash') {
-            lineDash = [(style.dashSpacing / 3), style.dashSpacing];
-        }
+        const lineDash = style.strokeType === 'dash'
+            ? [style.dashSpacing / 3, style.dashSpacing]
+            : undefined;
 
         const stroke = new Stroke({
             width: style.strokeWidth,
