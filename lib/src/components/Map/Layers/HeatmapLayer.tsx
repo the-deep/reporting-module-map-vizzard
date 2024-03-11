@@ -1,5 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { Map as MapFromLib } from 'ol';
+import {
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+} from 'react';
 import { Heatmap } from 'ol/layer';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -7,18 +11,34 @@ import { fromLonLat } from 'ol/proj';
 import * as d3ColorScale from 'd3-scale-chromatic';
 import { scaleLog } from 'd3-scale';
 
-import { HeatMapLayer, HeatMapLayerProperty } from '../index';
 import { vector } from '../helpers';
+import MapContext from '../MapContext';
 
-interface Props extends Pick<HeatMapLayer, 'data' | 'zIndex' | 'opacity' | 'blur' | 'radius' | 'fillPalette' | 'weighted' | 'scaleDataMax'>
-{
-    map: MapFromLib | undefined;
-    weightProperty?: string;
+export type HeatMapLayerProperty = GeoJSON.GeoJsonProperties & {
+    lon: number;
+    lat: number;
+    // FIXME: This is not used consistently
+    exclude_from_heatmap?: boolean;
+}
+
+type D3InterpolationSchemes = 'Blues' | 'Greens' | 'Greys' | 'Oranges' | 'Purples' | 'Reds' | 'Turbo' | 'Viridis' | 'Inferno' | 'Magma' | 'Plasma' | 'Cividis' | 'Warm' | 'Cool' | 'CubehelixDefault' | 'BuGn' | 'BuPu' | 'GnBu' | 'OrRd' | 'PuBuGn' | 'PuBu' | 'PuRd' | 'RdPu' | 'YlGnBu' | 'YlGn' | 'YlOrBr' | 'YlOrRd'
+| 'Rainbow' | 'Sinebow'
+| 'BrBG' | 'PRGn' | 'PiYG' | 'PuOr' | 'RdBu' | 'RdGy' | 'RdYlBu' | 'RdYlGn' | 'Spectral';
+
+export interface Props {
+    data: HeatMapLayerProperty[] | GeoJSON.FeatureCollection<GeoJSON.Point>;
+    zIndex: number;
+    opacity: number;
+    blur: number;
+    radius: number;
+    fillPalette: D3InterpolationSchemes;
+    weighted: boolean;
+    weightPropertyKey: string; // Only applicable when weighted = true
+    scaleDataMax: number;
 }
 
 function HeatmapLayer(props: Props) {
     const {
-        map,
         data,
         zIndex = 1,
         opacity = 1,
@@ -26,10 +46,11 @@ function HeatmapLayer(props: Props) {
         radius,
         fillPalette,
         weighted = false,
-        // FIXME: there should not be any default weightProperty
-        weightProperty = 'fatalities',
+        weightPropertyKey,
         scaleDataMax = 350,
     } = props;
+
+    const { map } = useContext(MapContext);
 
     const scaleWeight = useMemo(
         () => scaleLog()
@@ -40,7 +61,7 @@ function HeatmapLayer(props: Props) {
 
     const configRef = useRef({
         weighted,
-        weightProperty,
+        weightPropertyKey,
         blur,
         radius,
         scaleWeight,
@@ -81,7 +102,7 @@ function HeatmapLayer(props: Props) {
                 weight: (feature) => {
                     if (configRef.current.weighted) {
                         const w = scaleWeight(
-                            parseFloat(feature.get(configRef.current.weightProperty)),
+                            parseFloat(feature.get(configRef.current.weightPropertyKey)),
                         ) || 0;
                         return w;
                     }

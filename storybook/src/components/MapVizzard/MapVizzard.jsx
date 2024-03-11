@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import Button from '@mui/material/Button';
 import { createTheme } from '@mui/material/styles';
 import grey from '@mui/material/colors/grey';
+
 import saveFile from './saveFile';
 import '../Map/ol.css';
 import styles from './MapOptions/MapOptions.module.css';
@@ -105,42 +107,42 @@ function MapVizzard({
         )}
         <div id="map_panel" className={`${styles.mapPanel}`} style={{ fontFamily: mapOptions.fontStyle.fontFamily, color: rgba(mapOptions.fontStyle.color) }}>
           <Map
-            layers={layers}
-            height={mapOptions.height}
-            width={mapOptions.width}
-            fontStyle={mapOptions.fontStyle}
             center={mapOptions.center}
-            primaryColor={mapOptions.primaryColor}
-            zoom={mapOptions.zoom}
-            minZoom={mapOptions.minZoom}
-            maxZoom={mapOptions.maxZoom}
-            showHeader={mapOptions.showHeader}
-            headerStyle={mapOptions.headerStyle}
-            mainTitle={mapOptions.mainTitle}
-            subTitle={mapOptions.subTitle}
+            dashboard={dashboard}
             dateText={mapOptions.dateText}
-            showScale={mapOptions.showScale}
-            scaleUnits={mapOptions.scaleUnits}
-            scaleBar={mapOptions.scaleBar}
-            scaleBarPosition={mapOptions.scaleBarPosition}
-            enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
-            enableDragPan={mapOptions.enableDragPan}
+            embed={embed}
             enableDoubleClickZoom={mapOptions.enableDoubleClickZoom}
+            enableDragPan={mapOptions.enableDragPan}
+            enableMouseWheelZoom={mapOptions.enableMouseWheelZoom}
             enableZoomControls={mapOptions.enableZoomControls}
-            zoomControlsPosition={mapOptions.zoomControlsPosition}
-            showLegend={mapOptions.showLegend}
+            fontStyle={mapOptions.fontStyle}
+            headerStyle={mapOptions.headerStyle}
+            height={mapOptions.height}
+            layers={layers}
             legendPosition={mapOptions.legendPosition}
             legendTopPadding={legendTopPadding}
+            mainTitle={mapOptions.mainTitle}
+            maxZoom={mapOptions.maxZoom}
+            minZoom={mapOptions.minZoom}
+            overviewMapPosition={mapOptions.overviewMapPosition}
+            paddingBottom={paddingBottom}
+            primaryColor={mapOptions.primaryColor}
+            print={print}
+            scaleBar={mapOptions.scaleBar}
+            scaleBarPosition={mapOptions.scaleBarPosition}
+            scaleUnits={mapOptions.scaleUnits}
             setMapObj={setMapObj}
             showFooter={mapOptions.showFooter}
-            sources={mapOptions.sources}
+            showHeader={mapOptions.showHeader}
+            showLegend={mapOptions.showLegend}
             showLogos={mapOptions.showLogos}
             showOverview={mapOptions.showOverview}
-            overviewMapPosition={mapOptions.overviewMapPosition}
-            embed={embed}
-            dashboard={dashboard}
-            print={print}
-            paddingBottom={paddingBottom}
+            showScale={mapOptions.showScale}
+            sources={mapOptions.sources}
+            subTitle={mapOptions.subTitle}
+            width={mapOptions.width}
+            zoom={mapOptions.zoom}
+            zoomControlsPosition={mapOptions.zoomControlsPosition}
           />
         </div>
       </div>

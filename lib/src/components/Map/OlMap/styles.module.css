@@ -1,4 +1,9 @@
-.mapBottomRight {
+.ol-map {
+    width: 100%;
+    height: 100%;
+}
+
+.map-bottom-right {
     top: unset !important;
     left: unset !important;
     right: 8px;
@@ -9,7 +14,7 @@
     text-align: right;
 }
 
-.mapBottomLeft {
+.map-bottom-left {
     top: unset !important;
     left: 8px !important;
     right: unset !important;
@@ -20,7 +25,7 @@
     text-align: left;
 }
 
-.mapTopRight {
+.map-top-right {
     top: 64px !important;
     left: unset !important;
     right: 8px;
@@ -31,7 +36,7 @@
     text-align: right;
 }
 
-.mapTopLeft {
+.map-top-left {
     top: 64px !important;
     left: 8px !important;
     right: unset !important;
@@ -40,11 +45,6 @@
     position: absolute;
     z-index: 100;
     text-align: left;
-}
-
-/* FIXME: headeriMMAP is not available here */
-.headeriMMAP .POS-topRight {
-    top: 36px !important;
 }
 
 .POS-bottomRight {

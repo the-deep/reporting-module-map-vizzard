@@ -23,14 +23,18 @@ export function osm() {
     return new OSM();
 }
 
-export function vector<T extends Geometry>({ features }) {
+type VectorSourceOptions<T extends Geometry> = NonNullable<
+    ConstructorParameters<typeof VectorSource<T>>[number]
+>;
+export function vector<T extends Geometry>(options: Pick<VectorSourceOptions<T>, 'features'>) {
     return new VectorSource<T>({
-        features,
+        features: options.features,
     });
 }
 
-export function xyz({ url, attributions, maxZoom }) {
-    return new XYZ({ url, attributions, maxZoom });
+type XYZOptions = NonNullable<ConstructorParameters<typeof XYZ>[number]>;
+export function xyz(options: Pick<XYZOptions, 'url' | 'attributions' | 'maxZoom'>) {
+    return new XYZ(options);
 }
 
 export function rgba(rgb: { r: number; g: number; b: number; a: number} | undefined) {

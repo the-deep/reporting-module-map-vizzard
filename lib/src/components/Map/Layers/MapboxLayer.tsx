@@ -1,24 +1,30 @@
-import { useEffect, useRef, useMemo } from 'react';
+import {
+    useEffect,
+    useRef,
+    useMemo,
+    useContext,
+} from 'react';
 import { isNotDefined } from '@togglecorp/fujs';
-import { Map as MapFromLib } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { XYZ } from 'ol/source';
+import MapContext from '../MapContext';
 
-import { MapboxLayer } from '../index';
-
-interface Props extends Pick<MapboxLayer, 'zIndex' | 'opacity' | 'accessToken'> {
-    map: MapFromLib | undefined;
+export interface Props {
     styleUrl: string;
+    accessToken: string;
+    opacity: number;
+    zIndex: number;
 }
 
 function MapboxLayer(props: Props) {
     const {
-        map,
         zIndex = 1,
         opacity = 1,
         styleUrl,
         accessToken,
     } = props;
+
+    const { map } = useContext(MapContext);
 
     const configRef = useRef({
         zIndex,
@@ -34,7 +40,6 @@ function MapboxLayer(props: Props) {
                 source: new XYZ({
                     url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
                     tileSize: 512,
-                    // preload: 10,
                     crossOrigin: 'anonymous',
                 }),
                 zIndex: configRef.current.zIndex,

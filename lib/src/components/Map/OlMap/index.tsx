@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+    useRef,
+    useEffect,
+    useContext,
+    useMemo,
+} from 'react';
+import { isNotDefined } from '@togglecorp/fujs';
 import { View, Map } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { XYZ } from 'ol/source';
@@ -9,19 +15,19 @@ import {
     DoubleClickZoom,
     defaults,
 } from 'ol/interaction';
+
+import MapContext from '../MapContext';
 import styles from './styles.module.css';
 
 // FIXME: Let's pass this when using it
 const mapboxToken = 'pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ';
 
-interface Props {
-    map: Map | undefined;
-    setMap: (map: Map | undefined) => void;
-    setMapObj: (map: Map) => void;
+export interface Props {
     zoom: number;
     minZoom: number;
     maxZoom: number;
     center: [number, number];
+
     showScale?: boolean;
     showOverview?: boolean;
     scaleBar?: boolean;
@@ -39,9 +45,6 @@ interface Props {
 
 function OlMap(props: Props) {
     const {
-        setMapObj,
-        setMap,
-        map,
         children,
         zoom,
         minZoom,
@@ -61,7 +64,8 @@ function OlMap(props: Props) {
         paddingBottom = 0,
     } = props;
 
-    const mapRef = useRef<HTMLDivElement>(null);
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const { map, setMap } = useContext(MapContext);
 
     const bottomRightOverview = useRef<HTMLDivElement>(null);
     const topRightOverview = useRef<HTMLDivElement>(null);
@@ -72,169 +76,197 @@ function OlMap(props: Props) {
     const bottomLeftControl = useRef<HTMLDivElement>(null);
     const topLeftControl = useRef<HTMLDivElement>(null);
 
-    const controls = {
+    const controls = useMemo(() => ({
         bottomRight: bottomRightControl,
         topRight: topRightControl,
         topLeft: topLeftControl,
         bottomLeft: bottomLeftControl,
-    };
-    const overview = {
+    }), []);
+
+    const overview = useMemo(() => ({
         bottomRight: bottomRightOverview,
         topRight: topRightOverview,
         topLeft: topLeftOverview,
         bottomLeft: bottomLeftOverview,
-    };
+    }), []);
 
     const zoomDelta = 0.4;
-    const [overviewMap, setOverviewMap] = useState<OverviewMap | undefined>();
+    // const [overviewMap, setOverviewMap] = useState<OverviewMap | undefined>();
+
+    const optionsRef = useRef({
+        zoom,
+        center,
+        minZoom,
+        maxZoom,
+        controls,
+        zoomDelta,
+    });
 
     // on component mount
-    useEffect(() => {
-        const options = {
-            view: new View({
-                zoom,
-                center,
-                minZoom,
-                maxZoom,
-            }),
-            layers: [],
-            overlays: [],
-            controls: [],
-            interactions: defaults({
-                zoomDelta,
-            }),
-        };
-
-        const mapObject = new Map(options);
-
-        mapObject.getControls().forEach((control) => {
-            if (control instanceof ScaleLine) {
-                mapObject.removeControl(control);
+    useEffect(
+        () => {
+            if (isNotDefined(mapContainerRef.current)) {
+                return undefined;
             }
-        }, this);
 
-        if (showScale) {
-            let scaleClassName = 'ol-scale-line';
-            if (scaleBar) {
-                scaleClassName = 'ol-scale-bar';
-            }
-            const control = new ScaleLine({
-                units: scaleUnits,
-                bar: scaleBar,
-                className: scaleClassName,
-                minWidth: 100,
-                target: controls[scaleBarPosition].current ?? undefined,
-            });
-            mapObject.addControl(control);
-        }
-
-        if (enableMouseWheelZoom) {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof MouseWheelZoom) {
-                    interaction.setActive(true);
-                }
-            }, this);
-        } else {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof MouseWheelZoom) {
-                    interaction.setActive(false);
-                }
-            }, this);
-        }
-
-        if (enableDragPan) {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof DragPan) {
-                    interaction.setActive(true);
-                }
-            }, this);
-        } else {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof DragPan) {
-                    interaction.setActive(false);
-                }
-            }, this);
-        }
-
-        // enableDoubleClickZoom
-        if (enableDoubleClickZoom) {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof DoubleClickZoom) {
-                    interaction.setActive(true);
-                }
-            }, this);
-        } else {
-            mapObject.getInteractions().forEach((interaction) => {
-                if (interaction instanceof DoubleClickZoom) {
-                    interaction.setActive(false);
-                }
-            }, this);
-        }
-
-        if (enableZoomControls) {
-            const zoomClass = `${styles.ol - zoom} ${styles[`POS-${zoomControlsPosition}`]}`;
-            mapObject.addControl(new Zoom({ delta: zoomDelta, className: zoomClass }));
-        }
-
-        mapObject.getControls().forEach((control) => {
-            if (control instanceof OverviewMap) {
-                mapObject.removeControl(control);
-            }
-        });
-
-        if (showOverview) {
-            const styleUrl = 'mapbox://styles/matthewsmawfield/clo2texcn00hs01qsf0mg6drz';
-            let styleUrlParsed = styleUrl.replace('mapbox://', '');
-            styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
-
-            const layer = new TileLayer({
-                source: new XYZ({
-                    url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
-                    tileSize: 512,
-                    // FIXME: error with preload
-                    // preload: 10,
-                    crossOrigin: 'anonymous',
+            const options = {
+                view: new View({
+                    zoom: optionsRef.current.zoom,
+                    center: optionsRef.current.center,
+                    minZoom: optionsRef.current.minZoom,
+                    maxZoom: optionsRef.current.maxZoom,
                 }),
-            });
+                layers: [],
+                overlays: [],
+                controls: [],
+                interactions: defaults({
+                    zoomDelta: optionsRef.current.zoomDelta,
+                }),
+            };
 
-            const overviewDiv = overview[overviewMapPosition].current;
-            if (overviewDiv) {
-                overviewDiv.innerHTML = '';
-            }
+            const newMap = new Map(options);
+            setMap(newMap);
+            newMap.setTarget(mapContainerRef.current);
 
-            const overviewMapControl = new OverviewMap({
-                // see in overviewmap-custom.html to see the custom CSS used
-                className: 'ol-overviewmap ol-custom-overviewmap',
-                layers: [
-                    layer,
-                ],
-                collapsible: false,
-                collapsed: false,
-                target: overviewDiv ?? undefined,
-            });
-            mapObject.addControl(overviewMapControl);
-            setOverviewMap(overviewMapControl);
-        }
+            return () => {
+                newMap.getAllLayers().forEach((layer) => {
+                    newMap.removeLayer(layer);
+                });
+                newMap.setTarget(undefined);
+            };
 
-        mapObject.setTarget(mapRef.current ?? undefined);
-        if (setMap) {
-            setMap(mapObject);
-        }
-        if (setMapObj) {
-            setMapObj(mapObject);
-        }
-        return () => {
-            if (overviewMap) {
-                mapObject.removeControl(overviewMap);
-            }
+            /*
             mapObject.getControls().forEach((control) => {
                 if (control instanceof ScaleLine) {
                     mapObject.removeControl(control);
                 }
-            }, this);
-            mapObject.setTarget(undefined);
-        };
-    }, []);
+            });
+
+            if (showScale) {
+                let scaleClassName = 'ol-scale-line';
+                if (scaleBar) {
+                    scaleClassName = 'ol-scale-bar';
+                }
+                const control = new ScaleLine({
+                    units: scaleUnits,
+                    bar: scaleBar,
+                    className: scaleClassName,
+                    minWidth: 100,
+                    target: controls[scaleBarPosition].current ?? undefined,
+                });
+                mapObject.addControl(control);
+            }
+
+            if (enableMouseWheelZoom) {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof MouseWheelZoom) {
+                        interaction.setActive(true);
+                    }
+                });
+            } else {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof MouseWheelZoom) {
+                        interaction.setActive(false);
+                    }
+                });
+            }
+
+            if (enableDragPan) {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof DragPan) {
+                        interaction.setActive(true);
+                    }
+                });
+            } else {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof DragPan) {
+                        interaction.setActive(false);
+                    }
+                });
+            }
+
+            // enableDoubleClickZoom
+            if (enableDoubleClickZoom) {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof DoubleClickZoom) {
+                        interaction.setActive(true);
+                    }
+                });
+            } else {
+                mapObject.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof DoubleClickZoom) {
+                        interaction.setActive(false);
+                    }
+                });
+            }
+
+            if (enableZoomControls) {
+                const zoomClass = `${styles.ol - zoom} ${styles[`POS-${zoomControlsPosition}`]}`;
+                mapObject.addControl(new Zoom({ delta: zoomDelta, className: zoomClass }));
+            }
+
+            mapObject.getControls().forEach((control) => {
+                if (control instanceof OverviewMap) {
+                    mapObject.removeControl(control);
+                }
+            });
+
+            if (showOverview) {
+                const styleUrl = 'mapbox://styles/matthewsmawfield/clo2texcn00hs01qsf0mg6drz';
+                let styleUrlParsed = styleUrl.replace('mapbox://', '');
+                styleUrlParsed = styleUrlParsed.replace('styles/', 'styles/v1/');
+
+                const layer = new TileLayer({
+                    source: new XYZ({
+                        url: `https://api.mapbox.com/${styleUrlParsed}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
+                        tileSize: 512,
+                        // FIXME: error with preload
+                        // preload: 10,
+                        crossOrigin: 'anonymous',
+                    }),
+                });
+
+                const overviewDiv = overview[overviewMapPosition].current;
+                if (overviewDiv) {
+                    overviewDiv.innerHTML = '';
+                }
+
+                const overviewMapControl = new OverviewMap({
+                    // see in overviewmap-custom.html to see the custom CSS used
+                    className: 'ol-overviewmap ol-custom-overviewmap',
+                    layers: [
+                        layer,
+                    ],
+                    collapsible: false,
+                    collapsed: false,
+                    target: overviewDiv ?? undefined,
+                });
+                mapObject.addControl(overviewMapControl);
+                setOverviewMap(overviewMapControl);
+            }
+
+            mapObject.setTarget(mapContainerRef.current ?? undefined);
+            if (setMap) {
+                setMap(mapObject);
+            }
+            if (setMapObj) {
+                setMapObj(mapObject);
+            }
+            return () => {
+                if (overviewMap) {
+                    mapObject.removeControl(overviewMap);
+                }
+                mapObject.getControls().forEach((control) => {
+                    if (control instanceof ScaleLine) {
+                        mapObject.removeControl(control);
+                    }
+                });
+                mapObject.setTarget(undefined);
+            };
+            */
+        },
+        [setMap],
+    );
 
     useEffect(() => {
         if (!map) {
@@ -246,7 +278,7 @@ function OlMap(props: Props) {
         map.getView().setMinZoom(newMinZoom);
         map.getView().setMaxZoom(maxZoom);
         map.getView().setZoom(zoom);
-    }, [zoom, minZoom, maxZoom]);
+    }, [map, zoom, minZoom, maxZoom]);
 
     useEffect(() => {
         if (!map) return;
@@ -261,7 +293,7 @@ function OlMap(props: Props) {
             const zoomClass = `ol-zoom ${styles[`POS-${zoomControlsPosition}`]}`;
             map.addControl(new Zoom({ delta: zoomDelta, className: zoomClass }));
         }
-    }, [enableZoomControls, zoomControlsPosition]);
+    }, [map, enableZoomControls, zoomControlsPosition]);
 
     useEffect(() => {
         if (!map) return;
@@ -304,13 +336,13 @@ function OlMap(props: Props) {
             });
             map.addControl(overviewMapControl);
         }
-    }, [showOverview, overviewMapPosition]);
+    }, [map, overview, showOverview, overviewMapPosition]);
 
     // center change handler
     useEffect(() => {
         if (!map) return;
         map.getView().setCenter(center);
-    }, [JSON.stringify(center)]);
+    }, [map, center]);
 
     useEffect(() => {
         if (!map) return;
@@ -319,15 +351,15 @@ function OlMap(props: Props) {
                 if (interaction instanceof MouseWheelZoom) {
                     interaction.setActive(true);
                 }
-            }, this);
+            });
         } else {
             map.getInteractions().forEach((interaction) => {
                 if (interaction instanceof MouseWheelZoom) {
                     interaction.setActive(false);
                 }
-            }, this);
+            });
         }
-    }, [enableMouseWheelZoom]);
+    }, [map, enableMouseWheelZoom]);
 
     useEffect(() => {
         if (!map) return;
@@ -336,15 +368,15 @@ function OlMap(props: Props) {
                 if (interaction instanceof DragPan) {
                     interaction.setActive(true);
                 }
-            }, this);
+            });
         } else {
             map.getInteractions().forEach((interaction) => {
                 if (interaction instanceof DragPan) {
                     interaction.setActive(false);
                 }
-            }, this);
+            });
         }
-    }, [enableDragPan]);
+    }, [map, enableDragPan]);
 
     useEffect(() => {
         if (!map) return;
@@ -353,15 +385,15 @@ function OlMap(props: Props) {
                 if (interaction instanceof DoubleClickZoom) {
                     interaction.setActive(true);
                 }
-            }, this);
+            });
         } else {
             map.getInteractions().forEach((interaction) => {
                 if (interaction instanceof DoubleClickZoom) {
                     interaction.setActive(false);
                 }
-            }, this);
+            });
         }
-    }, [enableDoubleClickZoom]);
+    }, [map, enableDoubleClickZoom]);
 
     useEffect(() => {
         if (!map) return;
@@ -369,7 +401,7 @@ function OlMap(props: Props) {
             if (control instanceof ScaleLine) {
                 map.removeControl(control);
             }
-        }, this);
+        });
         if (showScale) {
             let scaleClassName = 'ol-scale-line';
             if (scaleBar) scaleClassName = 'ol-scale-bar';
@@ -382,13 +414,12 @@ function OlMap(props: Props) {
             });
             map.addControl(control);
         }
-    }, [showScale, scaleUnits, scaleBar, scaleBarPosition]);
+    }, [map, controls, showScale, scaleUnits, scaleBar, scaleBarPosition]);
 
     return (
         <div
-            ref={mapRef}
-            className="ol-map"
-            style={{ height: '100%' }}
+            ref={mapContainerRef}
+            className={styles.olMap}
         >
             {children}
             <div
@@ -423,7 +454,7 @@ function OlMap(props: Props) {
                 className={styles.mapTopLeft}
             >
                 <div
-                    className="scale"
+                    className={styles.scale}
                     ref={topLeftControl}
                 />
                 <div

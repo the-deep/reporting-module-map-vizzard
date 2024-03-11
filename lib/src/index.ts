@@ -29,3 +29,8 @@ export {
     default as CategoricalBarChart,
     type Props as CategoricalBarChartProps,
 } from './components/CategoricalBarChart';
+
+export {
+    default as Map,
+    type Props as MapProps,
+} from './components/Map';

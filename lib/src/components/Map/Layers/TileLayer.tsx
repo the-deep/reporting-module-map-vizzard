@@ -1,22 +1,41 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { isNotDefined } from '@togglecorp/fujs';
-import { Map as MapFromLib } from 'ol';
+import {
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+} from 'react';
+import { isDefined, isNotDefined } from '@togglecorp/fujs';
 import OLTileLayer from 'ol/layer/Tile';
 import TileSource from 'ol/source/Tile';
+import * as olSource from 'ol/source';
 
-import { OsmBackgroundLayer } from '../index';
+import MapContext from '../MapContext';
 
-interface Props extends Pick<OsmBackgroundLayer, 'zIndex' | 'opacity'> {
-    map: MapFromLib | undefined;
-    source: TileSource;
+export interface Props {
+    opacity: number;
+    zIndex: number;
+    source?: TileSource;
 }
+
 function TileLayer(props: Props) {
     const {
-        map,
-        source,
+        source: sourceFromProps,
         zIndex = 1,
         opacity = 1,
     } = props;
+
+    const source = useMemo(
+        () => {
+            if (isDefined(sourceFromProps)) {
+                return sourceFromProps;
+            }
+
+            return new olSource.OSM();
+        },
+        [sourceFromProps],
+    );
+
+    const { map } = useContext(MapContext);
 
     const configRef = useRef({
         zIndex,
