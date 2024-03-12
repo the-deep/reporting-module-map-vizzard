@@ -579,7 +579,7 @@ export function getTemporalDiff(min: DateLike, max: DateLike) {
     };
 }
 
-type CommonChartProps<DATUM, KEY> = BarChartContainerProps & {
+type CommonChartProps<DATUM, KEY> = Omit<BarChartContainerProps, 'children'> & {
     data: DATUM[] | undefined | null;
     yValueKeys: KEY[];
     colorSelector: (yKey: KEY) => string;

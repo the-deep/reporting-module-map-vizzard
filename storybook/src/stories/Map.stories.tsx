@@ -1,7 +1,7 @@
 import { Map } from '@the-deep/reporting-module-components';
 
-import defaultConfig from './default.json';
 /*
+import defaultConfig from './default.json';
 import sudanMapConfig from './sudan.json';
 import ukraineMapConfig from './ukraine.json';
 import darfurMapConfig from './darfur.json';
@@ -17,29 +17,35 @@ export default {
   component: Map,
   tags: ['autodocs'],
   argTypes: {
-    height: { control: 'number', description: 'Viewbox height in pixels', table: { type: { summary: 'number' } } },
-    zoom: { control: 'number', description: 'Initial zoom level', table: { type: { summary: 'number' } } },
+    title: { control: 'object', description: 'Title' },
+    subTitle: { control: 'object', description: 'Subtitle' },
+    zoom: { control: 'number', description: 'Zoom level', table: { type: { summary: 'number' } } },
+    minZoom: { control: 'number', description: 'Minimum zoom level', table: { type: { summary: 'number' } } },
+    maxZoom: { control: 'number', description: 'Maximum zoom level', table: { type: { summary: 'number' } } },
     center: { description: 'Viewbox centre coordinates', table: { type: { summary: 'array [lon,lat]' } } },
-    mainTitle: { description: 'Main map title', table: { type: { summary: 'string' } } },
-    subTitle: { description: 'Map sub-title', table: { type: { summary: 'string' } } },
     layers: { control: 'object', description: 'layers object', table: { type: { summary: 'JSON object' } } },
     showScale: { control: 'boolean', description: 'show scale', table: { type: { summary: 'boolean' } } },
-    children: { table: { disable: true } },
   },
 };
 
 export const Default = {
   args: {
-    ...defaultConfig.mapOptions,
-    center: {
-      lon: 30,
-      lat: 16.8,
-    },
-    zoom: 5.6,
+    title: { children: 'This is Map' },
+    subTitle: { children: 'This is the description of the map' },
+    mapHeight: 400,
+    maxZoom: 7,
+    minZoom: 1,
+    showScale: true,
+    scaleUnits: 'metric',
+    scaleBar: true,
+    enableMouseWheelZoom: true,
+    enableDoubleClickZoom: true,
+    enableZoomControls: true,
+    center: [31, 14],
+    zoom: 4,
     layers: [
       {
         id: 1,
-        name: 'OSM background',
         type: 'osm',
         visible: true,
         options: {
@@ -73,41 +79,6 @@ export const Default = {
           zIndex: 6,
           opacity: 0.83,
           scaleDataMax: 10,
-
-          // Unused properties
-          scale: 0.3,
-          scaleType: 'fixed',
-          scaleScaling: 'flannery',
-          scaleDataMin: 0,
-          showInLegend: true,
-          legendSeriesTitle: 'ACLED conflict events',
-          style: {
-            strokeWidth: 1.2,
-            stroke: {
-              r: 190,
-              g: 33,
-              b: 38,
-              a: 1,
-            },
-            fill: {
-              r: 255,
-              g: 255,
-              b: 255,
-              a: 0.1,
-            },
-            labelStyle: {
-              fontWeight: 'normal',
-              fontSize: 10,
-              showHalo: true,
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-                a: 1,
-              },
-              fontFamily: 'Barlow Condensed',
-            },
-          },
         },
       },
       {
@@ -141,14 +112,6 @@ export const Default = {
             },
             fontFamily: 'Barlow Condensed',
           },
-
-          // Unused properties
-          showInLegend: true,
-          legendSeriesTitle: 'Border crossing points - Active',
-          name: 'Border crossings - Active',
-          enableTooltips: true,
-          tooltipsTitleColumn: 'map_label',
-          ts: 0.19323252146233383,
         },
       },
       {
@@ -166,13 +129,6 @@ export const Default = {
             stroke: '#f00',
             strokeWidth: 2,
           },
-
-          // Unused properties
-          name: 'Disputed boundaries',
-          showLabels: false,
-          labelColumn: '',
-          showInLegend: true,
-          legendSeriesTitle: 'Disputed boundaries',
         },
       },
     ],

@@ -87,6 +87,7 @@ function HeatmapLayer(props: Props) {
             });
 
             const colorInterpolationFn = d3ColorScale[`interpolate${fillPalette}`];
+
             const numSteps = 5;
             const colors = Array.from(
                 { length: numSteps },

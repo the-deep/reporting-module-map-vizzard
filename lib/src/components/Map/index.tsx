@@ -2,92 +2,45 @@ import React, {
     useState,
     useMemo,
 } from 'react';
-
+import { isDefined } from '@togglecorp/fujs';
 import { Map as MapFromLib } from 'ol';
 import { fromLonLat } from 'ol/proj';
 
-import './ol.css';
-
+import TextNode, { type Props as DefaultTextNodeProps } from '../TextNode';
 import TileLayer from './Layers/TileLayer';
 import MapboxLayer from './Layers/MapboxLayer';
 import HeatmapLayer from './Layers/HeatmapLayer';
 import SymbolLayer from './Layers/SymbolLayer';
 import LineLayer from './Layers/LineLayer';
 
-import OlMap from './OlMap';
-import styles from './styles.module.css';
+import OlMap, { type Props as OlMapProps } from './OlMap';
 
 import MapContext, { MapContextProps } from './MapContext';
 
-import type { Layer, Rgba } from './types';
+import type { Layer } from './types';
+
+type TextNodeProps = Omit<DefaultTextNodeProps, 'as'>;
 
 function getLayerId(type: string, id: string) {
     return `${type}-${id}`;
 }
 
-export interface Props {
+export interface Props extends Omit<OlMapProps, 'center' | 'children'> {
+    title?: TextNodeProps;
+    subTitle?: TextNodeProps;
+    center: [number, number];
     layers: Layer[];
-    center: { lon: number; lat: number };
-    dashboard?: boolean; // FIXME: not sure if this is used
-    dateText?: string; // FIXME: What is this?
-    embed?: boolean;
-    enableDoubleClickZoom?: boolean,
-    enableDragPan?: boolean,
-    enableMouseWheelZoom?: boolean,
-    enableZoomControls?: boolean,
-    headerStyle: 'iMMAP' | undefined; // FIXME: we need to remove this
-    height?: number;
-    legendPosition?: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft';
-    legendTopPadding?: number;
-    mainTitle?: string;
-    maxZoom: number;
-    minZoom: number;
-    overviewMapPosition?: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft';
-    paddingBottom?: number;
-    primaryColor?: Rgba;
-    print?: boolean;
-    scaleBar?: boolean;
-    scaleBarPosition: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft';
-    scaleUnits?: 'degrees' | 'imperial' | 'nautical' | 'metric' | 'us';
-    showFooter?: boolean;
-    showHeader?: boolean;
-    showLegend?: boolean;
-    showLogos?: string[];
-    showOverview?: boolean;
-    showScale?: boolean;
-    sources?: string;
-    subTitle?: string;
-    width?: number;
-    zoomControlsPosition: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft', // FIXME: check if topLeft works
-    zoom?: number;
-    fontStyle: {
-        color: Rgba;
-        fontFamily: string;
-        fontWeight: 'normal'; // FIXME: other options
-    };
 }
+
+// const defaultCenter = [30.21, 15.86] as const;
 
 function Map(props: Props) {
     const {
+        title,
+        subTitle,
+        center,
         layers,
-        height = 400,
-        fontStyle,
-        zoom = 5,
-        minZoom,
-        maxZoom,
-        center = { lon: 30.21, lat: 15.86 },
-        showOverview = false,
-        overviewMapPosition = 'bottomRight',
-        showScale,
-        scaleUnits,
-        scaleBar,
-        scaleBarPosition,
-        enableMouseWheelZoom,
-        enableDragPan,
-        enableDoubleClickZoom,
-        enableZoomControls,
-        zoomControlsPosition,
-        paddingBottom = 0,
+        ...olMapProps
     } = props;
 
     const [map, setMap] = useState<MapFromLib | null>(null);
@@ -176,34 +129,26 @@ function Map(props: Props) {
 
     return (
         <MapContext.Provider value={mapContextValue}>
-            <div
-                className={styles.mapContainer}
-                style={{
-                    minHeight: height,
-                    fontFamily: fontStyle.fontFamily,
-                }}
+            {isDefined(title) && (
+                <TextNode
+                    as="h2"
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...title}
+                />
+            )}
+            {isDefined(subTitle) && (
+                <TextNode
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...subTitle}
+                />
+            )}
+            <OlMap
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...olMapProps}
+                center={fromLonLat(center)}
             >
-                <OlMap
-                    center={fromLonLat([center.lon, center.lat]) as [number, number]}
-                    zoom={zoom}
-                    minZoom={minZoom}
-                    maxZoom={maxZoom}
-                    showScale={showScale}
-                    scaleUnits={scaleUnits}
-                    scaleBar={scaleBar}
-                    scaleBarPosition={scaleBarPosition}
-                    enableDragPan={enableDragPan}
-                    enableMouseWheelZoom={enableMouseWheelZoom}
-                    enableDoubleClickZoom={enableDoubleClickZoom}
-                    enableZoomControls={enableZoomControls}
-                    zoomControlsPosition={zoomControlsPosition}
-                    showOverview={showOverview}
-                    overviewMapPosition={overviewMapPosition}
-                    paddingBottom={paddingBottom}
-                >
-                    {renderLayers}
-                </OlMap>
-            </div>
+                {renderLayers}
+            </OlMap>
         </MapContext.Provider>
     );
 }
