@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 :root {
     --ol-background-color: white;
     --ol-accent-background-color: #F5F5F5;
