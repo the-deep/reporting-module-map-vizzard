@@ -34,3 +34,8 @@ export {
     default as Map,
     type Props as MapProps,
 } from './components/Map';
+
+export {
+    default as NumericLineChart,
+    type Props as NumericLineChartProps,
+} from './components/NumericLineChart';

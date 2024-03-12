@@ -52,7 +52,7 @@ export const Simple: Story = {
       children: 'A numeric bar chart or bar graph is a chart or graph that presents numeric data with rectangular bars with heights or lengths proportional to the values that they represent. The bars can be plotted vertically or horizontally. A vertical bar chart is sometimes called a column chart.',
       style: {
         textAlign: 'right',
-        color: 'tomato',
+        color: 'gray',
       },
     },
     data: chartData,
@@ -69,22 +69,29 @@ export const Simple: Story = {
     },
     yValueKeys: ['y1', 'y2', 'y3'],
     colorSelector: (key) => colorMap[key],
+    yAxisLabel: {
+      children: 'Hello this is y-axis label',
+      style: {
+        fontFamily: 'sans-serif',
+        fontSize: 18,
+      },
+    },
+    xAxisLabel: {
+      children: 'And this is x-axis label',
+    },
     chartAxesOptions: {
-      yAxisLabel: {
-        children: 'Hello this is y-axis label',
-        style: {
-          fontFamily: 'sans-serif',
-          fontSize: 18,
-        },
-      },
-      xAxisLabel: {
-        children: 'And this is x-axis label',
-      },
       xAxisLineStyle: {
         stroke: 'teal',
         strokeWidth: '2pt',
       },
       xAxisGridLineStyle: {
+        stroke: 'lightgray',
+      },
+      yAxisLineStyle: {
+        stroke: 'teal',
+        strokeWidth: '2pt',
+      },
+      yAxisGridLineStyle: {
         stroke: 'lightgray',
       },
     },

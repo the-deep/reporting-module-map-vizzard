@@ -586,7 +586,7 @@ type CommonChartProps<DATUM, KEY> = Omit<BarChartContainerProps, 'children'> & {
     groupingMode?: BarGroupingMode;
 }
 
-export type CombinedProps<
+export type CombinedBarChartProps<
     DATUM,
     KEY extends string | number,
     ChartOptions,
@@ -601,8 +601,8 @@ const groupingModeMapping: Record<BarGroupingMode, ChartGroupingMode> = {
     'side-by-side': 'none',
 };
 
-export function extractProps<DATUM, KEY extends string | number, ChartOptions>(
-    combinedProps: CombinedProps<DATUM, KEY, ChartOptions>,
+export function extractBarChartProps<DATUM, KEY extends string | number, ChartOptions>(
+    combinedProps: CombinedBarChartProps<DATUM, KEY, ChartOptions>,
 ) {
     const {
         data,
@@ -640,6 +640,50 @@ export function extractProps<DATUM, KEY extends string | number, ChartOptions>(
         chartDataProps: {
             yValueKeys,
             groupingMode: groupingModeMapping[groupingMode],
+            ...chartOptions,
+        },
+    };
+}
+
+export type CombinedLineChartProps<
+    DATUM,
+    KEY extends string | number,
+    ChartOptions,
+> = ChartOptions & CommonChartProps<DATUM, KEY> & {
+    chartAxesOptions: Omit<ChartAxesProps, 'chartData' | 'tooltipSelector' | 'onHover' | 'onClick'>
+    chartOptions: ChartOptions;
+}
+export function extractLineChartProps<DATUM, KEY extends string | number, ChartOptions>(
+    combinedProps: CombinedLineChartProps<DATUM, KEY, ChartOptions>,
+) {
+    const {
+        data,
+        className,
+        yValueKeys,
+        colorSelector,
+
+        chartAxesOptions,
+        chartOptions,
+
+        ...chartContainerProps
+    } = combinedProps;
+
+    return {
+        commonProps: {
+            data,
+            yValueKeys,
+            colorSelector,
+        },
+        containerProps: {
+            ...chartContainerProps,
+            className,
+        },
+        chartAxesProps: {
+            ...chartAxesOptions,
+        },
+        chartDataProps: {
+            yValueKeys,
+            groupingMode: 'sum',
             ...chartOptions,
         },
     };

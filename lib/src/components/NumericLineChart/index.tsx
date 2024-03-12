@@ -1,19 +1,15 @@
 import React, { useMemo, useRef } from 'react';
 import { listToMap } from '@togglecorp/fujs';
 
-import useTemporalChartData, { type Options } from '../../hooks/useTemporalChartData';
-import { extractBarChartProps, type CombinedBarChartProps } from '../../utils/chart';
-
-import BarList from '../BarList';
+import useNumericChartData, { type Options } from '../../hooks/useNumericChartData';
+import { extractLineChartProps, type CombinedLineChartProps } from '../../utils/chart';
+import LineChartContainer from '../LineChartContainer';
 import ChartAxes from '../ChartAxes';
+import PointList from '../LineList';
 
-import BarChartContainer from '../BarChartContainer';
+export type Props<DATUM, KEY extends string | number> = CombinedLineChartProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
 
-export type Props<DATUM, KEY extends string | number> = CombinedBarChartProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
-
-function TemporalBarChart<DATUM, KEY extends string | number>(
-    props: Props<DATUM, KEY>,
-) {
+function NumericLineChart<DATUM, KEY extends string | number>(props: Props<DATUM, KEY>) {
     const {
         containerProps,
         commonProps: {
@@ -23,12 +19,11 @@ function TemporalBarChart<DATUM, KEY extends string | number>(
         },
         chartDataProps,
         chartAxesProps,
-        barListProps: barGroupProps,
-    } = extractBarChartProps(props);
+    } = extractLineChartProps(props);
 
     const chartContainerRef = useRef<HTMLDivElement>(null);
 
-    const chartData = useTemporalChartData(
+    const chartData = useNumericChartData(
         data,
         {
             containerRef: chartContainerRef,
@@ -47,11 +42,8 @@ function TemporalBarChart<DATUM, KEY extends string | number>(
         [colorSelector, yValueKeys],
     );
 
-    const xTickWidth = chartData.dataAreaSize.width
-        / chartData.chartTemporalDiff[chartData.temporalResolution];
-
     return (
-        <BarChartContainer
+        <LineChartContainer
             containerRef={chartContainerRef}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...containerProps}
@@ -61,15 +53,13 @@ function TemporalBarChart<DATUM, KEY extends string | number>(
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...chartAxesProps}
             />
-            <BarList
+            <PointList
                 chartData={chartData}
-                xTickWidth={xTickWidth}
+                yValueKeys={yValueKeys}
                 colorMap={colorMap}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...barGroupProps}
             />
-        </BarChartContainer>
+        </LineChartContainer>
     );
 }
 
-export default TemporalBarChart;
+export default NumericLineChart;

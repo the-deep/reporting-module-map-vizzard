@@ -88,9 +88,8 @@ export const Default = {
         options: {
           data: symbolData,
 
-          id: 12,
           zIndex: 111,
-          labelPropertyKey: 'map_label',
+          labelPropertyKey: 'lon',
           opacity: 1,
           scale: 1,
           scaleType: 'fixed',
@@ -104,12 +103,7 @@ export const Default = {
           labelStyle: {
             fontSize: 12,
             showHalo: true,
-            color: {
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 0.4,
-            },
+            color: '#717171',
             fontFamily: 'Barlow Condensed',
           },
         },

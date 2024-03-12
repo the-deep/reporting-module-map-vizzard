@@ -3,9 +3,7 @@ import React, {
     useCallback,
     useRef,
 } from 'react';
-import { _cs, isDefined } from '@togglecorp/fujs';
-
-import TextNode, { Props as DefaultTextNodeProps } from '../TextNode';
+import { isDefined } from '@togglecorp/fujs';
 
 import {
     type Rect,
@@ -13,8 +11,6 @@ import {
 } from '../../utils/chart';
 
 import styles from './styles.module.css';
-
-type AxisLabelProps = Omit<DefaultTextNodeProps, 'as'>;
 
 type Key = string | number;
 
@@ -43,8 +39,6 @@ export interface Props {
     tooltipSelector?: (key: Key, i: number) => React.ReactNode;
     onHover?: (key: Key | undefined, i: number | undefined) => void;
     onClick?: (key: Key, i: number) => void;
-    yAxisLabel?: AxisLabelProps & { width?: number };
-    xAxisLabel?: AxisLabelProps & { height?: number };
 
     xAxisGridLineStyle?: React.CSSProperties;
     yAxisGridLineStyle?: React.CSSProperties;
@@ -68,8 +62,6 @@ function ChartAxes(props: Props) {
         tooltipSelector,
         onHover,
         onClick,
-        yAxisLabel,
-        xAxisLabel,
         xAxisGridLineStyle,
         yAxisGridLineStyle,
         xAxisLineStyle,
@@ -128,9 +120,7 @@ function ChartAxes(props: Props) {
     }
 
     const xAxisDiff = dataAreaSize.width / xAxisTicks.length;
-
-    const yAxisLabelWidth = yAxisLabel?.width ?? 20;
-    const xAxisLabelHeight = xAxisLabel?.height ?? 20;
+    const xAxisGapDiff = dataAreaSize.width / (xAxisTicks.length - 1);
 
     const yAxisAreaX1 = chartMargin.left;
     const yAxisAreaX2 = chartMargin.left + yAxisWidth;
@@ -145,22 +135,6 @@ function ChartAxes(props: Props) {
 
     return (
         <g className={styles.chartAxes}>
-            {isDefined(yAxisLabel) && (
-                <foreignObject
-                    x={0}
-                    y={chartSize.height - yAxisLabelWidth}
-                    width={chartSize.height}
-                    height={yAxisLabelWidth}
-                    className={styles.yAxisLabelContainer}
-                    style={{ transformOrigin: `0 ${chartSize.height - yAxisLabelWidth}px` }}
-                >
-                    <TextNode
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...yAxisLabel}
-                        className={_cs(styles.yAxisLabel, yAxisLabel.className)}
-                    />
-                </foreignObject>
-            )}
             <g>
                 {yAxisTicks.map((pointData, i) => (
                     <Fragment key={pointData.y}>
@@ -205,6 +179,16 @@ function ChartAxes(props: Props) {
                 ))}
             </g>
             <g>
+                {yAxisLineStyle && (
+                    <line
+                        className={styles.yAxisGridLine}
+                        style={yAxisLineStyle}
+                        x1={dataAreaOffset.left - xAxisGapDiff}
+                        y1={chartAreaY1}
+                        x2={dataAreaOffset.left - xAxisGapDiff}
+                        y2={xAxisAreaY1}
+                    />
+                )}
                 {xAxisTicks.map((pointData, i) => {
                     const tick = pointData;
 
@@ -218,17 +202,7 @@ function ChartAxes(props: Props) {
 
                     return (
                         <Fragment key={tick.x}>
-                            {i === 0 && yAxisLineStyle && (
-                                <line
-                                    className={styles.yAxisGridLine}
-                                    style={yAxisLineStyle}
-                                    x1={x}
-                                    y1={chartAreaY1}
-                                    x2={x}
-                                    y2={xAxisAreaY1}
-                                />
-                            )}
-                            {i !== 0 && yAxisGridLineStyle && (
+                            {yAxisGridLineStyle && (
                                 <line
                                     className={styles.yAxisGridLine}
                                     style={yAxisGridLineStyle}
@@ -277,21 +251,6 @@ function ChartAxes(props: Props) {
                     );
                 })}
             </g>
-            {isDefined(xAxisLabel) && (
-                <foreignObject
-                    x={dataAreaOffset.left}
-                    y={chartSize.height - xAxisLabelHeight - dataAreaOffset.top}
-                    width={dataAreaSize.width}
-                    height={xAxisLabelHeight}
-                    className={styles.xAxisLabelContainer}
-                >
-                    <TextNode
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...xAxisLabel}
-                        className={_cs(styles.xAxisLabel, xAxisLabel.className)}
-                    />
-                </foreignObject>
-            )}
         </g>
     );
 }

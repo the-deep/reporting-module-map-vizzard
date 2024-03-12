@@ -2,12 +2,12 @@ import React, { useMemo, useRef } from 'react';
 import { listToMap } from '@togglecorp/fujs';
 
 import useNumericChartData, { type Options } from '../../hooks/useNumericChartData';
-import { extractProps, type CombinedProps } from '../../utils/chart';
+import { extractBarChartProps, type CombinedBarChartProps } from '../../utils/chart';
 import BarChartContainer from '../BarChartContainer';
 import BarList from '../BarList';
 import ChartAxes from '../ChartAxes';
 
-export type Props<DATUM, KEY extends string | number> = CombinedProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
+export type Props<DATUM, KEY extends string | number> = CombinedBarChartProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
 
 function NumericBarChart<DATUM, KEY extends string | number>(props: Props<DATUM, KEY>) {
     const {
@@ -20,7 +20,7 @@ function NumericBarChart<DATUM, KEY extends string | number>(props: Props<DATUM,
         chartDataProps,
         chartAxesProps,
         barListProps: barGroupProps,
-    } = extractProps(props);
+    } = extractBarChartProps(props);
 
     const chartContainerRef = useRef<HTMLDivElement>(null);
 

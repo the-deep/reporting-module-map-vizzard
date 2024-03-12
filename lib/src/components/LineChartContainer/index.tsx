@@ -21,7 +21,7 @@ export interface Props {
     yAxisLabel?: TextNodeProps;
 }
 
-function BarChartContainer(props: Props) {
+function LineChartContainer(props: Props) {
     const {
         className,
         title,
@@ -35,7 +35,7 @@ function BarChartContainer(props: Props) {
     } = props;
 
     return (
-        <div className={_cs(styles.barChartContainer, className)}>
+        <div className={_cs(styles.lineChartContainer, className)}>
             {isDefined(title) && (
                 <TextNode
                     as="h2"
@@ -87,4 +87,4 @@ function BarChartContainer(props: Props) {
     );
 }
 
-export default BarChartContainer;
+export default LineChartContainer;

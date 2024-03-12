@@ -2,13 +2,13 @@ import React, { useMemo, useRef } from 'react';
 import { listToMap } from '@togglecorp/fujs';
 
 import useCategoricalChartData, { type Options } from '../../hooks/useCategoricalChartData';
-import { extractProps, type CombinedProps } from '../../utils/chart';
+import { extractBarChartProps, type CombinedBarChartProps } from '../../utils/chart';
 import BarList from '../BarList';
 import ChartAxes from '../ChartAxes';
 
 import BarChartContainer from '../BarChartContainer';
 
-export type Props<DATUM, KEY extends string | number> = CombinedProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
+export type Props<DATUM, KEY extends string | number> = CombinedBarChartProps<DATUM, KEY, Omit<Options<DATUM, KEY>, 'containerRef'>>
 
 function CategoricalBarChart<DATUM, KEY extends string | number>(props: Props<DATUM, KEY>) {
     const {
@@ -21,7 +21,7 @@ function CategoricalBarChart<DATUM, KEY extends string | number>(props: Props<DA
         chartDataProps,
         chartAxesProps,
         barListProps: barGroupProps,
-    } = extractProps(props);
+    } = extractBarChartProps(props);
 
     const chartContainerRef = useRef<HTMLDivElement>(null);
 
