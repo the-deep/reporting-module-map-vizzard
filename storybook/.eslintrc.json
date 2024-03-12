@@ -1,17 +1,38 @@
 {
-  "extends": [
-    "./.eslintrc-lenient.json",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:storybook/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "rules": {
-    "no-param-reassign": "error",
-
-    "import/no-relative-packages": 0,
-    "react/require-default-props": ["warn", { "ignoreFunctionalComponents": true }],
-    "react/prop-types": "warn",
-    "react/react-in-jsx-scope": "off"
-  }
+    "extends": [
+        "react-app",
+        "react-app/jest",
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:storybook/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "no-param-reassign": "error",
+        "import/extensions": ["off", "never"],
+        "jsx-a11y/click-events-have-key-events": "warn",
+        "jsx-a11y/no-static-element-interactions": "warn",
+        "consistent-return": "warn",
+        "no-underscore-dangle": "warn",
+        "react/jsx-filename-extension": ["error", {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }],
+        "import/no-relative-packages": "warn",
+        "react/require-default-props": ["warn", { "ignoreFunctionalComponents": true }],
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "**/*.stories.*"
+            ],
+            "rules": {
+                "import/no-anonymous-default-export": "off"
+            }
+        }
+    ]
 }

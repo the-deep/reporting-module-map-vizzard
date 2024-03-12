@@ -1,0 +1,27 @@
+{
+    "mapOptions": {
+        "center": [30.1, 48.4],
+        "zoom": 3,
+        "maxZoom": 7,
+        "minZoom": 1,
+        "showScale": true,
+        "scaleUnits": "metric",
+        "scaleBar": true,
+        "enableMouseWheelZoom": true,
+        "enableDoubleClickZoom": true,
+        "enableZoomControls": true
+    },
+    "layers": [
+        {
+            "id": 11,
+            "type": "mapbox",
+            "visible": true,
+            "options": {
+                "opacity": 0.2,
+                "zIndex": 2,
+                "styleUrl": "mapbox://styles/matthewsmawfield/clidxtx3j003p01r0cetzc9iv",
+                "accessToken": "pk.eyJ1IjoibWF0dGhld3NtYXdmaWVsZCIsImEiOiJDdFBZM3dNIn0.9GYuVHPIaUZ2Gqjsk1EtcQ"
+            }
+        }
+    ]
+}
