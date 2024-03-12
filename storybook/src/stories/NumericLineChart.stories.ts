@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react';
-import { NumericBarChart, type NumericBarChartProps } from '@the-deep/reporting-module-components';
+import { NumericLineChart, type NumericLineChartProps } from '@the-deep/reporting-module-components';
 
 interface Datum {
     id: number;
@@ -24,7 +24,7 @@ const chartData: Datum[] = [
 ];
 
 type ValueKey = 'y1' | 'y2' | 'y3';
-type BarChartPropsForStory = NumericBarChartProps<Datum, ValueKey>;
+type BarChartPropsForStory = NumericLineChartProps<Datum, ValueKey>;
 const colorMap: Record<ValueKey, string> = {
   y1: '#f06690',
   y2: '#ffe082',
@@ -32,8 +32,8 @@ const colorMap: Record<ValueKey, string> = {
 };
 
 const meta = {
-  title: 'BarChart/Numeric',
-  component: NumericBarChart,
+  title: 'LineChart/Numeric',
+  component: NumericLineChart,
   tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<BarChartPropsForStory>;
@@ -45,14 +45,13 @@ type Story = StoryObj<BarChartPropsForStory>;
 export const Simple: Story = {
   args: {
     title: {
-      children: 'Numeric Bar Chart',
-      style: { textAlign: 'right' },
+      children: 'Numeric Line Chart',
     },
     subTitle: {
-      children: 'A numeric bar chart or bar graph is a chart or graph that presents numeric data with rectangular bars with heights or lengths proportional to the values that they represent. The bars can be plotted vertically or horizontally. A vertical bar chart is sometimes called a column chart.',
+      children: 'A line chart, also known as a line graph, line plot, or curve chart, is a graphical representation used to display data points connected by straight lines.',
       style: {
-        textAlign: 'right',
         color: 'gray',
+        marginBottom: '1rem',
       },
     },
     data: chartData,
@@ -62,13 +61,10 @@ export const Simple: Story = {
       yValueSelector: ({ y, z }) => [
         { key: 'y1', value: y },
         { key: 'y2', value: z },
-        { key: 'y3', value: y + z },
       ],
       yValueStartsFromZero: true,
       xAxisHeight: 56,
     },
-    yValueKeys: ['y1', 'y2', 'y3'],
-    colorSelector: (key) => colorMap[key],
     yAxisLabel: {
       children: 'Hello this is y-axis label',
       style: {
@@ -79,6 +75,8 @@ export const Simple: Story = {
     xAxisLabel: {
       children: 'And this is x-axis label',
     },
+    yValueKeys: ['y1', 'y2'],
+    colorSelector: (key) => colorMap[key],
     chartAxesOptions: {
       xAxisLineStyle: {
         stroke: 'teal',
