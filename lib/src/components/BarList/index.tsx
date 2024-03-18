@@ -23,7 +23,7 @@ export interface Props<KEY extends string | number> {
     barGroupGap?: number;
     yValueKeys: KEY[];
     colorMap: Record<KEY, string>;
-    groupingMode?: BarGroupingMode;
+    barGroupingMode?: BarGroupingMode;
 }
 
 function BarList<KEY extends string | number>(props: Props<KEY>) {
@@ -38,10 +38,10 @@ function BarList<KEY extends string | number>(props: Props<KEY>) {
         barGroupMargin = 1,
         yValueKeys,
         colorMap,
-        groupingMode = 'side-by-side',
+        barGroupingMode = 'side-by-side',
     } = props;
 
-    const maxBarWidth = groupingMode === 'side-by-side'
+    const maxBarWidth = barGroupingMode === 'side-by-side'
         ? Math.max((xTickWidth - barGroupMargin * 2), 0) / yValueKeys.length
         : xTickWidth;
 
@@ -52,7 +52,7 @@ function BarList<KEY extends string | number>(props: Props<KEY>) {
 
     return chartPoints.map((chartPoint) => (
         <g key={chartPoint.key}>
-            {groupingMode === 'side-by-side' && yValueKeys.map((yValueKey, i) => {
+            {barGroupingMode === 'side-by-side' && yValueKeys.map((yValueKey, i) => {
                 const currentY = chartPoint.y[yValueKey];
 
                 if (isNotDefined(currentY)) {
@@ -83,7 +83,7 @@ function BarList<KEY extends string | number>(props: Props<KEY>) {
                     />
                 );
             })}
-            {groupingMode === 'stacked' && yValueKeys.map((yValueKey, i) => {
+            {barGroupingMode === 'stacked' && yValueKeys.map((yValueKey, i) => {
                 const currentY = chartPoint.y[yValueKey];
 
                 if (isNotDefined(currentY)) {

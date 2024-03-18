@@ -51,21 +51,25 @@ const symbolIcons = {
     triangle,
 };
 
+export type Symbols = keyof typeof symbolIcons;
+export type ScaleTypes = 'fixed' | 'proportional';
+export type ScalingTechnique = 'absolute' | 'flannery';
+
 export interface Props {
     // layerId: string;
 
     labelVariant?: 'population';
     labelPropertyKey?: string;
-    scalePropertyKey: string;
+    scalePropertyKey?: string;
 
-    opacity: number;
-    scaleDataMax: number;
+    opacity: number | undefined;
+    scaleDataMax: number | undefined;
     // scaleDataMin: number;
-    scale: number;
-    scaleType?: 'fixed' | 'proportional';
-    scalingTechnique?: 'absolute' | 'flannery';
+    scale: number | undefined;
+    scaleType?: ScaleTypes;
+    scalingTechnique?: ScalingTechnique;
     showLabels: boolean;
-    symbol: keyof typeof symbolIcons;
+    symbol: Symbols;
 
     /*
     enableTooltips: boolean;
@@ -76,15 +80,15 @@ export interface Props {
 
     zIndex: number;
     symbolStyle: {
-        fill: ColorLike;
-        stroke: ColorLike;
+        fill: ColorLike | undefined;
+        stroke: ColorLike | undefined;
         strokeWidth: number;
     }
     labelStyle: {
-        color: ColorLike;
-        fontFamily: string;
+        color: ColorLike | undefined;
+        fontFamily: string | undefined;
         fontSize: number;
-        fontWeight: 'bold' | 'normal';
+        fontWeight?: 'bold' | 'normal';
         showHalo: boolean;
         textAlign?: 'left' | 'center' | 'right';
         transform?: 'uppercase';
@@ -181,7 +185,11 @@ function SymbolLayer(props: Props) {
                     const exp = scalingTechnique === 'flannery' ? 0.5716 : 0.5;
 
                     function getSize() {
-                        if (isNotDefined(properties) || scaleType !== 'proportional') {
+                        if (
+                            isNotDefined(properties)
+                            || scaleType !== 'proportional'
+                            || isNotDefined(scalePropertyKey)
+                        ) {
                             return scale;
                         }
 
@@ -190,7 +198,11 @@ function SymbolLayer(props: Props) {
                     }
 
                     function getRadius() {
-                        if (isNotDefined(properties) || scaleType !== 'proportional') {
+                        if (
+                            isNotDefined(properties)
+                            || scaleType !== 'proportional'
+                            || isNotDefined(scalePropertyKey)
+                        ) {
                             return (1 / Math.PI) ** exp * (10 * scale);
                         }
 
@@ -249,7 +261,10 @@ function SymbolLayer(props: Props) {
                         }
 
                         if (labelVariant === 'population') yPos = -5;
-                        if (labelVariant !== 'population' || properties[scalePropertyKey] >= 5) {
+                        if (
+                            labelVariant !== 'population'
+                            || (scalePropertyKey && properties[scalePropertyKey] >= 5)
+                        ) {
                             return (
                                 new Style({
                                     text: new Text({
@@ -267,7 +282,11 @@ function SymbolLayer(props: Props) {
                             );
                         }
 
-                        if (labelVariant === 'population' && properties[scalePropertyKey] >= 5) {
+                        if (
+                            labelVariant === 'population'
+                            && scalePropertyKey
+                            && properties[scalePropertyKey] >= 5
+                        ) {
                             const labelValue = properties[scalePropertyKey];
 
                             return (

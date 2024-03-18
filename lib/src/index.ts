@@ -36,6 +36,30 @@ export {
 } from './components/Map';
 
 export {
+    type HeatMapLayerProperty,
+    type Props as HeatMapLayerProps,
+} from './components/Map/Layers/HeatmapLayer';
+
+export {
+    type Props as LineLayerProps,
+} from './components/Map/Layers/LineLayer';
+
+export {
+    type Props as MapboxLayerProps,
+} from './components/Map/Layers/MapboxLayer';
+
+export {
+    type Props as TileLayerProps,
+} from './components/Map/Layers/TileLayer';
+
+export {
+    type Symbols,
+    type ScaleTypes as SymbolLayerScaleTypes,
+    type ScalingTechnique as SymbolLayerScalingTechnique,
+    type Props as SymbolLayerProps,
+} from './components/Map/Layers/SymbolLayer';
+
+export {
     default as NumericLineChart,
     type Props as NumericLineChartProps,
 } from './components/NumericLineChart';

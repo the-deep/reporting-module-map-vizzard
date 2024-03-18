@@ -56,7 +56,7 @@ export interface Options<DATUM, KEY> {
     yAxisTickLabelSelector?: (value: number, index: number) => React.ReactNode;
     yValueStartsFromZero?: boolean;
     yScale?: ChartScale;
-    groupingMode?: ChartGroupingMode;
+    chartGroupingMode?: ChartGroupingMode;
     yDomain?: Bounds;
     temporalResolution?: 'auto' | TemporalResolution;
     // NOTE: should be between 3 - 12
@@ -83,7 +83,7 @@ function useTemporalChartData<DATUM, KEY extends string | number>(
         yValueStartsFromZero,
         yScale = 'linear',
         yDomain,
-        groupingMode = 'none',
+        chartGroupingMode = 'none',
     } = options;
 
     const chartSize = useSizeTracking(containerRef);
@@ -422,10 +422,10 @@ function useTemporalChartData<DATUM, KEY extends string | number>(
                 chartData,
                 numYAxisTicks,
                 yValueStartsFromZero,
-                groupingMode,
+                chartGroupingMode,
             );
         },
-        [chartData, yValueStartsFromZero, yDomain, numYAxisTicks, groupingMode],
+        [chartData, yValueStartsFromZero, yDomain, numYAxisTicks, chartGroupingMode],
     );
 
     const yScaleFn = useMemo(

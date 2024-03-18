@@ -12,7 +12,7 @@ import * as olSource from 'ol/source';
 import MapContext from '../MapContext';
 
 export interface Props {
-    opacity: number;
+    opacity: number | undefined;
     zIndex: number;
     source?: TileSource;
 }
