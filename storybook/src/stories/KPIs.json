@@ -1,5 +1,6 @@
 [
     {
+        "key": "1",
         "title": "Total IDPs",
         "titleStyle": {
             "fontSize": 60,
@@ -28,6 +29,7 @@
         }
     },
     {
+        "key": "2",
         "title": "Total Returnees",
         "titleStyle": {
             "fontSize": 60,
@@ -50,6 +52,7 @@
         "value": "4.8m"
     },
     {
+        "key": "3",
         "title": "Education Institutions",
         "subtitle": "Destroyed",
         "source": "saveschools.in.ua",
@@ -58,6 +61,7 @@
         "value": "343"
     },
     {
+        "key": "5",
         "title": "Education Institutions",
         "subtitle": "Damaged",
         "source": "saveschools.in.ua",

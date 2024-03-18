@@ -4,6 +4,7 @@ import { IoOpenOutline } from 'react-icons/io5';
 import styles from './styles.module.css';
 
 interface KpiData {
+    key: string;
     title?: string;
     titleStyle: React.CSSProperties;
     subtitle?: string;
@@ -21,9 +22,8 @@ export interface Props {
     data: KpiData[],
 }
 
-// FIXME: Is this the correct way to get Kpi key?
 function getKey(item: KpiData) {
-    return `${item.title}:${item.value}`;
+    return item.key;
 }
 
 function KPIs(props: Props) {
@@ -53,7 +53,6 @@ function KPIs(props: Props) {
                             {kpi.subtitle}
                         </div>
                     </div>
-
                     <div className={styles.value}>
                         {kpi.value !== 0 && (
                             <div

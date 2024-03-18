@@ -36,6 +36,10 @@ export {
 } from './components/Map';
 
 export {
+    type HeatMapLayerProperty,
+} from './components/Map/Layers/HeatmapLayer';
+
+export {
     default as NumericLineChart,
     type Props as NumericLineChartProps,
 } from './components/NumericLineChart';

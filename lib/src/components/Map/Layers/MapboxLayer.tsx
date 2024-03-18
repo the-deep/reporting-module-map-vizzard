@@ -13,7 +13,7 @@ import MapContext from '../MapContext';
 export interface Props {
     styleUrl: string;
     accessToken: string;
-    opacity: number;
+    opacity: number | undefined;
     zIndex: number;
 }
 

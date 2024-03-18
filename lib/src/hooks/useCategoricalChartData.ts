@@ -41,7 +41,7 @@ export interface Options<DATUM, KEY> {
     yDomain?: Bounds;
     yValueStartsFromZero?: boolean;
     yScale?: ChartScale;
-    groupingMode?: ChartGroupingMode;
+    chartGroupingMode?: ChartGroupingMode;
 }
 
 function useNumericChartData<DATUM, KEY extends string | number>(
@@ -63,7 +63,7 @@ function useNumericChartData<DATUM, KEY extends string | number>(
         yDomain,
         yValueStartsFromZero,
         yScale = 'linear',
-        groupingMode = 'none',
+        chartGroupingMode = 'none',
     } = options;
 
     const chartSize = useSizeTracking(containerRef);
@@ -166,10 +166,10 @@ function useNumericChartData<DATUM, KEY extends string | number>(
                 chartData,
                 numYAxisTicks,
                 yValueStartsFromZero,
-                groupingMode,
+                chartGroupingMode,
             );
         },
-        [chartData, yDomain, yValueStartsFromZero, numYAxisTicks, groupingMode],
+        [chartData, yDomain, yValueStartsFromZero, numYAxisTicks, chartGroupingMode],
     );
 
     const yScaleFn = useMemo(

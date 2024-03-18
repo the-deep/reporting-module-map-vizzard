@@ -517,11 +517,11 @@ export function getYDomain(
     }>,
     numYAxisTicks: number,
     yValueStartsFromZero: boolean | undefined,
-    groupingMode: ChartGroupingMode,
+    chartGroupingMode: ChartGroupingMode,
 ) {
     let yValuesFlat: number[];
 
-    if (groupingMode === 'sum') {
+    if (chartGroupingMode === 'sum') {
         yValuesFlat = yValues.map(
             ({ yValue }) => sumSafe(
                 yValue.map(
@@ -583,16 +583,16 @@ type CommonChartProps<DATUM, KEY> = Omit<BarChartContainerProps, 'children'> & {
     data: DATUM[] | undefined | null;
     yValueKeys: KEY[];
     colorSelector: (yKey: KEY) => string;
-    groupingMode?: BarGroupingMode;
+    barGroupingMode?: BarGroupingMode;
 }
 
 export type CombinedBarChartProps<
     DATUM,
     KEY extends string | number,
     ChartOptions,
-> = ChartOptions & CommonChartProps<DATUM, KEY> & {
+> = CommonChartProps<DATUM, KEY> & {
     chartAxesOptions: Omit<ChartAxesProps, 'chartData' | 'tooltipSelector' | 'onHover' | 'onClick'>
-    barListOptions: Omit<BarListProps<KEY>, 'chartData' | 'yValueKeys' | 'colorMap' | 'groupingMode' | 'xTickWidth'>
+    barListOptions: Omit<BarListProps<KEY>, 'chartData' | 'yValueKeys' | 'colorMap' | 'barGroupingMode' | 'xTickWidth'>
     chartOptions: ChartOptions;
 }
 
@@ -614,7 +614,7 @@ export function extractBarChartProps<DATUM, KEY extends string | number, ChartOp
         barListOptions,
         chartOptions,
 
-        groupingMode = 'side-by-side',
+        barGroupingMode = 'side-by-side',
 
         ...chartContainerProps
     } = combinedProps;
@@ -635,11 +635,11 @@ export function extractBarChartProps<DATUM, KEY extends string | number, ChartOp
         barListProps: {
             ...barListOptions,
             yValueKeys,
-            groupingMode,
+            barGroupingMode,
         },
         chartDataProps: {
             yValueKeys,
-            groupingMode: groupingModeMapping[groupingMode],
+            chartGroupingMode: groupingModeMapping[barGroupingMode],
             ...chartOptions,
         },
     };
@@ -649,7 +649,7 @@ export type CombinedLineChartProps<
     DATUM,
     KEY extends string | number,
     ChartOptions,
-> = ChartOptions & CommonChartProps<DATUM, KEY> & {
+> = CommonChartProps<DATUM, KEY> & {
     chartAxesOptions: Omit<ChartAxesProps, 'chartData' | 'tooltipSelector' | 'onHover' | 'onClick'>
     chartOptions: ChartOptions;
 }
@@ -683,7 +683,7 @@ export function extractLineChartProps<DATUM, KEY extends string | number, ChartO
         },
         chartDataProps: {
             yValueKeys,
-            groupingMode: 'sum',
+            chartGroupingMode: 'sum',
             ...chartOptions,
         },
     };

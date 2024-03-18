@@ -28,13 +28,13 @@ type D3InterpolationSchemes = 'Blues' | 'Greens' | 'Greys' | 'Oranges' | 'Purple
 export interface Props {
     data: HeatMapLayerProperty[] | GeoJSON.FeatureCollection<GeoJSON.Point>;
     zIndex: number;
-    opacity: number;
-    blur: number;
-    radius: number;
+    opacity: number | undefined;
+    blur: number | undefined;
+    radius: number | undefined;
     fillPalette: D3InterpolationSchemes;
     weighted: boolean;
-    weightPropertyKey: string; // Only applicable when weighted = true
-    scaleDataMax: number;
+    weightPropertyKey: string | undefined; // Only applicable when weighted = true
+    scaleDataMax: number | undefined;
 }
 
 function HeatmapLayer(props: Props) {
@@ -101,7 +101,7 @@ function HeatmapLayer(props: Props) {
                 gradient: colors,
                 zIndex: configRef.current.zIndex,
                 weight: (feature) => {
-                    if (configRef.current.weighted) {
+                    if (configRef.current.weighted && configRef.current.weightPropertyKey) {
                         const w = scaleWeight(
                             parseFloat(feature.get(configRef.current.weightPropertyKey)),
                         ) || 0;
@@ -175,8 +175,12 @@ function HeatmapLayer(props: Props) {
 
             layerData.setOpacity(opacity);
             layerData.setZIndex(zIndex);
-            layerData.setBlur(blur);
-            layerData.setRadius(radius);
+            if (blur) {
+                layerData.setBlur(blur);
+            }
+            if (radius) {
+                layerData.setRadius(radius);
+            }
         },
         [layerData, opacity, zIndex, radius, blur],
     );
